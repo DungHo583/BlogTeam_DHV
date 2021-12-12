@@ -1,0 +1,114 @@
+{
+  "list": [
+    {
+      "name": "Máy tính A",
+      "code_prod": "MT001",
+      "thumbnail": "/images/mt1.jpg",
+      "description": "Là loại máy tính tốt",
+      "short_desc": "Câu từ ngắn hơn của mô tả",
+      "price": "16.000.000 đ",
+      "discount": "10%",
+      "status": "Còn hàng",
+      "rate": 3
+    },
+    {
+      "name": "Máy tính B",
+      "code_prod": "MT002",
+      "thumbnail": "/images/mt2.jpg",
+      "description": "Là loại máy tính tốt",
+      "short_desc": "Câu từ ngắn hơn của mô tả",
+      "price": "16.000.000 đ",
+      "discount": "10%",
+      "status": "Còn hàng",
+      "rate": 3
+    },
+    {
+      "name": "Máy tính C",
+      "code_prod": "MT003",
+      "thumbnail": "/images/mt3.jpg",
+      "description": "Là loại máy tính tốt",
+      "short_desc": "Câu từ ngắn hơn của mô tả",
+      "price": "16.000.000 đ",
+      "discount": "10%",
+      "status": "Còn hàng",
+      "rate": 3
+    },
+    {
+      "name": "Máy tính D",
+      "code_prod": "MT004",
+      "thumbnail": "/images/mt4.jpg",
+      "description": "Là loại máy tính tốt",
+      "short_desc": "Câu từ ngắn hơn của mô tả",
+      "price": "16.000.000 đ",
+      "discount": "10%",
+      "status": "Còn hàng",
+      "rate": 3
+    },
+    {
+      "name": "Máy tính E",
+      "code_prod": "MT005",
+      "thumbnail": "/images/mt5.jpg",
+      "description": "Là loại máy tính tốt",
+      "short_desc": "Câu từ ngắn hơn của mô tả",
+      "price": "16.000.000 đ",
+      "discount": "10%",
+      "status": "Còn hàng",
+      "rate": 3
+    },
+    {
+      "name": "Máy tính F",
+      "code_prod": "MT006",
+      "thumbnail": "/images/mt1.jpg",
+      "description": "Là loại máy tính tốt",
+      "short_desc": "Câu từ ngắn hơn của mô tả",
+      "price": "16.000.000 đ",
+      "discount": "10%",
+      "status": "Còn hàng",
+      "rate": 3
+    },
+    {
+      "name": "Máy tính G",
+      "code_prod": "MT007",
+      "thumbnail": "/images/mt2.jpg",
+      "description": "Là loại máy tính tốt",
+      "short_desc": "Câu từ ngắn hơn của mô tả",
+      "price": "16.000.000 đ",
+      "discount": "10%",
+      "status": "Còn hàng",
+      "rate": 3
+    },
+    {
+      "name": "Máy tính H",
+      "code_prod": "MT008",
+      "thumbnail": "/images/mt3.jpg",
+      "description": "Là loại máy tính tốt",
+      "short_desc": "Câu từ ngắn hơn của mô tả",
+      "price": "16.000.000 đ",
+      "discount": "10%",
+      "status": "Còn hàng",
+      "rate": 3
+    },
+    {
+      "name": "Máy tính I",
+      "code_prod": "MT009",
+      "thumbnail": "/images/mt4.jpg",
+      "description": "Là loại máy tính tốt",
+      "short_desc": "Câu từ ngắn hơn của mô tả",
+      "price": "16.000.000 đ",
+      "discount": "10%",
+      "status": "Còn hàng",
+      "rate": 3
+    },
+    {
+      "name": "Máy tính K",
+      "code_prod": "MT010",
+      "thumbnail": "/images/mt5.jpg",
+      "description": "Là loại máy tính tốt",
+      "short_desc": "Câu từ ngắn hơn của mô tả",
+      "price": "16.000.000 đ",
+      "discount": "10%",
+      "status": "Còn hàng",
+      "rate": 3
+    }
+  ]
+}

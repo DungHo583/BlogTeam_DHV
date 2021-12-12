@@ -1,0 +1,44 @@
+{
+  "recentPost": [
+    {
+      "id": 1,
+      "img": "/images/recent_post_1.jpeg",
+      "title": "Sử dụng camera màu đen trên cửa sổ",
+      "createdAt": "30/10/2021"
+    },
+    {
+      "id": 2,
+      "img": "/images/recent_post_2.jpg",
+      "title": "Happy group of friends enjoying the summer",
+      "createdAt": "30/10/2021"
+    },
+    {
+      "id": 3,
+      "img": "/images/recent_post_3.jpeg",
+      "title": "Sử dụng camera màu đen trên cửa sổ",
+      "createdAt": "30/10/2021"
+    }
+  ],
+  "footermenuList": [
+    {
+      "id": 1,
+      "path": "/",
+      "menuitem": "Trang chủ"
+    },
+    {
+      "id": 2,
+      "path": "/products",
+      "menuitem": "Đồ công nghệ"
+    },
+    {
+      "id": 3,
+      "path": "/trends",
+      "menuitem": "Xu hướng"
+    },
+    {
+      "id": 4,
+      "path": "/reviewtechnology",
+      "menuitem": "Review công nghệ"
+    }
+  ]
+}

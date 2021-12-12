@@ -1,0 +1,108 @@
+<template>
+  <div class="">
+    <section class="widget">
+      <div class="author-profile">
+        <h2 class="title">About Author</h2>
+        <div class="author-wrapper">
+          <figure>
+            <img
+              class="author"
+              src="https://templatesell.net/polite/wp-content/uploads/sites/3/2020/02/ava1.png"
+            />
+          </figure>
+
+          <p>
+            This is the author widget. You can add the author image and social
+            media icons there. All the popular social media icons are there in
+            this widgets. Try it now.
+          </p>
+
+          <div class="socials-icon">
+            <a class="icon" href="http://www.facebook.com" target="_blank"
+              ><a-icon type="facebook" :style="{ fontSize: '22px' }"
+            /></a>
+
+            <a class="icon" href="http://www.instagram.com" target="_blank"
+              ><a-icon type="instagram" :style="{ fontSize: '22px' }"
+            /></a>
+
+            <a class="icon" href="http://www.twitter.com" target="_blank"
+              ><a-icon type="twitter" :style="{ fontSize: '22px' }"
+            /></a>
+
+            <a class="icon" href="http://www.youtube.com" target="_blank"
+              ><a-icon type="youtube" :style="{ fontSize: '22px' }"
+            /></a>
+          </div>
+
+          <span class="author-sign">My Signature</span>
+        </div>
+      </div>
+    </section>
+    <section class="widget-post">
+      <h2 class="widget-title">Featured Posts</h2>
+
+      <listPost />
+    </section>
+  </div>
+</template>
+
+<script>
+import listPost from "./listPost.vue";
+export default {
+  components: { listPost },
+};
+</script>
+
+<style lang="less">
+.socials-icon {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  .icon {
+    margin: 0 5px;
+  }
+}
+.author-sign {
+  font-family: "Monsieur La Doulaise";
+  font-size: 35px;
+  padding: 20px 0;
+}
+.author-wrapper {
+  text-align: center;
+}
+.author {
+  width: 280px;
+  height: 280px;
+}
+.title {
+  margin: 0 0 15px;
+  font-family: "Prata", serif;
+  font-style: normal;
+  font-weight: 400;
+}
+.widget-title {
+  padding: 0;
+  margin: 40px 0 20px;
+  font-size: 18px;
+  line-height: 1.3;
+  text-transform: capitalize;
+  color: #2f3235;
+  background-color: #ffffff;
+
+  font-family: "Prata", serif;
+}
+.widget_featured_thumbnail {
+  position: relative;
+  overflow: hidden;
+  float: left;
+  margin: 0 15px 0 0;
+  border-radius: 100%;
+}
+
+.widget_featured_content {
+  height: 80px;
+  display: table-cell;
+  vertical-align: middle;
+}
+</style>
