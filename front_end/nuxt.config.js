@@ -1,4 +1,8 @@
+require("dotenv").config();
 export default {
+  env: {
+    API_BLOG: process.env.API_BLOG,
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: "BlogTeam",
@@ -32,18 +36,16 @@ export default {
       {
         rel: "stylesheet",
         href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css",
-        integrity: "sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==",
+        integrity:
+          "sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==",
         crossorigin: "anonymous",
         referrerpolicy: "no-referrer",
       },
     ],
-},
+  },
 
-// Global CSS: https://go.nuxtjs.dev/config-css
-css: [
-  "ant-design-vue/dist/antd.css",
-  "~static/css/style.css",
-],
+  // Global CSS: https://go.nuxtjs.dev/config-css
+  css: ["ant-design-vue/dist/antd.css", "~static/css/style.css"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -51,17 +53,18 @@ css: [
     { src: "./plugins/vue-carousel.js", mode: "client" },
   ],
 
-    // Auto import components: https://go.nuxtjs.dev/config-components
-    components: true,
+  // Auto import components: https://go.nuxtjs.dev/config-components
+  components: true,
 
-      // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-      buildModules: [
-        '@nuxtjs/fontawesome',
-      ],
+  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+  buildModules: ["@nuxtjs/fontawesome"],
 
-        // Modules: https://go.nuxtjs.dev/config-modules
-        modules: [],
+  // Modules: https://go.nuxtjs.dev/config-modules
+  modules: ["@nuxtjs/axios"],
 
-          // Build Configuration: https://go.nuxtjs.dev/config-build
-          build: { },
+  axios: {
+    baseURL: process.env.API_BLOG
+  },
+  // Build Configuration: https://go.nuxtjs.dev/config-build
+  build: {},
 };

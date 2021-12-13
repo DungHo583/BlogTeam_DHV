@@ -3,8 +3,8 @@ const CATEGORIES = require("../models/categories");
 const categoriesController = {
   getCategories: async (req, res) => {
     try {
-      const categories = await CATEGORIES.find();
-      if (!categories) {
+      const data = await CATEGORIES.find();
+      if (!data) {
         return res.json({
           success: false,
           message: "Không có data của category",
@@ -12,7 +12,7 @@ const categoriesController = {
       } else {
         return res.json({
           success: true,
-          categories,
+          data,
         });
       }
     } catch (error) {
