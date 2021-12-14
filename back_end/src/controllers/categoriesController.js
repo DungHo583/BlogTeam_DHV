@@ -12,7 +12,7 @@ const categoriesController = {
       } else {
         return res.json({
           success: true,
-          data,
+          data: data,
         });
       }
     } catch (error) {

@@ -21,9 +21,10 @@ export default {
   methods: {
     fetchData() {
       this.$axios.$get("/api/category").then((res) => {
-        console.log("data", res);
+        if (res.success) {
+          console.log("data", res.data);
+        }
       });
-      
     },
   },
 };
