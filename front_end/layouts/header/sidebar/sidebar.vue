@@ -44,6 +44,11 @@
 
       <listPost />
     </section>
+    <div class="btn-signin">
+      <a href="javascript:;">
+        <span class="text-signin" @click="handleSignIn">Đăng nhập / Đăng ký</span>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -51,6 +56,13 @@
 import listPost from "./listPost.vue";
 export default {
   components: { listPost },
+  methods: {
+    handleSignIn() {
+      this.$router.push({
+        path: '/admin/sign-up',
+      })
+    },
+  },
 };
 </script>
 
@@ -104,5 +116,19 @@ export default {
   height: 80px;
   display: table-cell;
   vertical-align: middle;
+}
+
+.btn-signin {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .text-signin {
+    font-size: 18px;
+    transition: all 0.3s ease;
+  }
+  .text-signin:hover {
+    color: var(--color-hover);
+  }
 }
 </style>

@@ -4,6 +4,9 @@ const categoriesSchema = new schema({
   title: String,
   short_desc: String,
   description: String,
+  name_author: String,
+  tags: Array,
+  type: Number,
   created_time: {
     type: Date,
     default: Date.now(),

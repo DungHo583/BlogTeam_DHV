@@ -1,6 +1,5 @@
 <template>
   <div class="layout-container">
-    <div class="">Đây là test thử</div>
     <newsPost />
     <listPost />
   </div>
