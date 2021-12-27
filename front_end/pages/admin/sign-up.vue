@@ -7,33 +7,117 @@
       </div>
       <div class="body-form">
         <div class="row-form">
-          <a-input placeholder="Nhập email" class="input-form-login" />
+          <a-input
+            placeholder="Nhập họ và tên"
+            class="input-form-login"
+            v-model="fullName"
+          />
         </div>
         <div class="row-form">
-          <a-input-password placeholder="Mật khẩu mới" class="input-form-pass" />
+          <a-input
+            placeholder="Nhập email"
+            class="input-form-login"
+            v-model="email"
+          />
         </div>
         <div class="row-form">
-          <a-input-password placeholder="Nhập lại mật khẩu" class="input-form-pass" />
+          <a-input-password
+            placeholder="Mật khẩu mới"
+            class="input-form-pass"
+            v-model="password"
+          />
         </div>
         <div class="row-form">
-          <a-button class="btn-signIn">Đăng ký</a-button>
+          <a-input-password
+            placeholder="Nhập lại mật khẩu"
+            class="input-form-pass"
+            v-model="repeatPwd"
+          />
+        </div>
+        <div class="row-form">
+          <a-button class="btn-signIn" @click="handleSignUp">Đăng ký</a-button>
         </div>
       </div>
       <div class="box-sign-up">
-        <a href="javascript:;" class="text-signUp" @click="handleSignIn">Bạn đã có tài khoản ?</a>
+        <a href="javascript:;" class="text-signUp" @click="handleSignIn">
+          Bạn đã có tài khoản ?
+        </a>
       </div>
     </div>
+    <notifications position="top right" />
   </div>
 </template>
 
 <script>
 export default {
   layout: "layoutLogin",
-   methods: {
+  data() {
+    return {
+      fullName: "",
+      email: "",
+      password: "",
+      repeatPwd: "",
+    };
+  },
+  methods: {
     handleSignIn() {
       this.$router.push({
         path: "/admin/login",
       });
+    },
+
+    beforSignUp() {
+      if (!this.fullName && this.fullName.trim() == "") {
+        this.$notify({
+          type: "error",
+          title: "Lỗi !",
+          text: "Không được để trống Họ và Tên !",
+        });
+        return false;
+      }
+      if (!this.email && this.email.trim() == "") {
+        this.$notify({
+          type: "error",
+          title: "Lỗi !",
+          text: "Kiểm tra lại Email !",
+        });
+        return false;
+      }
+      if (!this.password && this.password != this.repeatPwd) {
+        this.$notify({
+          type: "error",
+          title: "Lỗi !",
+          text: "Kiểm tra lại mật khẩu !",
+        });
+        return false;
+      }
+      return true;
+    },
+
+    async handleSignUp() {
+      let check = await this.beforSignUp();
+      const data = {
+        fullName: null,
+        email: null,
+        password: null,
+      };
+      if (check) {
+        data = {
+          fullName: this.fullName,
+          email: this.email,
+          password: this.password,
+        };
+
+        console.log("data", data);
+        this.$axios.$post("/api/sign-in", data).then((res) => {
+          if (res.success) {
+            console.log("data", res.data);
+          }
+        });
+      } else {
+        console.log("check lại");
+      }
+      // console.log("data", data);
     },
   },
 };
@@ -154,7 +238,7 @@ export default {
   color: #fff !important;
 }
 .input-form-pass > .ant-input-suffix > .anticon {
-    color: #fff;
+  color: #fff;
 }
 
 .l > .ant-checkbox-wrapper > span {

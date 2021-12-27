@@ -15,7 +15,8 @@
         "cross-env": "^7.0.3",
         "dotenv": "^10.0.0",
         "nuxt": "^2.15.7",
-        "vue-carousel": "^0.18.0"
+        "vue-carousel": "^0.18.0",
+        "vue-notification": "^1.3.20"
     },
     "devDependencies": {
         "@nuxtjs/fontawesome": "^1.1.2",

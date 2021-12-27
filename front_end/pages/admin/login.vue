@@ -7,19 +7,25 @@
       </div>
       <div class="body-form">
         <div class="row-form">
-          <a-input v-model="email" placeholder="Email" class="input-form-login" />
+          <a-input
+            v-model="email"
+            placeholder="Email"
+            class="input-form-login"
+          />
         </div>
         <div class="row-form">
-          <a-input-password v-model="password" placeholder="Mật khẩu" class="input-form-pass" />
+          <a-input-password
+            v-model="password"
+            placeholder="Mật khẩu"
+            class="input-form-pass"
+          />
         </div>
         <div class="row-form">
           <a-button class="btn-signIn">Đăng nhập</a-button>
         </div>
         <div class="row-form">
           <div class="l">
-            <a-checkbox v-model="saveAccount" @change="onChange">
-              Nhớ tài khoản
-            </a-checkbox>
+            <a-checkbox v-model="saveAccount"> Nhớ tài khoản </a-checkbox>
           </div>
           <div class="r">
             <!-- <p class="text-forgot">Quên mật khẩu</p> -->
