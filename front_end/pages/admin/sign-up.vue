@@ -59,6 +59,10 @@ export default {
       repeatPwd: "",
     };
   },
+  // mounted() {
+  //   const urlClient = "http://localhost:3000";
+  //   console.log("urlClient", urlClient);
+  // },
   methods: {
     handleSignIn() {
       this.$router.push({
@@ -96,26 +100,30 @@ export default {
 
     async handleSignUp() {
       let check = await this.beforSignUp();
-      const data = {
-        fullName: null,
-        email: null,
-        password: null,
-      };
       if (check) {
-        data = {
-          fullName: this.fullName,
+        const url = process.env.API_BLOG;
+        const api = await this.$axios.post(url + "/api/sign-in", {
+          fullname: this.fullName,
           email: this.email,
           password: this.password,
-        };
-
-        console.log("data", data);
-        this.$axios.$post("/api/sign-in", data).then((res) => {
-          if (res.success) {
-            console.log("data", res.data);
-          }
+          created_at: Date.now(),
         });
-      } else {
-        console.log("check lại");
+        if (api.data && api.data.success == true) {
+          this.$notify({
+            type: "success",
+            title: "Thành công !",
+            text: "Đăng ký thành công !",
+          });
+          setTimeout(() => {
+            this.$router.push({ path: "/" });
+          }, 1500);
+        } else {
+          this.$notify({
+            type: "error",
+            title: "Thất bại !",
+            text: "Đăng ký thất bại !",
+          });
+        }
       }
       // console.log("data", data);
     },

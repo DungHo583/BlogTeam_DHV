@@ -3,20 +3,20 @@ const ACCOUNT = require("../models/account");
 const accountController = {
   getSignIn: async (req, res) => {
     try {
-      const data = req.body;
+      const { fullname, email, password, created_at } = req.body;
 
-      //   const data = await ACCOUNT.find();
-      if (!data) {
-        return res.json({
-          success: false,
-          message: "Không có data của account",
-        });
-      } else {
-        return res.json({
-          success: true,
-          data: data,
-        });
-      }
+      const newAccount = new ACCOUNT({
+        fullname,
+        email,
+        password,
+        created_at,
+      });
+      await newAccount.save();
+
+      return res.json({
+        success: true,
+        message: "Đăng ký thành công",
+      });
     } catch (error) {
       return res.json({
         success: false,

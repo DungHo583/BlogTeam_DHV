@@ -15,16 +15,16 @@ export default {
     listPost,
   },
   mounted() {
-    this.fetchData();
+    // this.fetchData();
   },
   methods: {
-    fetchData() {
-      this.$axios.$get("/api/category").then((res) => {
-        if (res.success) {
-          console.log("data", res.data);
-        }
-      });
-    },
+    // fetchData() {
+    //   this.$axios.$get("/api/category").then((res) => {
+    //     if (res.success) {
+    //       console.log("data", res.data);
+    //     }
+    //   });
+    // },
   },
 };
 </script>

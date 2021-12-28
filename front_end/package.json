@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "dev": "cross-env API_BLOG=http://localhost:5000/ nuxt",
-        "build": "cross-env API_BLOG=http://localhost:5000/ nuxt build",
+        "dev": "cross-env API_BLOG=http://localhost:5000 API_CLIENT=http://localhost:3000 nuxt",
+        "build": "cross-env API_BLOG=http://localhost:5000 API_CLIENT=http://localhost:3000 nuxt build",
         "start": "nuxt start",
         "generate": "nuxt generate"
     },
