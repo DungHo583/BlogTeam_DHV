@@ -103,15 +103,19 @@ export default {
           password: this.password,
           created_at: Date.now(),
         });
-        console.log("api", api);
         if (api.data && api.data.success == true) {
+          window.localStorage.setItem("auth", api.data.data.token);
           this.$notify({
             type: "success",
             title: "Thành công !",
             text: api.data.message,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/" });
+            if (api.data.data.role == 3) {
+              this.$router.push({ path: "/" });
+            } else {
+              this.$router.push({ path: "/" });
+            }
           }, 1500);
         } else {
           this.$notify({

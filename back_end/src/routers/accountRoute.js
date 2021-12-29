@@ -9,5 +9,7 @@ router.post("/sign-in", accountController.getSignIn);
 router.post("/sign-up", accountController.getSignUp);
 // api danh sách tài khoản
 router.get("/list-user", auth, accountController.getAccounts);
+// api get token
+router.get("/get-user", auth, accountController.getToken);
 
 module.exports = router;

@@ -36,6 +36,7 @@ const accountController = {
       );
       // Save user token
       newAccount.token = token;
+      res.cookie("auth", token);
 
       return res.json({
         success: true,
@@ -98,6 +99,26 @@ const accountController = {
       return res.json({
         success: false,
         message: error,
+      });
+    }
+  },
+
+  getUser: async (req, res) => {},
+
+  getToken: async (req, res) => {
+    const userToken = req.user;
+    console.log(userToken);
+
+    if (userToken) {
+      return res.json({
+        success: true,
+        message: "Thành công",
+        data: userToken,
+      });
+    } else {
+      return res.json({
+        success: false,
+        message: "Không xác thực được tài khoản",
       });
     }
   },

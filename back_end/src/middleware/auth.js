@@ -13,9 +13,10 @@ const verifyToken = (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, config.TOKEN_KEY);
+
     req.user = decoded;
   } catch (err) {
-    return res.status(401).send("Xác nhận tài khoản thành công !");
+    return res.status(401).send("Token không hợp lệ !");
   }
   return next();
 };
