@@ -44,7 +44,6 @@
         </a>
       </div>
     </div>
-    <notifications position="top right" />
   </div>
 </template>
 
@@ -59,10 +58,6 @@ export default {
       repeatPwd: "",
     };
   },
-  // mounted() {
-  //   const urlClient = "http://localhost:3000";
-  //   console.log("urlClient", urlClient);
-  // },
   methods: {
     handleSignIn() {
       this.$router.push({
@@ -108,11 +103,12 @@ export default {
           password: this.password,
           created_at: Date.now(),
         });
+        console.log("api", api);
         if (api.data && api.data.success == true) {
           this.$notify({
             type: "success",
             title: "Thành công !",
-            text: "Đăng ký thành công !",
+            text: api.data.message,
           });
           setTimeout(() => {
             this.$router.push({ path: "/" });
@@ -121,7 +117,7 @@ export default {
           this.$notify({
             type: "error",
             title: "Thất bại !",
-            text: "Đăng ký thất bại !",
+            text: api.data.message,
           });
         }
       }

@@ -21,7 +21,9 @@
           />
         </div>
         <div class="row-form">
-          <a-button class="btn-signIn">Đăng nhập</a-button>
+          <a-button class="btn-signIn" @click="handleSignIn">
+            Đăng nhập
+          </a-button>
         </div>
         <div class="row-form">
           <div class="l">
@@ -56,6 +58,53 @@ export default {
       this.$router.push({
         path: "/admin/sign-up",
       });
+    },
+
+    beforSignIn() {
+      if (!this.email && this.email.trim() == "") {
+        this.$notify({
+          type: "error",
+          title: "Lỗi !",
+          text: "Kiểm tra lại Email !",
+        });
+        return false;
+      }
+      if (!this.password && this.password.trim() == "") {
+        this.$notify({
+          type: "error",
+          title: "Lỗi !",
+          text: "Kiểm tra lại mật khẩu !",
+        });
+        return false;
+      }
+      return true;
+    },
+
+    async handleSignIn() {
+      let check = await this.beforSignIn();
+      if (check) {
+        const url = process.env.API_BLOG;
+        const api = await this.$axios.post(url + "/api/sign-up", {
+          email: this.email,
+          password: this.password,
+        });
+        if (api.data && api.data.success == true) {
+          this.$notify({
+            type: "success",
+            title: "Thành công !",
+            text: api.data.message,
+          });
+          setTimeout(() => {
+            this.$router.push({ path: "/" });
+          }, 1500);
+        } else {
+          this.$notify({
+            type: "error",
+            title: "Thất bại !",
+            text: api.data.message,
+          });
+        }
+      }
     },
   },
 };

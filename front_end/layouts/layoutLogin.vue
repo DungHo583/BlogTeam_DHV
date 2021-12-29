@@ -5,6 +5,8 @@
         <Nuxt />
       </div>
     </div>
+    <!-- notify -->
+    <notifications position="top right" />
   </div>
 </template>
 

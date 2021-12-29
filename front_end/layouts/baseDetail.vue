@@ -39,6 +39,8 @@
     <!-- start footer -->
     <footerLayout />
     <!-- end footer -->
+    <!-- notify -->
+    <notifications position="top right" />
   </div>
 </template>
 
