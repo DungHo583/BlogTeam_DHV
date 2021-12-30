@@ -1,13 +1,18 @@
 <template>
-  <div class="">index admin vue</div>
+  <adminLayout>
+    <div class="card-container">Test</div>
+  </adminLayout>
 </template>
 
 <script>
-export default {
+import adminLayout from "~/layouts/adminLayout";
 
-}
+export default {
+  components: {
+    adminLayout,
+  },
+};
 </script>
 
 <style lang="less" scoped>
-
 </style>

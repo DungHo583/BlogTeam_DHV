@@ -99,7 +99,7 @@ export default {
             if (api.data.data.role == 3) {
               this.$router.push({ path: "/" });
             } else {
-              this.$router.push({ path: "/" });
+              this.$router.push({ path: "/admin" });
             }
           }, 1500);
         } else {

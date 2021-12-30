@@ -79,13 +79,11 @@ export default {
       });
     },
     async handleLogout() {
-      const remove = await window.localStorage.removeItem("auth");
-      if (remove) {
-        this.$router.push({
-          path: "/",
-        });
+      await window.localStorage.removeItem("auth");
+      setTimeout(() => {
         this.checkUser = false;
-      }
+        this.$router.go();
+      }, 500);
     },
 
     checkToken() {

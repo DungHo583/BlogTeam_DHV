@@ -12,6 +12,11 @@ body {
   box-sizing: border-box;
 }
 
+/* body::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+} */
+
 .text-title {
   font-size: 24px;
   font-style: normal;
@@ -203,3 +208,11 @@ body {
 }
 
 /* end style slide */
+
+/* style container admin */
+.card-container {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 1px 15px 0 rgba(123, 123, 123, 0.05);
+}
