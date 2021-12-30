@@ -107,7 +107,6 @@ const accountController = {
 
   getToken: async (req, res) => {
     const userToken = req.user;
-    console.log(userToken);
 
     if (userToken) {
       return res.json({

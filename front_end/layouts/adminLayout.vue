@@ -1,6 +1,9 @@
 <template>
   <main class="main-body">
-    <div class="main-container">
+    <div class="loading-content" v-if="checkLoading">
+      <a-icon type="loading" />
+    </div>
+    <div class="main-container" v-else>
       <!-- header admin -->
       <headerAdmin />
       <!-- content -->
@@ -13,6 +16,7 @@
         </div>
       </div>
     </div>
+    <notifications class="notify" position="top right" />
   </main>
 </template>
 
@@ -25,6 +29,19 @@ export default {
     headerAdmin,
     navAdmin,
   },
+  props: {
+    loadPage: Boolean,
+  },
+  data() {
+    return {
+      checkLoading: true,
+    }
+  },
+  watch: {
+    loadPage(ev) {
+      this.checkLoading = ev;
+    }
+  }
 };
 </script>
 
@@ -32,6 +49,22 @@ export default {
 .main-body {
   width: 100%;
   height: 100vh;
+  position: relative;
+  z-index: 1;
+  .loading-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    .anticon {
+      font-size: 60px;
+      color: #42b883;
+    }
+  }
   .main-container {
     width: 100%;
     height: 100%;
@@ -57,5 +90,9 @@ export default {
       }
     }
   }
+  .notify {
+    // position: relative;
+  z-index: 99999;
+}
 }
 </style>

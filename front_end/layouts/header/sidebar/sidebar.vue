@@ -98,14 +98,15 @@ export default {
     async getUser() {
       let check = await this.checkToken();
       console.log("check", check);
-      // if (check) {
-      //   const url = process.env.API_BLOG;
-      //   const user_id = await this.$axios.get(url + "/api/get-user");
-      //   console.log("token", user_id);
-      //   // if (user_id && user_id.data.success == true) {
-      //   //   this.user_id = user_id.data.data.user_id;
-      //   // }
-      // }
+      if (check) {
+        const url = process.env.API_BLOG;
+        const response = await this.$axios.get(url + "/api/get-user", {
+          headers: {
+            Authorization: "Bearer " + window.localStorage.auth,
+          },
+        });
+        console.log("token", api);
+      }
     },
 
     async fetchData() {},
