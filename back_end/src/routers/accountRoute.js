@@ -4,12 +4,12 @@ const accountController = require("../controllers/accountController");
 const auth = require("../middleware/auth");
 
 // api đăng ký
-router.post("/sign-in", accountController.getSignIn);
+router.post("/sign-up", accountController.getSignIn);
 // api đăng nhập
-router.post("/sign-up", accountController.getSignUp);
+router.post("/sign-in", accountController.getSignUp);
 // api danh sách tài khoản
 router.get("/list-user", auth, accountController.getAccounts);
 // api get token
-router.get("/get-user", auth, accountController.getToken);
+router.get("/check-user", auth, accountController.getToken);
 
 module.exports = router;

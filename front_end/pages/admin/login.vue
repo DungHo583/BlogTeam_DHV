@@ -84,7 +84,7 @@ export default {
       let check = await this.beforSignIn();
       if (check) {
         const url = process.env.API_BLOG;
-        const api = await this.$axios.post(url + "/api/sign-up", {
+        const api = await this.$axios.post(url + "/api/sign-in", {
           email: this.email,
           password: this.password,
         });

@@ -100,7 +100,7 @@ export default {
       console.log("check", check);
       if (check) {
         const url = process.env.API_BLOG;
-        const response = await this.$axios.get(url + "/api/get-user", {
+        const response = await this.$axios.get(url + "/api/check-user", {
           headers: {
             Authorization: "Bearer " + window.localStorage.auth,
           },
