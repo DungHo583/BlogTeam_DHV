@@ -36,7 +36,7 @@ const accountController = {
       );
       // Save user token
       newAccount.token = token;
-      res.cookie("auth", token);
+      // res.cookie("auth", token);
 
       return res.json({
         success: true,

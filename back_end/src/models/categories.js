@@ -4,7 +4,7 @@ const categoriesSchema = new schema({
   title: String,
   short_desc: String,
   description: String,
-  created_time: {
+  created_at: {
     type: Date,
     default: Date.now(),
   },

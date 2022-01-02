@@ -52,6 +52,7 @@ export default {
     "@/plugins/antd-ui",
     { src: "./plugins/vue-carousel.js", mode: "client" },
     { src: "./plugins/vue-notification.js", mode: "client" },
+    { src: "~/plugins/moment.js", ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

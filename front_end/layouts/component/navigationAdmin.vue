@@ -3,50 +3,92 @@
     <div class="title-menu">
       <h3 class="text-title">Blog Team</h3>
     </div>
-    <div class="hr-line"></div>
-    <a-menu
-      :default-selected-keys="['1']"
-      :default-open-keys="['sub1']"
-      mode="inline"
-    >
-      <a-menu-item key="1">
-        <a-icon type="pie-chart" />
-        <span>Dashboard</span>
+    <div class="menu-admin">
+      <div
+        class="item-menu-admin"
+        v-for="item in menuList"
+        :key="item.key"
+        :class="{ active: item.route == routeActive }"
+        @click="pushRouter(item.route)"
+      >
+        <a-icon :type="item.icon" />
+        <span>{{ item.name }}</span>
+      </div>
+    </div>
+    <!-- <div class="hr-line"></div> -->
+    <!-- <a-menu v-model="navigation" mode="inline">
+      <a-menu-item
+        v-for="item in menuList"
+        :key="item.key"
+        @click="handleMenu(item.key)"
+      >
+        <a-icon :type="item.icon" />
+        <span>{{ item.name }}</span>
       </a-menu-item>
-      <!--  -->
-      <a-menu-item key="2">
-        <a-icon type="folder" />
-        <span>Danh mục</span>
-      </a-menu-item>
-      <!--  -->
-      <a-menu-item key="3">
-        <a-icon type="file-text" />
-        <span>Bài viết</span>
-      </a-menu-item>
-      <!--  -->
-      <a-menu-item key="4">
-        <a-icon type="form" />
-        <span>Tác giả</span>
-      </a-menu-item>
-      <!--  -->
-      <a-menu-item key="5">
-        <a-icon type="snippets" />
-        <span>Thẻ tag</span>
-      </a-menu-item>
-      <!--  -->
-      <a-menu-item key="6">
-        <a-icon type="user" />
-        <span>Tài khoản</span>
-      </a-menu-item>
-    </a-menu>
+    </a-menu> -->
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      navigation: "",
+      menuDefault: [],
+      menuList: [
+        {
+          key: "admin",
+          icon: "pie-chart",
+          name: "Dashboard",
+          route: "/admin",
+        },
+        {
+          key: "category",
+          icon: "folder",
+          name: "Danh mục",
+          route: "/admin/category",
+        },
+        {
+          key: "post",
+          icon: "file-text",
+          name: "Bài viết",
+          route: "/admin/post",
+        },
+        {
+          key: "author",
+          icon: "form",
+          name: "Tác giả",
+          route: "/admin/author",
+        },
+        {
+          key: "tags",
+          icon: "snippets",
+          name: "Thẻ tag",
+          route: "/admin/tags",
+        },
+        {
+          key: "user",
+          icon: "user",
+          name: "Tài khoản",
+          route: "/admin/user",
+        },
+      ],
+    };
   },
-  methods: {},
+  mounted() {
+    // console.log("default", this.menuDefault);
+  },
+  methods: {
+    pushRouter(path) {
+      this.$router.push({
+        path: `${path}`,
+      });
+    },
+  },
+  computed: {
+    routeActive() {
+      return this.$route.path;
+    },
+  },
 };
 </script>
 
@@ -55,6 +97,53 @@ export default {
   height: 100%;
   box-shadow: 0 2px 22px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.15);
   width: 230px;
+  background: linear-gradient(0deg, #389466 0%, #42b883 100%);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  .title-menu {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px 16px;
+    .text-title {
+      margin-bottom: 0;
+      font-weight: normal;
+      color: #fff;
+    }
+  }
+  .menu-admin {
+    width: 100%;
+    border-top: 1px solid #fff;
+    padding-top: 20px;
+    .item-menu-admin {
+      padding: 20px 12px 20px 20px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      cursor: pointer;
+      .anticon {
+        color: rgba(255, 255, 255, 0.8);
+        margin-right: 10px;
+        font-size: 16px;
+      }
+      span {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+    .item-menu-admin:hover {
+      .anticon {
+        color: #fff;
+      }
+      span {
+        color: #fff;
+      }
+    }
+    .active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
 }
 </style>
 <style lang="less">
@@ -81,20 +170,7 @@ export default {
       color: #fff;
     }
   }
-  .title-menu {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    background: #42b883;
-    padding: 8px 12px 16px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    .text-title {
-      margin-bottom: 0;
-      font-weight: normal;
-      color: #fff;
-    }
-  }
+
   .hr-line {
     border-top: 1px solid #fff;
     width: calc(100% - 24px);

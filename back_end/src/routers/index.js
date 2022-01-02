@@ -4,7 +4,7 @@ const cateRoute = require("./categoriesRoute")
 const accountRoute = require("./accountRoute")
 
 // 
-router.use('/api/category', cateRoute)
+router.use('/api', cateRoute)
 
 // api sign in account
 router.use('/api', accountRoute)

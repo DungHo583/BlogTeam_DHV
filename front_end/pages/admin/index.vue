@@ -66,7 +66,6 @@ export default {
             }, 1500);
           }
         }
-        console.log("token", api);
       }
     },
   },
