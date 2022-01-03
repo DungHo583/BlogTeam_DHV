@@ -1,7 +1,6 @@
 import Vue from "vue";
 import moment from "moment";
 
-var escape = require("escape-html");
 export default function ({ store, redirect }) {
   Number.prototype.zeroPad = function (length) {
     length = length || 2; // defaults to 2 if no parameter is passed

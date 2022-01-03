@@ -8,7 +8,7 @@ const categoriesSchema = new schema({
   tags: Array,
   type: Number,
   created_time: {
-    type: Date,
+    type: Number,
     default: Date.now(),
   },
 });

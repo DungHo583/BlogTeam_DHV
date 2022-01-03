@@ -13,7 +13,7 @@ const accountSchema = new schema({
     default: 3,
   },
   created_time: {
-    type: Date,
+    type: Number,
     default: Date.now(),
   },
 });

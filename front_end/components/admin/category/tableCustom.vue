@@ -21,14 +21,15 @@
           <td>{{ item.title }}</td>
           <td>{{ item.short_desc }}</td>
           <td align="center">
-            {{ Number(item.created_at) | formatDate("dd/mm/yyyy hh:MM") }}
+            <!-- {{ Number(item.created_at) | formatDate("dd/mm/yyyy hh:MM") }} -->
+            {{ item.created_at | formatDate("dd/mm/yyyy hh:MM") }}
           </td>
           <td class="col-action">
             <div class="action-table">
-              <button class="btn-custom btn-edit">
+              <button class="btn-custom btn-edit" @click="handleEdit(item._id)">
                 <a-icon type="edit" /> Sửa
               </button>
-              <button class="btn-custom btn-del">
+              <button class="btn-custom btn-del" @click="handleDel(item._id)">
                 <a-icon type="delete" /> Xóa
               </button>
             </div>
@@ -53,18 +54,16 @@ export default {
       bodyTable: [],
     };
   },
-  watch: {
-    content() {
-      console.log("table", this.content);
+  watch: {},
+  methods: {
+    handleEdit(event) {
+      this.$router.push({ path: "/admin/category/update/" + event });
     },
-    // header() {
-    //   this.headerTable = this.header;
-    // },
-    // content() {
-    //   this.bodyTable = this.content;
-    // },
+
+    handleDel(event) {
+      console.log("event", event);
+    },
   },
-  methods: {},
 };
 </script>
 
@@ -113,6 +112,7 @@ export default {
   color: #fff;
   background: #419ef9e0;
   transition: all 0.3s ease;
+  outline: none;
   cursor: pointer;
   .anticon {
     margin-right: 5px;

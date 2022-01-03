@@ -68,7 +68,6 @@ export default {
           this.loading = false;
           this.contentTable = response.data.data;
         }, 1500);
-        console.log("fetch", response.data.data);
       }
     },
   },

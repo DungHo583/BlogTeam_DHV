@@ -1,9 +1,10 @@
 const CATEGORIES = require("../models/categories");
 
 const categoriesController = {
+  // danh sách danh mục
   getCategories: async (req, res) => {
     try {
-      const data = await CATEGORIES.find();
+      const data = await CATEGORIES.find().sort({ created_at: -1 });
       if (!data) {
         return res.json({
           success: false,
@@ -15,6 +16,25 @@ const categoriesController = {
           data: data,
         });
       }
+    } catch (error) {
+      return res.json({
+        success: false,
+        message: error,
+      });
+    }
+  },
+
+  // get 1 danh mục theo id
+  getCate: async (req, res) => {
+    try {
+      const idCate = req.params.id;
+
+      const data = await CATEGORIES.findById(idCate);
+
+      return res.json({
+        success: true,
+        data: data,
+      });
     } catch (error) {
       return res.json({
         success: false,
@@ -44,6 +64,30 @@ const categoriesController = {
       return res.json({
         success: false,
         message: "Thêm danh mục thất bại !",
+      });
+    }
+  },
+
+  // update danh mục
+  updateCate: async (req, res) => {
+    try {
+      const { title, short_desc, description } = req.body;
+
+      const idCate = req.params.id;
+
+      const data = await CATEGORIES.findByIdAndUpdate(idCate, {
+        $set: { title, short_desc, description },
+      });
+
+      return res.json({
+        success: true,
+        message: "Cập nhật thành công !",
+        data: data,
+      });
+    } catch (error) {
+      return res.json({
+        success: false,
+        message: "Cập nhật thất bại !",
       });
     }
   },
