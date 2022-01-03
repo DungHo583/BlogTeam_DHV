@@ -64,10 +64,7 @@ export default {
   components: {},
   props: ["getCategory"],
   mounted() {
-    console.log("get data", this.getCategory);
-    this.nameCate = this.getCategory.name;
-    this.shortDesc = this.getCategory.short_desc;
-    this.descCate = this.getCategory.description;
+    this.getPropsCate();
   },
   data() {
     return {
@@ -103,6 +100,18 @@ export default {
         this.dataCate.description = this.descCate;
         this.$emit("getValue", this.dataCate);
       }, 500);
+    },
+
+    async getPropsCate() {
+      this.nameCate = this.getCategory.name;
+      this.shortDesc = this.getCategory.short_desc;
+      this.descCate = this.getCategory.description;
+      this.dataCate = await {
+        name: this.getCategory.name,
+        short_desc: this.getCategory.short_desc,
+        description: this.getCategory.description,
+      };
+      this.$emit("getValue", this.dataCate);
     },
   },
 };

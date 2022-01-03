@@ -61,7 +61,6 @@ export default {
           short_desc: response.data.data.short_desc,
           description: response.data.data.description,
         };
-        console.log("dataRes", this.dataCate);
         setTimeout(() => {
           this.loading = false;
         }, 1500);
