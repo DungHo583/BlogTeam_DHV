@@ -5,6 +5,7 @@ const categoriesController = {
   getCategories: async (req, res) => {
     try {
       const data = await CATEGORIES.find().sort({ created_at: -1 });
+
       if (!data) {
         return res.json({
           success: false,

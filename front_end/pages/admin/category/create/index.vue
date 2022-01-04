@@ -94,12 +94,6 @@ export default {
             text: api.data.message,
           });
         }
-
-        // this.$notify({
-        //   type: "success",
-        //   title: "Thành công !",
-        //   text: "Lưu danh mục thành công !",
-        // });
       }
     },
   },

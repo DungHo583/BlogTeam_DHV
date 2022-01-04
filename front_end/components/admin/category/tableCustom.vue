@@ -21,7 +21,6 @@
           <td>{{ item.title }}</td>
           <td>{{ item.short_desc }}</td>
           <td align="center">
-            <!-- {{ Number(item.created_at) | formatDate("dd/mm/yyyy hh:MM") }} -->
             {{ item.created_at | formatDate("dd/mm/yyyy hh:MM") }}
           </td>
           <td class="col-action">
