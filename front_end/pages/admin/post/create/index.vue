@@ -5,7 +5,7 @@
         <h3 class="text-title">Tạo bài viết</h3>
       </div>
       <!--  -->
-      <inputCate @getValue="valueInput" />
+      <inputCate @getValue="valueInput" @getSelected="valueSelect" />
       <!--  -->
       <div class="line"></div>
       <!--  -->
@@ -35,6 +35,7 @@ export default {
         short_desc: "",
         description: "",
       },
+      author: null,
     };
   },
   mounted() {
@@ -48,6 +49,10 @@ export default {
       this.$router.push({
         path: "/admin/category",
       });
+    },
+
+    valueSelect(event) {
+      this.author = event;
     },
 
     valueInput(value = {}) {

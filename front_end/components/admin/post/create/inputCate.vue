@@ -38,7 +38,11 @@
           <div class="title-input">
             <h3 class="text-title">Tác giả:</h3>
           </div>
-          <selectCustom />
+          <selectCustom
+            :selected="selected"
+            :list="listSelect"
+            @getEvent="getSelect"
+          />
         </div>
       </div>
       <!--  -->
@@ -75,6 +79,17 @@ export default {
         short_desc: "",
         description: "",
       },
+      selected: { _id: 12346, name: "value 2" },
+      listSelect: [
+        {
+          _id: 12345,
+          name: "value 1",
+        },
+        {
+          _id: 12346,
+          name: "value 2",
+        },
+      ],
       config: {
         placeholderText: "Nhập nội dung bài viết !",
         charCounterCount: false,
@@ -102,6 +117,9 @@ export default {
         this.dataPost.description = this.descPost;
         this.$emit("getValue", this.dataPost);
       }, 500);
+    },
+    getSelect(event) {
+      this.selected = event;
     },
   },
 };

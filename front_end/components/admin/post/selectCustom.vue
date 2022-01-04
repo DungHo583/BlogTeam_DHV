@@ -4,7 +4,7 @@
       <span class="label-select">{{ getName() }}</span>
       <a-icon :type="show ? 'up' : 'down'" />
     </div>
-    <ul class="dropdown-select">
+    <ul class="dropdown-select" v-if="show">
       <li
         class="dropdown-item"
         @click="handleChange(item)"
@@ -21,21 +21,13 @@
 <script>
 import vClickOutside from "v-click-outside";
 export default {
-  props: {},
+  props: {
+    selected: Object,
+    list: Array,
+  },
   data() {
     return {
       show: false,
-      selected: { _id: 12346, name: "value 2" },
-      list: [
-        {
-          _id: 12345,
-          name: "value 1",
-        },
-        {
-          _id: 12346,
-          name: "value 2",
-        },
-      ],
     };
   },
   directives: {
@@ -52,7 +44,7 @@ export default {
     handleChange(event) {
       this.show = false;
       console.log("select", event);
-      //   this.$emit("getEvent", event);
+      this.$emit("getEvent", event);
     },
 
     getName() {
@@ -65,4 +57,39 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.select-custom {
+  position: relative;
+  width: 100%;
+  .select-item {
+    padding: 10px 18px;
+    color: #222a42;
+    border: 1px solid #1d253b80;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // outline: none;
+  }
+  .dropdown-select {
+    position: absolute;
+    z-index: 99;
+    margin-bottom: 0;
+    list-style: none;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 99%;
+    padding-inline-start: 0;
+    padding: 10px 0px;
+    .dropdown-item {
+      padding: 10px 15px;
+    }
+    .dropdown-item:hover {
+      background-color: #fafafa;
+    }
+    .active {
+      background-color: #fafafa;
+    }
+  }
+}
 </style>
