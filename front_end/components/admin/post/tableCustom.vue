@@ -20,6 +20,7 @@
           <td class="col-number">{{ idx + 1 }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.short_desc }}</td>
+          <td>{{ item.name_author }}</td>
           <td align="center">
             <!-- {{ Number(item.created_at) | formatDate("dd/mm/yyyy hh:MM") }} -->
             {{ item.created_at | formatDate("dd/mm/yyyy hh:MM") }}

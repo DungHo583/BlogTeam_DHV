@@ -81,13 +81,32 @@ const categoriesController = {
 
       return res.json({
         success: true,
-        message: "Cập nhật thành công !",
+        message: "Cập nhật danh mục thành công !",
         data: data,
       });
     } catch (error) {
       return res.json({
         success: false,
         message: "Cập nhật thất bại !",
+      });
+    }
+  },
+
+  // xoá danh mục
+  deleteCate: async (req, res) => {
+    try {
+      const idCate = req.params.id;
+
+      await CATEGORIES.findByIdAndDelete(idCate);
+
+      return res.json({
+        success: true,
+        message: "Xoá danh mục thành công !",
+      });
+    } catch (error) {
+      return res.json({
+        success: false,
+        message: "Xoá danh mục thất bại !",
       });
     }
   },

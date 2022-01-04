@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
-const categoriesSchema = new schema({
+const postsSchema = new schema({
   title: String,
   short_desc: String,
   description: String,
   name_author: String,
   tags: Array,
   type: Number,
-  created_time: {
+  created_at: {
     type: Number,
     default: Date.now(),
   },
 });
 
-module.exports = mongoose.model("categories", categoriesSchema);
+module.exports = mongoose.model("posts", postsSchema);

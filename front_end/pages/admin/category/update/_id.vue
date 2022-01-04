@@ -2,7 +2,7 @@
   <adminLayout :loadPage="loading">
     <div class="card-container" v-if="!loading">
       <div class="title-card">
-        <h3 class="text-title">Tạo danh mục</h3>
+        <h3 class="text-title">Cập nhật danh mục</h3>
       </div>
       <!--  -->
       <updateCate :getCategory="dataCate" @getValue="valueInput" />

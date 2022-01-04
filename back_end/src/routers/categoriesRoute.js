@@ -14,4 +14,7 @@ router.post("/category/create", categoriesController.createCate);
 // cập nhật danh mục
 router.post("/category/update/:id", categoriesController.updateCate);
 
+// xoá danh mục
+router.delete("/category/delete/:id", categoriesController.deleteCate);
+
 module.exports = router;

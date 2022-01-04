@@ -46,11 +46,13 @@ export default {
       contentTable: [],
     };
   },
+  watch: {
+    contentTable() {
+      this.fetchCategory();
+    },
+  },
   mounted() {
     this.fetchCategory();
-    setTimeout(() => {
-      this.loading = false;
-    }, 1500);
   },
 
   methods: {

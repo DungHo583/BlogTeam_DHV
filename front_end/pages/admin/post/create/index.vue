@@ -2,10 +2,10 @@
   <adminLayout :loadPage="loading">
     <div class="card-container" v-if="!loading">
       <div class="title-card">
-        <h3 class="text-title">Cập nhật bài viết</h3>
+        <h3 class="text-title">Tạo bài viết</h3>
       </div>
       <!--  -->
-      <updateCate :getCategory="dataCate" @getValue="valueInput" />
+      <inputCate @getValue="valueInput" />
       <!--  -->
       <div class="line"></div>
       <!--  -->
@@ -18,61 +18,42 @@
 </template>
 
 <script>
-import updateCate from "~/components/admin/post/update/updateCate.vue";
+import inputCate from "~/components/admin/post/create/inputCate.vue";
 import adminLayout from "~/layouts/adminLayout";
 
 export default {
   components: {
     adminLayout,
-    updateCate,
+    inputCate,
   },
   data() {
     return {
       checkRegister: null,
       loading: true,
       dataCate: {
-        name: null,
-        short_desc: null,
-        description: null,
+        name: "",
+        short_desc: "",
+        description: "",
       },
-      getIdPost: null,
     };
   },
   mounted() {
-    this.getID();
-    this.fetchCate();
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
   },
 
   methods: {
     handleBack() {
       this.$router.push({
-        path: "/admin/post",
+        path: "/admin/category",
       });
     },
 
-    async fetchCate() {
-      const url = process.env.API_BLOG;
-      const response = await this.$axios.get(
-        url + "/api/get-category/" + this.getIdPost
-      );
-      if (response.data && response.data.success == true) {
-        this.dataCate = {
-          name: response.data.data.title,
-          short_desc: response.data.data.short_desc,
-          description: response.data.data.description,
-        };
-        setTimeout(() => {
-          this.loading = false;
-        }, 1500);
-      }
-    },
-
     valueInput(value = {}) {
-      this.dataCate = {
-        name: value.name,
-        short_desc: value.short_desc,
-        description: value.description,
-      };
+      this.dataCate.name = value.name;
+      this.dataCate.short_desc = value.short_desc;
+      this.dataCate.description = value.description;
     },
 
     beforSave() {
@@ -80,7 +61,7 @@ export default {
         this.$notify({
           type: "error",
           title: "Thất bại !",
-          text: "Bạn chưa nhập tên danh mục !",
+          text: "Bạn chưa nhập tiêu đề bài viết !",
         });
         return false;
       }
@@ -91,14 +72,12 @@ export default {
       let check = await this.beforSave();
       if (check) {
         const url = process.env.API_BLOG;
-        const response = await this.$axios.post(
-          url + "/api/post/update/" + this.getIdPost,
-          {
-            title: this.dataCate.name,
-            short_desc: this.dataCate.short_desc,
-            description: this.dataCate.description,
-          }
-        );
+        const response = await this.$axios.post(url + "/api/post/create", {
+          title: this.dataCate.name,
+          short_desc: this.dataCate.short_desc,
+          description: this.dataCate.description,
+          created_at: Date.now(),
+        });
         if (response.data && response.data.success == true) {
           this.$notify({
             type: "success",
@@ -106,7 +85,7 @@ export default {
             text: response.data.message,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/admin/post" });
+            this.$router.push({ path: "/admin/category" });
           }, 1500);
         } else {
           this.$notify({
@@ -115,11 +94,13 @@ export default {
             text: api.data.message,
           });
         }
-      }
-    },
 
-    getID() {
-      this.getIdPost = this.$route.params.id;
+        // this.$notify({
+        //   type: "success",
+        //   title: "Thành công !",
+        //   text: "Lưu danh mục thành công !",
+        // });
+      }
     },
   },
 };
