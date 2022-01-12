@@ -4,13 +4,13 @@
       <div class="l">
         <div class="form-input-group">
           <div class="title-input">
-            <h3 class="text-title">Tên danh mục:</h3>
+            <h3 class="text-title">Tên tác giả:</h3>
           </div>
           <input
             type="text"
             class="input-group"
-            placeholder="Nhập tên danh mục ..."
-            v-model="nameCate"
+            placeholder="Nhập tên tác giả ..."
+            v-model="nameAuthor"
             @input="changeName"
           />
         </div>
@@ -19,14 +19,14 @@
       <div class="r">
         <div class="form-input-group">
           <div class="title-input">
-            <h3 class="text-title">Mô tả ngắn:</h3>
+            <h3 class="text-title">Email:</h3>
           </div>
           <input
-            type="text"
+            type="email"
             class="input-group"
-            placeholder="Nhập mô tả ngắn ..."
-            v-model="shortDesc"
-            @input="changeShort"
+            placeholder="Nhập email ..."
+            v-model="email_address"
+            @input="changeEmail"
           />
         </div>
       </div>
@@ -36,25 +36,18 @@
       <div class="l">
         <div class="form-input-group">
           <div class="title-input">
-            <h3 class="text-title">Mô tả danh mục:</h3>
+            <h3 class="text-title">Mô tả tác giả:</h3>
           </div>
           <textarea
             class="area-group"
             rows="4"
             placeholder="Nhập mô tả ..."
-            v-model="descCate"
+            v-model="descAuthor"
             @input="changeDesc"
           >
           </textarea>
         </div>
       </div>
-      <!--  -->
-      <!-- <div class="r">
-        <div class="form-input-group">
-          <label for="">Mô tả ngắn:</label>
-          <input type="text" class="input-group" />
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -62,20 +55,21 @@
 <script>
 export default {
   components: {},
-  props: ["getCategory"],
+  props: ["getAuthor"],
   mounted() {
-    this.getPropsCate();
+    this.getPropsAuthor();
   },
   data() {
     return {
-      nameCate: "",
+      nameAuthor: "",
       shortDesc: "",
-      descCate: "",
+      descAuthor: "",
       waitInput: null,
-      dataCate: {
-        name: "",
-        short_desc: "",
+      dataAuthor: {
+        email_address: "",
+        name_author: "",
         description: "",
+        image: "",
       },
     };
   },
@@ -83,35 +77,41 @@ export default {
     changeName() {
       clearTimeout(this.waitInput);
       this.waitInput = setTimeout(() => {
-        this.dataCate.name = this.nameCate;
-        this.$emit("getValue", this.dataCate);
-      }, 500);
-    },
-    changeShort() {
-      clearTimeout(this.waitInput);
-      this.waitInput = setTimeout(() => {
-        this.dataCate.short_desc = this.shortDesc;
-        this.$emit("getValue", this.dataCate);
-      }, 500);
-    },
-    changeDesc() {
-      clearTimeout(this.waitInput);
-      this.waitInput = setTimeout(() => {
-        this.dataCate.description = this.descCate;
-        this.$emit("getValue", this.dataCate);
+        this.dataAuthor.name_author = this.nameAuthor;
+        this.$emit("getValue", this.dataAuthor);
       }, 500);
     },
 
-    async getPropsCate() {
-      this.nameCate = this.getCategory.name;
-      this.shortDesc = this.getCategory.short_desc;
-      this.descCate = this.getCategory.description;
-      this.dataCate = await {
-        name: this.getCategory.name,
-        short_desc: this.getCategory.short_desc,
-        description: this.getCategory.description,
+    changeDesc() {
+      clearTimeout(this.waitInput);
+      this.waitInput = setTimeout(() => {
+        this.dataAuthor.description = this.descAuthor;
+        this.$emit("getValue", this.dataAuthor);
+      }, 500);
+    },
+    changeEmail() {
+      clearTimeout(this.waitInput);
+      this.waitInput = setTimeout(() => {
+        this.dataAuthor.email_address = this.email_address;
+        this.$emit("getValue", this.dataAuthor);
+      }, 500);
+    },
+
+    async getPropsAuthor() {
+      this.nameAuthor = this.getAuthor.name_author;
+      this.shortDesc = this.getAuthor.short_desc;
+      this.descAuthor = this.getAuthor.description;
+      this.email_address = this.getAuthor.email_address;
+      this.image = this.getAuthor.image;
+
+      this.dataAuthor = await {
+        name_author: this.getAuthor.name_author,
+        short_desc: this.getAuthor.short_desc,
+        description: this.getAuthor.description,
+        image: this.getAuthor.image,
+        email_address: this.getAuthor.email_address,
       };
-      this.$emit("getValue", this.dataCate);
+      this.$emit("getValue", this.dataAuthor);
     },
   },
 };
