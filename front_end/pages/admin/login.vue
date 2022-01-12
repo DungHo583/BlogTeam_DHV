@@ -7,19 +7,27 @@
       </div>
       <div class="body-form">
         <div class="row-form">
-          <a-input v-model="email" placeholder="Email" class="input-form-login" />
+          <a-input
+            v-model="email"
+            placeholder="Email"
+            class="input-form-login"
+          />
         </div>
         <div class="row-form">
-          <a-input-password v-model="password" placeholder="Mật khẩu" class="input-form-pass" />
+          <a-input-password
+            v-model="password"
+            placeholder="Mật khẩu"
+            class="input-form-pass"
+          />
         </div>
         <div class="row-form">
-          <a-button class="btn-signIn">Đăng nhập</a-button>
+          <a-button class="btn-signIn" @click="handleSignIn">
+            Đăng nhập
+          </a-button>
         </div>
         <div class="row-form">
           <div class="l">
-            <a-checkbox v-model="saveAccount" @change="onChange">
-              Nhớ tài khoản
-            </a-checkbox>
+            <a-checkbox v-model="saveAccount"> Nhớ tài khoản </a-checkbox>
           </div>
           <div class="r">
             <!-- <p class="text-forgot">Quên mật khẩu</p> -->
@@ -50,6 +58,58 @@ export default {
       this.$router.push({
         path: "/admin/sign-up",
       });
+    },
+
+    beforSignIn() {
+      if (!this.email && this.email.trim() == "") {
+        this.$notify({
+          type: "error",
+          title: "Lỗi !",
+          text: "Kiểm tra lại Email !",
+        });
+        return false;
+      }
+      if (!this.password && this.password.trim() == "") {
+        this.$notify({
+          type: "error",
+          title: "Lỗi !",
+          text: "Kiểm tra lại mật khẩu !",
+        });
+        return false;
+      }
+      return true;
+    },
+
+    async handleSignIn() {
+      let check = await this.beforSignIn();
+      if (check) {
+        const url = process.env.API_BLOG;
+        const api = await this.$axios.post(url + "/api/sign-in", {
+          email: this.email,
+          password: this.password,
+        });
+        if (api.data && api.data.success == true) {
+          window.localStorage.setItem("auth", api.data.data.token);
+          this.$notify({
+            type: "success",
+            title: "Thành công !",
+            text: api.data.message,
+          });
+          setTimeout(() => {
+            if (api.data.data.role == 3) {
+              this.$router.push({ path: "/" });
+            } else {
+              this.$router.push({ path: "/admin" });
+            }
+          }, 1500);
+        } else {
+          this.$notify({
+            type: "error",
+            title: "Thất bại !",
+            text: api.data.message,
+          });
+        }
+      }
     },
   },
 };

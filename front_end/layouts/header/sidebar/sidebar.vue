@@ -45,8 +45,13 @@
       <listPost />
     </section>
     <div class="btn-signin">
-      <a href="javascript:;">
-        <span class="text-signin" @click="handleSignIn">Đăng nhập / Đăng ký</span>
+      <a href="javascript:;" v-if="!checkUser">
+        <span class="text-signin" @click="handleSignIn">
+          Đăng nhập / Đăng ký
+        </span>
+      </a>
+      <a href="javascript:;" v-else>
+        <span class="text-signin" @click="handleLogout"> Đăng xuất </span>
       </a>
     </div>
   </div>
@@ -56,12 +61,55 @@
 import listPost from "./listPost.vue";
 export default {
   components: { listPost },
+  data() {
+    return {
+      checkUser: false,
+      user_id: null,
+      checkRegister: null,
+    };
+  },
+  mounted() {
+    this.getUser();
+  },
+
   methods: {
     handleSignIn() {
       this.$router.push({
-        path: '/admin/sign-up',
-      })
+        path: "/admin/sign-up",
+      });
     },
+    async handleLogout() {
+      await window.localStorage.removeItem("auth");
+      setTimeout(() => {
+        this.checkUser = false;
+        this.$router.go();
+      }, 500);
+    },
+
+    checkToken() {
+      this.checkRegister = window.localStorage.auth;
+      if (this.checkRegister) {
+        this.checkUser = true;
+        return true;
+      }
+      return false;
+    },
+
+    async getUser() {
+      let check = await this.checkToken();
+      console.log("check", check);
+      if (check) {
+        const url = process.env.API_BLOG;
+        const response = await this.$axios.get(url + "/api/check-user", {
+          headers: {
+            Authorization: "Bearer " + window.localStorage.auth,
+          },
+        });
+        console.log("token", api);
+      }
+    },
+
+    async fetchData() {},
   },
 };
 </script>

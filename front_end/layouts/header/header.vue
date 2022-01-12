@@ -51,9 +51,6 @@
             <li>
               <NuxtLink to="/contact"> Contact </NuxtLink>
             </li>
-            <li>
-              <NuxtLink to="/admin/formAuthor"> FormAuthor </NuxtLink>
-            </li>
           </ul>
         </nav>
       </div>
