@@ -48,13 +48,6 @@
           </textarea>
         </div>
       </div>
-      <!--  -->
-      <!-- <div class="r">
-        <div class="form-input-group">
-          <label for="">Mô tả ngắn:</label>
-          <input type="text" class="input-group" />
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -83,13 +76,7 @@ export default {
         this.$emit("getValue", this.dataAuthor);
       }, 500);
     },
-    changeShort() {
-      clearTimeout(this.waitInput);
-      this.waitInput = setTimeout(() => {
-        this.dataAuthor.short_desc = this.shortDesc;
-        this.$emit("getValue", this.dataAuthor);
-      }, 500);
-    },
+
     changeDesc() {
       clearTimeout(this.waitInput);
       this.waitInput = setTimeout(() => {
