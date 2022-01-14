@@ -90,6 +90,7 @@ export default {
         });
         if (api.data && api.data.success == true) {
           window.localStorage.setItem("auth", api.data.data.token);
+          console.log("auth", api.data.data);
           this.$notify({
             type: "success",
             title: "Thành công !",
@@ -99,7 +100,9 @@ export default {
             if (api.data.data.role == 3) {
               this.$router.push({ path: "/" });
             } else {
-              this.$router.push({ path: "/admin" });
+              this.$router.push({
+                path: "/admin?user_id=" + api.data.data._id,
+              });
             }
           }, 1500);
         } else {

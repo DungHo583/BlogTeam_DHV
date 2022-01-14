@@ -106,18 +106,22 @@ const accountController = {
   getUser: async (req, res) => {},
 
   getToken: async (req, res) => {
-    const userToken = req.user;
+    try {
+      const { user_id } = req.body;
 
-    if (userToken) {
-      return res.json({
-        success: true,
-        message: "Thành công",
-        data: userToken,
-      });
-    } else {
+      const account = await ACCOUNT.findOne({ user_id });
+
+      if (account) {
+        return res.json({
+          success: true,
+          message: "Đăng nhập thành công !",
+          data: account,
+        });
+      }
+    } catch (error) {
       return res.json({
         success: false,
-        message: "Không xác thực được tài khoản",
+        message: "Đăng nhập thất bại !",
       });
     }
   },

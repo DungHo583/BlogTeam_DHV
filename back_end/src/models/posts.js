@@ -11,7 +11,10 @@ const postsSchema = new schema({
   },
   short_desc: String,
   description: String,
-  name_author: String,
+  author: {
+    type: schema.Types.ObjectId,
+    ref: "categories",
+  },
   tags: Array,
   category: {
     type: schema.Types.ObjectId,

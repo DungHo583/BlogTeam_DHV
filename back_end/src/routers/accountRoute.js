@@ -8,8 +8,8 @@ router.post("/sign-up", accountController.getSignIn);
 // api đăng nhập
 router.post("/sign-in", accountController.getSignUp);
 // api danh sách tài khoản
-router.get("/list-user", auth, accountController.getAccounts);
+router.get("/list-user", accountController.getAccounts);
 // api get token
-router.get("/check-user", auth, accountController.getToken);
+router.post("/check-user", accountController.getToken);
 
 module.exports = router;
