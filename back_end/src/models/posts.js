@@ -1,7 +1,14 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 const postsSchema = new schema({
-  title: String,
+  title: {
+    type: String,
+    required: true,
+  },
+  thumbnail: {
+    type: String,
+    default: null,
+  },
   short_desc: String,
   description: String,
   name_author: String,
