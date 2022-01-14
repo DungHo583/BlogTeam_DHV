@@ -2,10 +2,10 @@
   <adminLayout :loadPage="loading">
     <div class="card-container" v-if="!loading">
       <div class="title-card">
-        <h3 class="text-title">Cập nhật tác giả</h3>
+        <h3 class="text-title">Tạo tác giả</h3>
       </div>
       <!--  -->
-      <updateAuthor :getAuthor="dataAuthor" @getValue="valueInput" />
+      <inputAuthor @getValue="valueInput" />
       <!--  -->
       <div class="line"></div>
       <!--  -->
@@ -18,31 +18,31 @@
 </template>
 
 <script>
-import updateAuthor from "~/components/admin/author/update/updateAuthor.vue";
+import inputAuthor from "../../../../components/admin/author/create/inputAuthor.vue";
 import adminLayout from "~/layouts/adminLayout";
 
 export default {
   components: {
     adminLayout,
-    updateAuthor,
+    inputAuthor,
   },
   data() {
     return {
       checkRegister: null,
       loading: true,
       dataAuthor: {
-        name_author: null,
-        short_desc: null,
-        description: null,
-        email_address: null,
-        image: null,
+        name_author: "",
+        short_desc: "",
+        description: "",
+        email_address: "",
+        image: "",
       },
-      getIdAuthor: null,
     };
   },
   mounted() {
-    this.getID();
-    this.fetchAuthor();
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
   },
 
   methods: {
@@ -52,33 +52,12 @@ export default {
       });
     },
 
-    async fetchAuthor() {
-      const url = process.env.API_BLOG;
-      const response = await this.$axios.get(
-        url + "/api/get-author/" + this.getIdAuthor
-      );
-      if (response.data && response.data.success == true) {
-        this.dataAuthor = {
-          name_author: response.data.data.name_author,
-          short_desc: response.data.data.short_desc,
-          description: response.data.data.description,
-          email_address: response.data.data.email_address,
-          image: response.data.data.image,
-        };
-        setTimeout(() => {
-          this.loading = false;
-        }, 1500);
-      }
-    },
-
     valueInput(value = {}) {
-      this.dataAuthor = {
-        name_author: value.name_author,
-        short_desc: value.short_desc,
-        email_address: value.email_address,
-        description: value.description,
-        image: value.image,
-      };
+      this.dataAuthor.name_author = value.name_author;
+      this.dataAuthor.short_desc = value.short_desc;
+      this.dataAuthor.description = value.description;
+      this.dataAuthor.email_address = value.email_address;
+      this.dataAuthor.image = value.image;
     },
 
     beforSave() {
@@ -93,6 +72,17 @@ export default {
         });
         return false;
       }
+      if (
+        !this.dataAuthor.email_address &&
+        this.dataAuthor.email_address.trim() == ""
+      ) {
+        this.$notify({
+          type: "error",
+          title: "Thất bại !",
+          text: "Bạn chưa nhập email !",
+        });
+        return false;
+      }
       return true;
     },
 
@@ -100,16 +90,15 @@ export default {
       let check = await this.beforSave();
       if (check) {
         const url = process.env.API_BLOG;
-        const response = await this.$axios.post(
-          url + "/api/author/update/" + this.getIdAuthor,
-          {
-            name_author: this.dataAuthor.name_author,
-            short_desc: this.dataAuthor.short_desc,
-            description: this.dataAuthor.description,
-            email_address: this.dataAuthor.email_address,
-            image: this.dataAuthor.image,
-          }
-        );
+        const response = await this.$axios.post(url + "/api/author/create", {
+          name_author: this.dataAuthor.name_author,
+          short_desc: this.dataAuthor.short_desc,
+          description: this.dataAuthor.description,
+          email_address: this.dataAuthor.email_address,
+          image: this.dataAuthor.image,
+
+          created_at: Date.now(),
+        });
         if (response.data && response.data.success == true) {
           this.$notify({
             type: "success",
@@ -127,10 +116,6 @@ export default {
           });
         }
       }
-    },
-
-    getID() {
-      this.getIdAuthor = this.$route.params.id;
     },
   },
 };

@@ -18,8 +18,10 @@
         <!--  -->
         <tr v-for="(item, idx) in content" :key="idx">
           <td class="col-number">{{ idx + 1 }}</td>
-          <td>{{ item.title }}</td>
-          <td>{{ item.short_desc }}</td>
+          <td>{{ item.name_author }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.email_address }}</td>
+
           <td align="center">
             {{ item.created_at | formatDate("dd/mm/yyyy hh:MM") }}
           </td>
@@ -42,7 +44,7 @@
     <a-modal
       class="modal-warning"
       v-model="visible"
-      title="Xoá danh mục"
+      title="Xoá tác giả"
       on-ok="handleOk"
     >
       <template slot="footer">
@@ -51,7 +53,7 @@
           Xoá
         </a-button>
       </template>
-      <p>Xác nhận xoá danh mục này ?</p>
+      <p>Xác nhận xoá tác giả này ?</p>
     </a-modal>
   </div>
 </template>
@@ -68,17 +70,17 @@ export default {
       bodyTable: [],
       loading: false,
       visible: false,
-      idCate: null,
+      idAuthor: null,
     };
   },
   watch: {},
   methods: {
     handleEdit(event) {
-      this.$router.push({ path: "/admin/category/update/" + event });
+      this.$router.push({ path: "/admin/author/update/" + event });
     },
 
     confirmDel(event) {
-      this.idCate = event;
+      this.idAuthor = event;
       this.visible = true;
     },
 
@@ -87,7 +89,7 @@ export default {
       setTimeout(() => {
         this.visible = false;
         this.loading = false;
-        this.handleDel(this.idCate);
+        this.handleDel(this.idAuthor);
       }, 1500);
     },
     handleCancel(e) {
@@ -97,7 +99,7 @@ export default {
     async handleDel(event) {
       const url = process.env.API_BLOG;
       const response = await this.$axios.delete(
-        url + "/api/category/delete/" + event
+        url + "/api/author/delete/" + event
       );
       if (response.data && response.data.success == true) {
         this.$notify({
@@ -105,7 +107,7 @@ export default {
           title: "Thành công !",
           text: response.data.message,
         });
-        this.$router.push({ path: "/admin/category" });
+        this.$router.push({ path: "/admin/author" });
       } else {
         this.$notify({
           type: "error",
