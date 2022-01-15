@@ -1,0 +1,183 @@
+<template>
+  <div class="form-group">
+    <div class="row-form-item">
+      <div class="l">
+        <div class="form-input-group">
+          <div class="title-input">
+            <h3 class="text-title">Tên tác giả:</h3>
+          </div>
+          <input
+            type="text"
+            class="input-group"
+            placeholder="Nhập tên tác giả ..."
+            v-model="nameAuthor"
+            @input="changeName"
+          />
+        </div>
+      </div>
+      <!--  -->
+      <div class="r">
+        <div class="form-input-group">
+          <div class="title-input">
+            <h3 class="text-title">Email:</h3>
+          </div>
+          <input
+            type="email"
+            class="input-group"
+            placeholder="Nhập email ..."
+            v-model="email_address"
+            @input="changeEmail"
+          />
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="row-form-item">
+      <div class="l">
+        <div class="form-input-group">
+          <div class="title-input">
+            <h3 class="text-title">Mô tả tác giả:</h3>
+          </div>
+          <textarea
+            class="area-group"
+            rows="4"
+            placeholder="Nhập mô tả ..."
+            v-model="descAuthor"
+            @input="changeDesc"
+          >
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  components: {},
+  props: ["getAuthor"],
+  mounted() {
+    this.getPropsAuthor();
+  },
+  data() {
+    return {
+      nameAuthor: "",
+      shortDesc: "",
+      descAuthor: "",
+      waitInput: null,
+      dataAuthor: {
+        email_address: "",
+        name_author: "",
+        description: "",
+        image: "",
+      },
+    };
+  },
+  methods: {
+    changeName() {
+      clearTimeout(this.waitInput);
+      this.waitInput = setTimeout(() => {
+        this.dataAuthor.name_author = this.nameAuthor;
+        this.$emit("getValue", this.dataAuthor);
+      }, 500);
+    },
+
+    changeDesc() {
+      clearTimeout(this.waitInput);
+      this.waitInput = setTimeout(() => {
+        this.dataAuthor.description = this.descAuthor;
+        this.$emit("getValue", this.dataAuthor);
+      }, 500);
+    },
+    changeEmail() {
+      clearTimeout(this.waitInput);
+      this.waitInput = setTimeout(() => {
+        this.dataAuthor.email_address = this.email_address;
+        this.$emit("getValue", this.dataAuthor);
+      }, 500);
+    },
+
+    async getPropsAuthor() {
+      this.nameAuthor = this.getAuthor.name_author;
+      this.shortDesc = this.getAuthor.short_desc;
+      this.descAuthor = this.getAuthor.description;
+      this.email_address = this.getAuthor.email_address;
+      this.image = this.getAuthor.image;
+
+      this.dataAuthor = await {
+        name_author: this.getAuthor.name_author,
+        short_desc: this.getAuthor.short_desc,
+        description: this.getAuthor.description,
+        image: this.getAuthor.image,
+        email_address: this.getAuthor.email_address,
+      };
+      this.$emit("getValue", this.dataAuthor);
+    },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.form-group {
+  width: 100%;
+}
+.row-form-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  .l {
+    width: 48%;
+  }
+  .r {
+    width: 48%;
+  }
+}
+
+.row-form-item:last-child {
+  margin-bottom: 0;
+}
+
+.form-input-group {
+  width: 100%;
+  .title-input {
+    margin-bottom: 5px;
+    .text-title {
+      font-size: 16px;
+    }
+  }
+  .input-group {
+    padding: 10px 18px;
+    color: #222a42;
+    border: 1px solid #1d253b80;
+    border-radius: 10px;
+    width: 100%;
+    outline: none;
+  }
+
+  .input-group:hover {
+    border-color: #e14eca;
+  }
+
+  .input-group:focus {
+    border-color: #e14eca;
+  }
+
+  .area-group {
+    padding: 10px 18px;
+    color: #222a42;
+    border: 1px solid #1d253b80;
+    border-radius: 10px;
+    width: 100%;
+    outline: none;
+  }
+
+  .area-group:hover {
+    border-color: #e14eca;
+  }
+
+  .area-group:focus {
+    border-color: #e14eca;
+  }
+}
+</style>

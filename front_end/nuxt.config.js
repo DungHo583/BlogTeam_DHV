@@ -45,12 +45,20 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ["ant-design-vue/dist/antd.css", "~static/css/style.css"],
+  css: [
+    "ant-design-vue/dist/antd.css",
+    "~static/css/style.css",
+    "~static/css/style.less",
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     "@/plugins/antd-ui",
     { src: "./plugins/vue-carousel.js", mode: "client" },
+    { src: "./plugins/vue-notification.js", mode: "client" },
+    { src: "~/plugins/moment.js", ssr: false },
+    { src: "~/plugins/froala.js", ssr: false },
+    { src: "~/plugins/vClickOutSide.js", ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -63,7 +71,8 @@ export default {
   modules: ["@nuxtjs/axios"],
 
   axios: {
-    baseURL: process.env.API_BLOG
+    baseURL: process.env.API_BLOG,
+    clientURL: process.env.API_CLIENT,
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

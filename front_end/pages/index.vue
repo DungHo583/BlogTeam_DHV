@@ -1,6 +1,5 @@
 <template>
   <div class="layout-container">
-    <div class="">Đây là test thử</div>
     <newsPost />
     <listPost />
   </div>
@@ -16,15 +15,16 @@ export default {
     listPost,
   },
   mounted() {
-    this.fetchData();
+    // this.fetchData();
   },
   methods: {
-    fetchData() {
-      this.$axios.$get("/api/category").then((res) => {
-        console.log("data", res);
-      });
-      
-    },
+    // fetchData() {
+    //   this.$axios.$get("/api/category").then((res) => {
+    //     if (res.success) {
+    //       console.log("data", res.data);
+    //     }
+    //   });
+    // },
   },
 };
 </script>
