@@ -6,7 +6,7 @@ const authorSchema = new schema({
   email_address: String,
   image: String,
   created_at: {
-    type: Date,
+    type: Number,
     default: Date.now(),
   },
 });
