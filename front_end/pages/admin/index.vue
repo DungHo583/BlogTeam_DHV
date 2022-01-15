@@ -1,5 +1,5 @@
 <template>
-  <adminLayout :userID="userID">
+  <adminLayout :loadPage="loading">
     <div class="card-container">Test</div>
   </adminLayout>
 </template>
@@ -12,32 +12,31 @@ export default {
     adminLayout,
   },
   props: {
-    notifyAlert: String,
+    // notifyAlert: String,
   },
   data() {
     return {
-      checkRegister: null,
-      loading: true,
+      loading: false,
       userID: null,
     };
   },
 
   mounted() {
-    this.userID = this.getUserID;
-    if (this.notifyAlert) {
-      this.$notify({
-        type: "success",
-        title: "Thành công !",
-        text: this.notifyAlert,
-      });
-      this.loading = false;
-    }
+    // this.userID = this.getUserID;
+    // if (this.notifyAlert) {
+    //   this.$notify({
+    //     type: "success",
+    //     title: "Thành công !",
+    //     text: this.notifyAlert,
+    //   });
+    //   this.loading = false;
+    // }
   },
 
   computed: {
-    getUserID() {
-      return this.$route.query.user_id;
-    },
+    // getUserID() {
+    //   return this.$route.query.user_id;
+    // },
   },
 
   methods: {},

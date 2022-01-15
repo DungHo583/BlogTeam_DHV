@@ -61,6 +61,7 @@ export default {
   props: {
     header: Array,
     content: Array,
+    getUserID: String,
   },
   data() {
     return {
@@ -69,12 +70,20 @@ export default {
       loading: false,
       visible: false,
       idCate: null,
+      userID: null,
     };
   },
-  watch: {},
+  watch: {
+    getUserID() {
+      this.userID = this.getUserID;
+      console.log("id user table:", this.getUserID);
+    },
+  },
   methods: {
     handleEdit(event) {
-      this.$router.push({ path: "/admin/category/update/" + event });
+      this.$router.push({
+        path: "/admin/category/update/" + event + "?user_id=" + this.userID,
+      });
     },
 
     confirmDel(event) {
@@ -105,7 +114,7 @@ export default {
           title: "Thành công !",
           text: response.data.message,
         });
-        this.$router.push({ path: "/admin/category" });
+        this.$router.push({ path: "/admin/category?user_id=" + this.userID });
       } else {
         this.$notify({
           type: "error",

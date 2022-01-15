@@ -12,7 +12,7 @@
           <navAdmin :userIDLayout="userID" />
         </div>
         <div class="body-content">
-          <slot :notifyAlert="notifyText" :loadPage="checkLoading" />
+          <slot />
         </div>
       </div>
     </div>
@@ -31,58 +31,62 @@ export default {
   },
   props: {
     loadPage: Boolean,
-    userID: String,
   },
   data() {
     return {
       checkLoading: true,
-      getUserId: null,
       notifyText: null,
+      userID: this.$route.query.user_id,
     };
   },
   watch: {
     loadPage(ev) {
       this.checkLoading = ev;
     },
-    userID() {
-      this.getUserId = this.userID;
-    },
-    getUserId() {
-      this.fetchUser();
-    },
+  },
+  mounted() {
+    console.log("userID layout:", this.userID);
+    this.fetchUser();
   },
   methods: {
+    checkUser() {
+      if (this.userID == undefined) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+
     async fetchUser() {
-      const url = process.env.API_BLOG;
-      const response = await this.$axios.post(url + "/api/check-user", {
-        user_id: this.getUserId,
-      });
-      if (response.data && response.data.success) {
-        if (response.data.data.role == 1 || response.data.data.role == 2) {
-          // this.$notify({
-          //   type: "success",
-          //   title: "Thành công !",
-          //   text: "Đăng nhập thành công !",
-          // });
-          this.notifyText = "Đăng nhập thành công !";
-          setTimeout(() => {
-            this.$router.push({
-              path: "/admin?user_id=" + this.getUserId,
-            });
-            this.checkLoading = false;
-          }, 1500);
-        } else {
-          this.$notify({
-            type: "error",
-            title: "Lỗi !",
-            text: "Tài khoản này không có quyền truy cập !",
-          });
-          setTimeout(() => {
-            this.$router.push({
-              path: "/",
-            });
-          }, 1500);
+      let check = await this.checkUser();
+      console.log("check user:", check);
+      if (check) {
+        const url = process.env.API_BLOG;
+        const response = await this.$axios.post(url + "/api/check-user", {
+          user_id: this.userID,
+        });
+        if (response.data && response.data.success) {
+          if (response.data.data.role == 1 || response.data.data.role == 2) {
+            this.notifyText = "Đăng nhập thành công !";
+            setTimeout(() => {
+              this.$router.push({
+                path: "/admin?user_id=" + this.userID,
+              });
+              this.checkLoading = false;
+            }, 1500);
+          }
         }
+      } else {
+        this.$notify({
+          type: "error",
+          title: "Lỗi !",
+          text: "Tài khoản này không có quyền truy cập !",
+        });
+        setTimeout(() => {
+          this.$router.push({
+            path: "/",
+          });
+        }, 1500);
       }
     },
   },

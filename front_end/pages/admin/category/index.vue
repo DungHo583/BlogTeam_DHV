@@ -8,7 +8,7 @@
         </button>
       </div>
       <!--  -->
-      <tableCustom :header="headerTable" :content="contentTable" />
+      <tableCustom :header="headerTable" :content="contentTable" :getUserID="getUserID" />
     </div>
   </adminLayout>
 </template>

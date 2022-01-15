@@ -46,7 +46,7 @@ export default {
   methods: {
     handleBack() {
       this.$router.push({
-        path: "/admin/category",
+        path: "/admin/category?user_id=" + this.getUserID,
       });
     },
 
@@ -106,7 +106,9 @@ export default {
             text: response.data.message,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/admin/category" });
+            this.$router.push({
+              path: "/admin/category?user_id=" + this.getUserID,
+            });
           }, 1500);
         } else {
           this.$notify({
@@ -120,6 +122,11 @@ export default {
 
     getID() {
       this.getIdCate = this.$route.params.id;
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };
