@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const cateRoute = require("./categoriesRoute");
 const authorRoute = require("./authorRoute");
-
-router.use("/api", authorRoute);
 const accountRoute = require("./accountRoute");
 const postRoute = require("./postRoute");
 
+// api author
 router.use("/api", authorRoute);
+
 // api category
 router.use("/api", cateRoute);
 
