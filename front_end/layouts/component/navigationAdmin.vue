@@ -30,8 +30,18 @@
 </template>
 <script>
 export default {
+  // props: {
+  //   userIDLayout: String,
+  // },
+  // watch: {
+  //   userIDLayout() {
+  //     console.log("getID", this.userIDLayout);
+  //     this.getUserID = this.userIDLayout;
+  //   },
+  // },
   data() {
     return {
+      getEvUserID: null,
       navigation: "",
       menuDefault: [],
       menuList: [
@@ -75,16 +85,20 @@ export default {
     };
   },
   mounted() {
+    this.getEvUserID = this.getUserID;
     // console.log("default", this.menuDefault);
   },
   methods: {
     pushRouter(path) {
       this.$router.push({
-        path: `${path}`,
+        path: `${path}` + "?user_id=" + this.getEvUserID,
       });
     },
   },
   computed: {
+    getUserID() {
+      return this.$route.query.user_id;
+    },
     routeActive() {
       return this.$route.path;
     },
