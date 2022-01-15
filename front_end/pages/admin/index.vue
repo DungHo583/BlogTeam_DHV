@@ -1,6 +1,6 @@
 <template>
   <adminLayout :userID="userID">
-    <div class="card-container" v-if="!loading">Test</div>
+    <div class="card-container">Test</div>
   </adminLayout>
 </template>
 

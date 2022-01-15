@@ -9,7 +9,7 @@
       <!-- content -->
       <div class="main-content">
         <div class="nav-content">
-          <navAdmin />
+          <navAdmin :userIDLayout="userID" />
         </div>
         <div class="body-content">
           <slot :notifyAlert="notifyText" :loadPage="checkLoading" />
@@ -41,9 +41,9 @@ export default {
     };
   },
   watch: {
-    // loadPage(ev) {
-    //   this.checkLoading = ev;
-    // },
+    loadPage(ev) {
+      this.checkLoading = ev;
+    },
     userID() {
       this.getUserId = this.userID;
     },
