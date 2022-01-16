@@ -1,5 +1,5 @@
 <template>
-  <adminLayout :loadPage="loadingPage">
+  <adminLayout>
     <div class="card-container">
       <div class="title-card">
         <h3 class="text-title">Danh sách danh mục</h3>
@@ -8,7 +8,12 @@
         </button>
       </div>
       <!--  -->
-      <tableCustom :header="headerTable" :content="contentTable" :getUserID="getUserID" />
+      <tableCustom
+        :header="headerTable"
+        :content="contentTable"
+        :getUserID="getUserID"
+        :loadingTable="loadingTable"
+      />
     </div>
   </adminLayout>
 </template>
@@ -25,7 +30,8 @@ export default {
   data() {
     return {
       checkRegister: null,
-      loadingPage: true,
+      loadingPage: false,
+      loadingTable: true,
       headerTable: [
         {
           name: "Tên danh mục",
@@ -47,11 +53,12 @@ export default {
     };
   },
   watch: {
-    contentTable() {
-      this.fetchCategory();
-    },
+    // contentTable() {
+    //   this.fetchCategory();
+    // },
   },
   mounted() {
+    this.$emit("pagePath", "/admin/category");
     this.fetchCategory();
   },
 
@@ -66,10 +73,8 @@ export default {
       const url = process.env.API_BLOG;
       const response = await this.$axios.get(url + "/api/category");
       if (response.data && response.data.success == true) {
-        setTimeout(() => {
-          this.loadingPage = false;
-          this.contentTable = response.data.data;
-        }, 1500);
+        this.contentTable = response.data.data;
+        this.loadingTable = false;
       }
     },
   },

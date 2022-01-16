@@ -109,6 +109,17 @@ const accountController = {
     try {
       const { user_id } = req.body;
 
+      if (
+        user_id == "underfied" ||
+        user_id == "null" ||
+        user_id == "undefined"
+      ) {
+        return res.json({
+          success: false,
+          message: "Tài khoản này không được cấp quyền truy cập !",
+        });
+      }
+
       const account = await ACCOUNT.findOne({ user_id });
 
       if (account) {

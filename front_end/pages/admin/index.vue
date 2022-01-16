@@ -1,5 +1,5 @@
 <template>
-  <adminLayout :loadPage="loading">
+  <adminLayout>
     <div class="card-container">Test</div>
   </adminLayout>
 </template>
@@ -22,6 +22,7 @@ export default {
   },
 
   mounted() {
+    this.$emit("pagePath", "/admin");
     // this.userID = this.getUserID;
     // if (this.notifyAlert) {
     //   this.$notify({

@@ -14,7 +14,7 @@
         <th class="col-action">Thao tác</th>
       </thead>
       <!--  -->
-      <tbody class="body-table-custom">
+      <tbody class="body-table-custom" v-if="!loadingData">
         <!--  -->
         <tr v-for="(item, idx) in content" :key="idx">
           <td class="col-number">{{ idx + 1 }}</td>
@@ -38,6 +38,10 @@
       </tbody>
       <!--  -->
     </table>
+    <!-- loading data -->
+    <div class="no-data" v-if="loadingData">
+      <div class="text-loading"><a-icon type="loading" />Đang tải dữ liệu</div>
+    </div>
     <!-- modal confirm -->
     <a-modal
       class="modal-warning"
@@ -62,6 +66,7 @@ export default {
     header: Array,
     content: Array,
     getUserID: String,
+    loadingTable: Boolean,
   },
   data() {
     return {
@@ -71,12 +76,16 @@ export default {
       visible: false,
       idCate: null,
       userID: null,
+      loadingData: false,
     };
   },
   watch: {
     getUserID() {
       this.userID = this.getUserID;
-      console.log("id user table:", this.getUserID);
+    },
+    loadingTable(event) {
+      console.log("loading", event);
+      this.loadingData = event;
     },
   },
   methods: {
