@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Tags = new Schema({
-  title: { type: Array, },
-  description: { type: String },
-},
-  {
-    timestamps: true,
-  });
+const tagSchemma = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    default: null,
+  },
+  created_at: {
+    type: Number,
+    default: Date.now(),
+  },
+});
 
-module.exports = mongoose.model('Tags', Tags);
+module.exports = mongoose.model('tags', tagSchemma);

@@ -2,10 +2,10 @@
   <adminLayout :loadPage="loading">
     <div class="card-container" v-if="!loading">
       <div class="title-card">
-        <h3 class="text-title">Cập nhật tags</h3>
+        <h3 class="text-title">Thêm tags</h3>
       </div>
       <!--  -->
-      <updateTags :getTags="dataTags" @getValue="valueInput" />
+      <inputTags @getValue="valueInput" />
       <!--  -->
       <div class="line"></div>
       <!--  -->
@@ -18,28 +18,28 @@
 </template>
 
 <script>
-import updateTags from "~/components/admin/tags/update/updateTags.vue";
+import inputTags from "~/components/admin/tags/create/inputTags.vue";
 import adminLayout from "~/layouts/adminLayout";
 
 export default {
   components: {
     adminLayout,
-    updateTags,
+    inputTags,
   },
   data() {
     return {
       checkRegister: null,
       loading: true,
       dataTags: {
-        title: null,
-        description: null,
+        title: "",
+        description: "",
       },
-      getIdTag: null,
     };
   },
   mounted() {
-    this.getID();
-    this.fetchTag();
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
   },
 
   methods: {
@@ -49,27 +49,9 @@ export default {
       });
     },
 
-    async fetchTag() {
-      const url = process.env.API_BLOG;
-      const response = await this.$axios.get(
-        url + "/api/get-tag/" + this.getIdTag
-      );
-      if (response.data && response.data.success == true) {
-        this.dataTags = {
-          title: response.data.data.title,
-          description: response.data.data.description,
-        };
-        setTimeout(() => {
-          this.loading = false;
-        }, 1500);
-      }
-    },
-
     valueInput(value = {}) {
-      this.dataTags = {
-        title: value.title,
-        description: value.description,
-      };
+      this.dataTags.title = value.title;
+      this.dataTags.description = value.description;
     },
 
     beforSave() {
@@ -80,7 +62,7 @@ export default {
         this.$notify({
           type: "error",
           title: "Thất bại !",
-          text: "Bạn chưa nhập tags !",
+          text: "Bạn chưa nhập tag!",
         });
         return false;
       }
@@ -91,13 +73,11 @@ export default {
       let check = await this.beforSave();
       if (check) {
         const url = process.env.API_BLOG;
-        const response = await this.$axios.post(
-          url + "/api/tags/update/" + this.getIdTag,
-          {
-            title: this.dataTags.title,
-            description: this.dataTags.description,
-          }
-        );
+        const response = await this.$axios.post(url + "/api/tags/create", {
+          title: this.dataTags.title,
+          description: this.dataTags.description,
+          created_at: Date.now(),
+        });
         if (response.data && response.data.success == true) {
           this.$notify({
             type: "success",
@@ -115,10 +95,6 @@ export default {
           });
         }
       }
-    },
-
-    getID() {
-      this.getIdTag = this.$route.params.id;
     },
   },
 };
