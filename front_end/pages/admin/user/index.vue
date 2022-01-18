@@ -1,8 +1,8 @@
 <template>
-  <adminLayout :loadPage="loading">
-    <div class="card-container" v-if="!loading">
+  <adminLayout :loadPage="loadingPage">
+    <div class="card-container">
       <div class="title-card">
-        <h3 class="text-title">Danh sách tác giả</h3>
+        <h3 class="text-title">Danh sách tài khoản</h3>
         <button class="btn-create" @click="handleCreate">
           <a-icon type="plus" /> Thêm
         </button>
@@ -25,13 +25,13 @@ export default {
   data() {
     return {
       checkRegister: null,
-      loading: true,
+      loadingPage: true,
       headerTable: [
-        {
-          name: "Avatar",
-          width: "70px",
-          align: "left",
-        },
+        // {
+        //   name: "Avatar",
+        //   width: "70px",
+        //   align: "left",
+        // },
         {
           name: "Tên tài khoản",
           width: "100px",
@@ -52,40 +52,45 @@ export default {
           width: "50px",
           align: "left",
         },
-        {
-          name: "Tạo lúc",
-          width: "50px",
-          align: "center",
-        },
+        // {
+        //   name: "Tạo lúc",
+        //   width: "50px",
+        //   align: "center",
+        // },
       ],
       contentTable: [],
     };
   },
   watch: {
     contentTable() {
-      this.fetchAuthor();
+      this.fetchAccount();
     },
   },
   mounted() {
-    this.fetchAuthor();
+    this.fetchAccount();
   },
 
   methods: {
     handleCreate() {
       this.$router.push({
-        path: "/admin/user/create",
+        path: "/admin/user/create?user_id=" + this.getUserID,
       });
     },
 
-    async fetchAuthor() {
+    async fetchAccount() {
       const url = process.env.API_BLOG;
-      const response = await this.$axios.get(url + "/api/author");
+      const response = await this.$axios.get(url + "/api/list-user");
       if (response.data && response.data.success == true) {
         setTimeout(() => {
-          this.loading = false;
+          this.loadingPage = false;
           this.contentTable = response.data.data;
         }, 1500);
       }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };

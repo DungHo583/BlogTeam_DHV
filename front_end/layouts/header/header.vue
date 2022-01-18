@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="logo">
-      <h1>Nhoms 3</h1>
+      <img src="/images/logo.jpg" style="" />
     </div>
     <div class="navbar">
       <div class="sidebar">
@@ -12,7 +12,7 @@
         <label for="check" class="sidebar__overlay"></label>
         <div class="sidebar__left">
           <div class="sidebar__left-header">
-            <h1 class="sidebar__left-header-content">nhom 3</h1>
+            <h1 class="sidebar__left-header-content">Blog Review</h1>
             <label for="check" class="sidebar__close">
               <a-icon
                 :style="{ fontSize: '22px', color: '#eaeaec' }"

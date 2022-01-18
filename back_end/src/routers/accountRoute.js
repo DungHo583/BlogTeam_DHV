@@ -11,5 +11,11 @@ router.post("/sign-in", accountController.getSignUp);
 router.get("/list-user", accountController.getAccounts);
 // api get token
 router.post("/check-user", accountController.getToken);
+// cập nhật tác giả
+router.post("/account/update/:id", accountController.updateAccount);
 
+router.get("/get-account/:id", accountController.getOneAccount);
+
+// xoá tác giả
+router.delete("/account/delete/:id", accountController.deleteAccount);
 module.exports = router;

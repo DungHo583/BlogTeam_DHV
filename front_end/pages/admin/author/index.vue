@@ -1,6 +1,6 @@
 <template>
-  <adminLayout :loadPage="loading">
-    <div class="card-container" v-if="!loading">
+  <adminLayout :loadPage="loadingPage">
+    <div class="card-container">
       <div class="title-card">
         <h3 class="text-title">Danh sách tác giả</h3>
         <button class="btn-create" @click="handleCreate">
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       checkRegister: null,
-      loading: true,
+      loadingPage: true,
       headerTable: [
         {
           name: "Tên tác giả",
@@ -63,7 +63,7 @@ export default {
   methods: {
     handleCreate() {
       this.$router.push({
-        path: "/admin/author/create",
+        path: "/admin/author/create?user_id=" + this.getUserID,
       });
     },
 
@@ -72,10 +72,15 @@ export default {
       const response = await this.$axios.get(url + "/api/author");
       if (response.data && response.data.success == true) {
         setTimeout(() => {
-          this.loading = false;
+          this.loadingPage = false;
           this.contentTable = response.data.data;
         }, 1500);
       }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };

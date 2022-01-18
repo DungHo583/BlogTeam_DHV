@@ -2,10 +2,10 @@
   <adminLayout :loadPage="loading">
     <div class="card-container" v-if="!loading">
       <div class="title-card">
-        <h3 class="text-title">Tạo tác giả</h3>
+        <h3 class="text-title">Tạo tài khoản</h3>
       </div>
       <!--  -->
-      <inputAuthor @getValue="valueInput" />
+      <inputUser @getValue="valueInput" />
       <!--  -->
       <div class="line"></div>
       <!--  -->
@@ -18,24 +18,23 @@
 </template>
 
 <script>
-import inputAuthor from "../../../../components/admin/author/create/inputAuthor.vue";
+import inputUser from "../../../../components/admin/user/create/inputUser.vue";
 import adminLayout from "~/layouts/adminLayout";
 
 export default {
   components: {
     adminLayout,
-    inputAuthor,
+    inputUser,
   },
   data() {
     return {
       checkRegister: null,
       loading: true,
-      dataAuthor: {
-        name_author: "",
-        short_desc: "",
-        description: "",
-        email_address: "",
+      dataAccount: {
         image: "",
+        fullname: "",
+        email: "",
+        password: "",
       },
     };
   },
@@ -48,34 +47,30 @@ export default {
   methods: {
     handleBack() {
       this.$router.push({
-        path: "/admin/author",
+        path: "/admin/user",
       });
     },
 
     valueInput(value = {}) {
-      this.dataAuthor.name_author = value.name_author;
-      this.dataAuthor.short_desc = value.short_desc;
-      this.dataAuthor.description = value.description;
-      this.dataAuthor.email_address = value.email_address;
-      this.dataAuthor.image = value.image;
+      this.dataAccount.fullname = value.fullname;
+      this.dataAccount.email = value.email;
+      this.dataAccount.password = value.password;
+      this.dataAccount.image = value.image;
     },
 
     beforSave() {
       if (
-        !this.dataAuthor.name_author &&
-        this.dataAuthor.name_author.trim() == ""
+        !this.dataAccount.fullname &&
+        this.dataAccount.fullname.trim() == ""
       ) {
         this.$notify({
           type: "error",
           title: "Thất bại !",
-          text: "Bạn chưa nhập tên tác giả !",
+          text: "Bạn chưa nhập tên tài khoản !",
         });
         return false;
       }
-      if (
-        !this.dataAuthor.email_address &&
-        this.dataAuthor.email_address.trim() == ""
-      ) {
+      if (!this.dataAccount.email && this.dataAccount.email.trim() == "") {
         this.$notify({
           type: "error",
           title: "Thất bại !",
@@ -90,12 +85,11 @@ export default {
       let check = await this.beforSave();
       if (check) {
         const url = process.env.API_BLOG;
-        const response = await this.$axios.post(url + "/api/author/create", {
-          name_author: this.dataAuthor.name_author,
-          short_desc: this.dataAuthor.short_desc,
-          description: this.dataAuthor.description,
-          email_address: this.dataAuthor.email_address,
-          image: this.dataAuthor.image,
+        const response = await this.$axios.post(url + "/api/sign-up", {
+          fullname: this.dataAccount.fullname,
+          email: this.dataAccount.email,
+          password: this.dataAccount.password,
+          image: this.dataAccount.image,
 
           created_at: Date.now(),
         });
@@ -106,7 +100,7 @@ export default {
             text: response.data.message,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/admin/author" });
+            this.$router.push({ path: "/admin/user" });
           }, 1500);
         } else {
           this.$notify({

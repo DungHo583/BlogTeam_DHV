@@ -6,7 +6,7 @@ const accountController = {
   // đăng ký
   getSignIn: async (req, res) => {
     try {
-      const { fullname, email, password, created_at } = req.body;
+      const { thumbnail, fullname, email, password, created_at } = req.body;
 
       const oldAcc = await ACCOUNT.findOne({ email: email });
 
@@ -20,6 +20,7 @@ const accountController = {
       const hashedPassword = passwordHash.generate(password);
 
       const newAccount = await ACCOUNT.create({
+        thumbnail,
         fullname,
         email: email.toLowerCase(),
         password: hashedPassword,
@@ -122,6 +123,66 @@ const accountController = {
       return res.json({
         success: false,
         message: "Đăng nhập thất bại !",
+      });
+    }
+  },
+  //get 1 tài khoản
+  getOneAccount: async (req, res) => {
+    try {
+      const idAccount = req.params.id;
+
+      const data = await ACCOUNT.findById(idAccount);
+
+      return res.json({
+        success: true,
+        data: data,
+      });
+    } catch (error) {
+      return res.json({
+        success: false,
+        message: error,
+      });
+    }
+  },
+  // update tài khoản
+  updateAccount: async (req, res) => {
+    try {
+      const { thumbnail, fullname, email, password, created_at } = req.body;
+
+      const idAccount = req.params.id;
+
+      const data = await ACCOUNT.findByIdAndUpdate(idAccount, {
+        $set: { thumbnail, fullname, email, password, created_at },
+      });
+
+      return res.json({
+        success: true,
+        message: "Cập nhật tài khoản thành công !",
+        data: data,
+      });
+    } catch (error) {
+      return res.json({
+        success: false,
+        message: "Cập nhật thất bại !",
+      });
+    }
+  },
+
+  // xoá tài khoản
+  deleteAccount: async (req, res) => {
+    try {
+      const idAccount = req.params.id;
+
+      await ACCOUNT.findByIdAndDelete(idAccount);
+
+      return res.json({
+        success: true,
+        message: "Xoá tài khoản thành công !",
+      });
+    } catch (error) {
+      return res.json({
+        success: false,
+        message: "Xoá tài khoản thất bại !",
       });
     }
   },

@@ -18,15 +18,15 @@
         <!--  -->
         <tr v-for="(item, idx) in content" :key="idx">
           <td class="col-number">{{ idx + 1 }}</td>
-          <td>{{ item.name_author }}</td>
-          <td>{{ item.description }}</td>
-          <td>{{ item.email_address }}</td>
-          <td>{{ item.description }}</td>
-          <td>{{ item.email_address }}</td>
+          <!-- <td>{{ item.image }}</td> -->
+          <td>{{ item.fullname }}</td>
+          <td>{{ item.password }}</td>
+          <td>{{ item.role }}</td>
+          <td>{{ item.email }}</td>
 
-          <td align="center">
+          <!-- <td align="center">
             {{ item.created_at | formatDate("dd/mm/yyyy hh:MM") }}
-          </td>
+          </td> -->
           <td class="col-action">
             <div class="action-table">
               <button class="btn-custom btn-edit" @click="handleEdit(item._id)">
@@ -46,7 +46,7 @@
     <a-modal
       class="modal-warning"
       v-model="visible"
-      title="Xoá tác giả"
+      title="Xoá tài khoản"
       on-ok="handleOk"
     >
       <template slot="footer">
@@ -55,7 +55,7 @@
           Xoá
         </a-button>
       </template>
-      <p>Xác nhận xoá tác giả này ?</p>
+      <p>Xác nhận xoá tài khoản này ?</p>
     </a-modal>
   </div>
 </template>
@@ -72,17 +72,17 @@ export default {
       bodyTable: [],
       loading: false,
       visible: false,
-      idAuthor: null,
+      idAccount: null,
     };
   },
   watch: {},
   methods: {
     handleEdit(event) {
-      this.$router.push({ path: "/admin/author/update/" + event });
+      this.$router.push({ path: "/admin/user/update/" + event });
     },
 
     confirmDel(event) {
-      this.idAuthor = event;
+      this.idAccount = event;
       this.visible = true;
     },
 
@@ -91,7 +91,7 @@ export default {
       setTimeout(() => {
         this.visible = false;
         this.loading = false;
-        this.handleDel(this.idAuthor);
+        this.handleDel(this.idAccount);
       }, 1500);
     },
     handleCancel(e) {
@@ -101,7 +101,7 @@ export default {
     async handleDel(event) {
       const url = process.env.API_BLOG;
       const response = await this.$axios.delete(
-        url + "/api/author/delete/" + event
+        url + "/api/account/delete/" + event
       );
       if (response.data && response.data.success == true) {
         this.$notify({
@@ -109,7 +109,7 @@ export default {
           title: "Thành công !",
           text: response.data.message,
         });
-        this.$router.push({ path: "/admin/author" });
+        this.$router.push({ path: "/admin/user" });
       } else {
         this.$notify({
           type: "error",

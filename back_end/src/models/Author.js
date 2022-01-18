@@ -4,7 +4,7 @@ const authorSchema = new schema({
   description: String,
   name_author: String,
   email_address: String,
-  image: String,
+  thumbnail: String,
   created_at: {
     type: Number,
     default: Date.now(),

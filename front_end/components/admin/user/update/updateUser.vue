@@ -68,6 +68,11 @@
 
 <script>
 export default {
+  components: {},
+  props: ["getAccount"],
+  mounted() {
+    this.getPropsAccount();
+  },
   data() {
     return {
       nameAccount: "",
@@ -112,6 +117,20 @@ export default {
         this.dataAccount.image = this.imageAccount;
         this.$emit("getValue", this.dataAccount);
       }, 500);
+    },
+    async getPropsAccount() {
+      this.nameAccount = this.getAccount.fullname;
+      this.imageAccount = this.getAccount.image;
+      this.passAccount = this.getAccount.password;
+      this.emailAccount = this.getAccount.email;
+
+      this.dataAccount = await {
+        nameAccount: this.getAccount.fullname,
+        imageAccount: this.getAccount.image,
+        passAccount: this.getAccount.password,
+        emailAccount: this.getAccount.email,
+      };
+      this.$emit("getValue", this.dataAccount);
     },
   },
 };
