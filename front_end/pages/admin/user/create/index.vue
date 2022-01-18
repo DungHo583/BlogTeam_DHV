@@ -2,22 +2,24 @@
   <adminLayout :loadPage="loading">
     <div class="card-container" v-if="!loading">
       <div class="title-card">
-        <h3 class="text-title">Cập nhật tác giả</h3>
+        <h3 class="text-title">Tạo tài khoản</h3>
       </div>
       <!--  -->
-      <updateAuthor :getAuthor="dataAuthor" @getValue="valueInput" />
+      <inputUser @getValue="valueInput" />
       <!--  -->
       <div class="line"></div>
       <!--  -->
       <div class="btn-action-group">
-        <button class="btn-action btn-cancel" @click="handleBack">Hủy</button>
         <button
-          class="btn-action btn-save"
-          @click="handleSave"
+          class="btn-action btn-cancel"
+          @click="handleBack"
           :disabled="loadingSave"
         >
+          Hủy
+        </button>
+        <button class="btn-action btn-save" @click="handleSave">
           <span v-if="loadingSave"><a-icon type="loading" /></span>
-          <span> Lưu</span>
+          <span v-else>Lưu</span>
         </button>
       </div>
     </div>
@@ -25,13 +27,13 @@
 </template>
 
 <script>
-import updateAuthor from "~/components/admin/author/update/updateAuthor.vue";
+import inputUser from "../../../../components/admin/user/create/inputUser.vue";
 import adminLayout from "~/layouts/adminLayout";
 
 export default {
   components: {
     adminLayout,
-    updateAuthor,
+    inputUser,
   },
   data() {
     return {
@@ -39,66 +41,51 @@ export default {
       loading: true,
       loadingSave: false,
 
-      dataAuthor: {
-        name_author: null,
-        short_desc: null,
-        description: null,
-        email_address: null,
-        image: null,
+      dataAccount: {
+        image: "",
+        fullname: "",
+        email: "",
+        password: "",
       },
-      getIdAuthor: null,
     };
   },
   mounted() {
-    this.getID();
-    this.fetchAuthor();
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
   },
 
   methods: {
     handleBack() {
       this.$router.push({
-        path: "/admin/author?user_id=" + this.getUserID,
+        path: "/admin/user?user_id=" + this.getUserID,
       });
     },
 
-    async fetchAuthor() {
-      const url = process.env.API_BLOG;
-      const response = await this.$axios.get(
-        url + "/api/get-author/" + this.getIdAuthor
-      );
-      if (response.data && response.data.success == true) {
-        this.dataAuthor = {
-          name_author: response.data.data.name_author,
-          short_desc: response.data.data.short_desc,
-          description: response.data.data.description,
-          email_address: response.data.data.email_address,
-          image: response.data.data.image,
-        };
-        setTimeout(() => {
-          this.loading = false;
-        }, 1500);
-      }
-    },
-
     valueInput(value = {}) {
-      this.dataAuthor = {
-        name_author: value.name_author,
-        short_desc: value.short_desc,
-        email_address: value.email_address,
-        description: value.description,
-        image: value.image,
-      };
+      this.dataAccount.fullname = value.fullname;
+      this.dataAccount.email = value.email;
+      this.dataAccount.password = value.password;
+      this.dataAccount.image = value.image;
     },
 
     beforSave() {
       if (
-        !this.dataAuthor.name_author &&
-        this.dataAuthor.name_author.trim() == ""
+        !this.dataAccount.fullname &&
+        this.dataAccount.fullname.trim() == ""
       ) {
         this.$notify({
           type: "error",
           title: "Thất bại !",
-          text: "Bạn chưa nhập tên tác giả !",
+          text: "Bạn chưa nhập tên tài khoản !",
+        });
+        return false;
+      }
+      if (!this.dataAccount.email && this.dataAccount.email.trim() == "") {
+        this.$notify({
+          type: "error",
+          title: "Thất bại !",
+          text: "Bạn chưa nhập email !",
         });
         return false;
       }
@@ -111,16 +98,14 @@ export default {
         this.loadingSave = true;
 
         const url = process.env.API_BLOG;
-        const response = await this.$axios.post(
-          url + "/api/author/update/" + this.getIdAuthor,
-          {
-            name_author: this.dataAuthor.name_author,
-            short_desc: this.dataAuthor.short_desc,
-            description: this.dataAuthor.description,
-            email_address: this.dataAuthor.email_address,
-            image: this.dataAuthor.image,
-          }
-        );
+        const response = await this.$axios.post(url + "/api/sign-up", {
+          fullname: this.dataAccount.fullname,
+          email: this.dataAccount.email,
+          password: this.dataAccount.password,
+          image: this.dataAccount.image,
+
+          created_at: Date.now(),
+        });
         if (response.data && response.data.success == true) {
           this.$notify({
             type: "success",
@@ -129,7 +114,7 @@ export default {
           });
           setTimeout(() => {
             this.$router.push({
-              path: "/admin/author?user_id=" + this.getUserID,
+              path: "/admin/user?user_id=" + this.getUserID,
             });
           }, 1500);
         } else {
@@ -140,10 +125,6 @@ export default {
           });
         }
       }
-    },
-
-    getID() {
-      this.getIdAuthor = this.$route.params.id;
     },
   },
   computed: {

@@ -1,7 +1,7 @@
 <template>
   <div class="nav-admin">
     <div class="title-menu">
-      <h3 class="text-title">Blog Team</h3>
+      <h3 class="text-title" @click="backToHome">Blog Team</h3>
     </div>
     <div class="menu-admin">
       <div
@@ -68,12 +68,17 @@ export default {
       this.menuDefault = path;
       this.$emit("route", this.menuDefault);
     },
+    backToHome() {
+      this.$router.push({
+        path: "/?user_id=" + this.getUserID,
+      });
+    },
   },
 
   computed: {
-    // routeActive() {
-    //   return this.$route.path;
-    // },
+    getUserID() {
+      return this.$route.query.user_id;
+    },
   },
 };
 </script>
@@ -87,6 +92,7 @@ export default {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   .title-menu {
+    cursor: pointer;
     height: 70px;
     display: flex;
     align-items: center;

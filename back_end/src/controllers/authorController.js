@@ -41,13 +41,13 @@ const authorController = {
   },
   createAuthor: async (req, res) => {
     try {
-      const { name_author, email_address, image, description, created_at } =
+      const { name_author, email_address, thumbnail, description, created_at } =
         req.body;
 
       const newAuthor = await AUTHOR.create({
         name_author,
         email_address,
-        image,
+        thumbnail,
         description,
         created_at,
       });
@@ -65,16 +65,22 @@ const authorController = {
     }
   },
 
-  // update danh mục
+  // update tác giả
   updateAuthor: async (req, res) => {
     try {
-      const { name_author, email_address, image, description, created_at } =
+      const { name_author, email_address, thumbnail, description, created_at } =
         req.body;
 
       const idAuthor = req.params.id;
 
       const data = await AUTHOR.findByIdAndUpdate(idAuthor, {
-        $set: { name_author, email_address, image, description, created_at },
+        $set: {
+          name_author,
+          email_address,
+          thumbnail,
+          description,
+          created_at,
+        },
       });
 
       return res.json({
@@ -90,7 +96,7 @@ const authorController = {
     }
   },
 
-  // xoá danh mục
+  // xoá tác giả
   deleteAuthor: async (req, res) => {
     try {
       const idAuthor = req.params.id;
