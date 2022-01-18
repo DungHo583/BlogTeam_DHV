@@ -29,7 +29,6 @@ export default {
   },
   data() {
     return {
-      loading: true,
       loadingTable: false,
       headerTable: [
         {
@@ -70,6 +69,7 @@ export default {
     },
 
     async fetchPost() {
+      this.loadingTable = true;
       const url = process.env.API_BLOG;
       const response = await this.$axios.get(url + "/api/posts");
       if (response.data && response.data.success == true) {

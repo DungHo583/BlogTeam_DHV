@@ -14,7 +14,7 @@
         <th class="col-action">Thao tác</th>
       </thead>
       <!--  -->
-      <tbody class="body-table-custom" v-if="!loadingData">
+      <tbody class="body-table-custom" v-if="!loadingTable">
         <!--  -->
         <tr v-for="(item, idx) in content" :key="idx">
           <td class="col-number">{{ idx + 1 }}</td>
@@ -41,7 +41,7 @@
       <!--  -->
     </table>
     <!-- loading data -->
-    <div class="no-data" v-if="loadingData">
+    <div class="no-data" v-if="loadingTable">
       <div class="text-loading"><a-icon type="loading" />Đang tải dữ liệu</div>
     </div>
     <!-- modal confirm -->
