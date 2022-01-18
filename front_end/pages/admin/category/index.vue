@@ -1,5 +1,5 @@
 <template>
-  <adminLayout :loadPage="loadingPage">
+  <adminLayout>
     <div class="card-container">
       <div class="title-card">
         <h3 class="text-title">Danh sách danh mục</h3>
@@ -8,7 +8,12 @@
         </button>
       </div>
       <!--  -->
-      <tableCustom :header="headerTable" :content="contentTable" />
+      <tableCustom
+        :header="headerTable"
+        :content="contentTable"
+        :loadingTable="loadingTable"
+        @reloadTable="reloadFetchData"
+      />
     </div>
   </adminLayout>
 </template>
@@ -25,7 +30,8 @@ export default {
   data() {
     return {
       checkRegister: null,
-      loadingPage: true,
+      loadingPage: false,
+      loadingTable: false,
       headerTable: [
         {
           name: "Tên danh mục",
@@ -46,15 +52,11 @@ export default {
       contentTable: [],
     };
   },
-  watch: {
-    contentTable() {
-      this.fetchCategory();
-    },
-  },
+  watch: {},
   mounted() {
+    this.$emit("pagePath", "/admin/category");
     this.fetchCategory();
   },
-
   methods: {
     handleCreate() {
       this.$router.push({
@@ -63,13 +65,20 @@ export default {
     },
 
     async fetchCategory() {
+      this.loadingTable = true;
       const url = process.env.API_BLOG;
       const response = await this.$axios.get(url + "/api/category");
       if (response.data && response.data.success == true) {
+        this.contentTable = response.data.data;
         setTimeout(() => {
-          this.loadingPage = false;
-          this.contentTable = response.data.data;
+          this.loadingTable = false;
         }, 1500);
+      }
+    },
+
+    reloadFetchData(event) {
+      if (event == true) {
+        this.fetchCategory();
       }
     },
   },

@@ -1,49 +1,28 @@
 <template>
   <div class="nav-admin">
     <div class="title-menu">
-      <h3 class="text-title">Blog Team</h3>
+      <h3 class="text-title" @click="backToHome">Blog Team</h3>
     </div>
     <div class="menu-admin">
       <div
         class="item-menu-admin"
         v-for="item in menuList"
         :key="item.key"
-        :class="{ active: item.route == routeActive }"
+        :class="{ active: item.route == menuDefault }"
         @click="pushRouter(item.route)"
       >
         <a-icon :type="item.icon" />
         <span>{{ item.name }}</span>
       </div>
     </div>
-    <!-- <div class="hr-line"></div> -->
-    <!-- <a-menu v-model="navigation" mode="inline">
-      <a-menu-item
-        v-for="item in menuList"
-        :key="item.key"
-        @click="handleMenu(item.key)"
-      >
-        <a-icon :type="item.icon" />
-        <span>{{ item.name }}</span>
-      </a-menu-item>
-    </a-menu> -->
   </div>
 </template>
 <script>
 export default {
-  // props: {
-  //   userIDLayout: String,
-  // },
-  // watch: {
-  //   userIDLayout() {
-  //     console.log("getID", this.userIDLayout);
-  //     this.getUserID = this.userIDLayout;
-  //   },
-  // },
   data() {
     return {
-      getEvUserID: null,
       navigation: "",
-      menuDefault: [],
+      menuDefault: "",
       menuList: [
         {
           key: "admin",
@@ -84,23 +63,21 @@ export default {
       ],
     };
   },
-  mounted() {
-    this.getEvUserID = this.getUserID;
-    // console.log("default", this.menuDefault);
-  },
   methods: {
     pushRouter(path) {
+      this.menuDefault = path;
+      this.$emit("route", this.menuDefault);
+    },
+    backToHome() {
       this.$router.push({
-        path: `${path}` + "?user_id=" + this.getEvUserID,
+        path: "/?user_id=" + this.getUserID,
       });
     },
   },
+
   computed: {
     getUserID() {
       return this.$route.query.user_id;
-    },
-    routeActive() {
-      return this.$route.path;
     },
   },
 };
@@ -115,6 +92,7 @@ export default {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   .title-menu {
+    cursor: pointer;
     height: 70px;
     display: flex;
     align-items: center;

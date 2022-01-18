@@ -5,6 +5,9 @@ const authorRoute = require("./authorRoute");
 const accountRoute = require("./accountRoute");
 const postRoute = require("./postRoute");
 
+// api author
+router.use("/api", authorRoute);
+
 // api category
 router.use("/api", cateRoute);
 
@@ -14,7 +17,5 @@ router.use("/api", accountRoute);
 // api post
 router.use("/api", postRoute);
 
-// api author
-router.use("/api", authorRoute);
 //
 module.exports = router;

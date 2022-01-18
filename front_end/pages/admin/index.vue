@@ -1,5 +1,8 @@
 <template>
-  <adminLayout :userID="userID">
+  <adminLayout>
+    <div class="loading-content" v-if="checkLoadingAdmin">
+      <a-icon type="loading" />
+    </div>
     <div class="card-container">Test</div>
   </adminLayout>
 </template>
@@ -12,32 +15,24 @@ export default {
     adminLayout,
   },
   props: {
-    notifyAlert: String,
+    // notifyAlert: String,
   },
   data() {
     return {
-      checkRegister: null,
-      loading: true,
+      loading: false,
       userID: null,
+      checkLoadingAdmin: true,
     };
   },
 
   mounted() {
-    this.userID = this.getUserID;
-    if (this.notifyAlert) {
-      this.$notify({
-        type: "success",
-        title: "Thành công !",
-        text: this.notifyAlert,
-      });
-      this.loading = false;
-    }
+    this.$emit("pagePath", "/admin");
+    setTimeout(() => {
+      this.checkLoadingAdmin = false;
+    }, 1500);
   },
 
   computed: {
-    getUserID() {
-      return this.$route.query.user_id;
-    },
   },
 
   methods: {},

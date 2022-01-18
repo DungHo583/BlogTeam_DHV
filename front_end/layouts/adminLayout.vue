@@ -1,18 +1,15 @@
 <template>
   <main class="main-body">
-    <div class="loading-content" v-if="checkLoading">
-      <a-icon type="loading" />
-    </div>
-    <div class="main-container" v-else>
+    <div class="main-container">
       <!-- header admin -->
       <headerAdmin />
       <!-- content -->
       <div class="main-content">
         <div class="nav-content">
-          <navAdmin :userIDLayout="userID" />
+          <navAdmin @route="pathRoute" />
         </div>
         <div class="body-content">
-          <slot :notifyAlert="notifyText" :loadPage="checkLoading" />
+          <slot @pagePath="pathSlot" />
         </div>
       </div>
     </div>
@@ -29,60 +26,66 @@ export default {
     headerAdmin,
     navAdmin,
   },
-  props: {
-    loadPage: Boolean,
-    userID: String,
-  },
   data() {
     return {
       checkLoading: true,
-      getUserId: null,
-      notifyText: null,
+      userID: this.$route.query.user_id,
+      routePage: "",
+      nextPage: false,
+      checkLoadingAdmin: true,
     };
   },
-  watch: {
-    loadPage(ev) {
-      this.checkLoading = ev;
-    },
-    userID() {
-      this.getUserId = this.userID;
-    },
-    getUserId() {
-      this.fetchUser();
-    },
+  watch: {},
+  mounted() {
+    this.fetchUser();
   },
   methods: {
+    pathSlot(event) {
+      this.routePage = event;
+      if (this.nextPage) {
+        this.pushPage(this.routePage);
+      }
+    },
+    pathRoute(event) {
+      this.routePage = event;
+      if (this.nextPage) {
+        this.pushPage(this.routePage);
+      }
+    },
+
+    pushPage(route) {
+      this.$router.push({
+        path: route + "?user_id=" + this.userID,
+      });
+    },
+
     async fetchUser() {
       const url = process.env.API_BLOG;
       const response = await this.$axios.post(url + "/api/check-user", {
-        user_id: this.getUserId,
+        user_id: this.userID,
       });
       if (response.data && response.data.success) {
         if (response.data.data.role == 1 || response.data.data.role == 2) {
-          // this.$notify({
-          //   type: "success",
-          //   title: "Thành công !",
-          //   text: "Đăng nhập thành công !",
-          // });
-          this.notifyText = "Đăng nhập thành công !";
-          setTimeout(() => {
-            this.$router.push({
-              path: "/admin?user_id=" + this.getUserId,
+          if (this.routePage == "/admin") {
+            this.$notify({
+              title: "Thành công",
+              text: "Truy cập quản trị thành công !",
+              type: "success",
             });
-            this.checkLoading = false;
-          }, 1500);
-        } else {
-          this.$notify({
-            type: "error",
-            title: "Lỗi !",
-            text: "Tài khoản này không có quyền truy cập !",
-          });
-          setTimeout(() => {
-            this.$router.push({
-              path: "/",
-            });
-          }, 1500);
+          }
+          this.nextPage = true;
         }
+      } else {
+        this.$notify({
+          title: "Thất bại",
+          text: "Tài khoản này không có quyền truy cập !",
+          type: "error",
+        });
+        setTimeout(() => {
+          this.$router.push({
+            path: "/",
+          });
+        }, 1500);
       }
     },
   },
@@ -95,29 +98,17 @@ export default {
   height: 100vh;
   position: relative;
   z-index: 1;
-  .loading-content {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.6);
-    .anticon {
-      font-size: 60px;
-      color: #42b883;
-    }
-  }
   .main-container {
     width: 100%;
     height: 100%;
     border-top: 2px solid #42b883;
     background-color: #f5f6fa;
+    position: relative;
     .main-content {
       width: 100%;
       display: flex;
       padding: 0 30px 0 20px;
+      position: relative;
       .nav-content {
         width: max-content;
         height: calc(100vh - 82px);

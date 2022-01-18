@@ -1,5 +1,5 @@
 <template>
-  <adminLayout :loadPage="loadingPage">
+  <adminLayout>
     <div class="card-container">
       <div class="title-card">
         <h3 class="text-title">Danh sách tác giả</h3>
@@ -8,7 +8,12 @@
         </button>
       </div>
       <!--  -->
-      <tableCustom :header="headerTable" :content="contentTable" />
+      <tableCustom
+        :header="headerTable"
+        :content="contentTable"
+        :loadingTable="loadingTable"
+        @reloadTable="reloadFetchData"
+      />
     </div>
   </adminLayout>
 </template>
@@ -26,6 +31,7 @@ export default {
     return {
       checkRegister: null,
       loadingPage: true,
+      loadingTable: false,
       headerTable: [
         {
           name: "Tên tác giả",
@@ -51,12 +57,10 @@ export default {
       contentTable: [],
     };
   },
-  watch: {
-    contentTable() {
-      this.fetchAuthor();
-    },
-  },
+  watch: {},
   mounted() {
+    this.$emit("pagePath", "/admin/author");
+
     this.fetchAuthor();
   },
 
@@ -68,16 +72,25 @@ export default {
     },
 
     async fetchAuthor() {
+      this.loadingTable = true;
+
       const url = process.env.API_BLOG;
       const response = await this.$axios.get(url + "/api/author");
       if (response.data && response.data.success == true) {
+        this.contentTable = response.data.data;
+
         setTimeout(() => {
-          this.loadingPage = false;
-          this.contentTable = response.data.data;
+          this.loadingTable = false;
         }, 1500);
       }
     },
+    reloadFetchData(event) {
+      if (event == true) {
+        this.fetchAuthor();
+      }
+    },
   },
+
   computed: {
     getUserID() {
       return this.$route.query.user_id;

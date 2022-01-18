@@ -38,8 +38,7 @@ export default {
   methods: {
     handleEdit() {
       this.$router.push({
-        path:
-          "/admin/user/update/" + this.getUserID + "?user_id=" + this.getUserID,
+        path: "/admin/user/update/" + this.getUserID,
       });
     },
     async handleLogout() {

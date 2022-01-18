@@ -14,7 +14,7 @@
         <th class="col-action">Thao tác</th>
       </thead>
       <!--  -->
-      <tbody class="body-table-custom">
+      <tbody class="body-table-custom" v-if="!loadingData">
         <!--  -->
         <tr v-for="(item, idx) in content" :key="idx">
           <td class="col-number">{{ idx + 1 }}</td>
@@ -29,9 +29,9 @@
           </td> -->
           <td class="col-action">
             <div class="action-table">
-              <button class="btn-custom btn-edit" @click="handleEdit(item._id)">
+              <!-- <button class="btn-custom btn-edit" @click="handleEdit(item._id)">
                 <a-icon type="edit" /> Sửa
-              </button>
+              </button> -->
               <button class="btn-custom btn-del" @click="confirmDel(item._id)">
                 <a-icon type="delete" /> Xóa
               </button>
@@ -42,6 +42,10 @@
       </tbody>
       <!--  -->
     </table>
+    <!-- loading data -->
+    <div class="no-data" v-if="loadingData">
+      <div class="text-loading"><a-icon type="loading" />Đang tải dữ liệu</div>
+    </div>
     <!-- modal confirm -->
     <a-modal
       class="modal-warning"
@@ -65,6 +69,7 @@ export default {
   props: {
     header: Array,
     content: Array,
+    loadingTable: Boolean,
   },
   data() {
     return {
@@ -73,12 +78,19 @@ export default {
       loading: false,
       visible: false,
       idAccount: null,
+      loadingData: true,
     };
   },
-  watch: {},
+  watch: {
+    loadingTable(event) {
+      this.loadingData = event;
+    },
+  },
   methods: {
     handleEdit(event) {
-      this.$router.push({ path: "/admin/user/update/" + event });
+      this.$router.push({
+        path: "/admin/user/update/" + event + "?user_id=" + this.getUserID,
+      });
     },
 
     confirmDel(event) {
@@ -109,7 +121,7 @@ export default {
           title: "Thành công !",
           text: response.data.message,
         });
-        this.$router.push({ path: "/admin/user" });
+        this.$emit("reloadTable", true);
       } else {
         this.$notify({
           type: "error",
