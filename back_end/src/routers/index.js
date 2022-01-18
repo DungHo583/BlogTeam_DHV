@@ -4,6 +4,10 @@ const cateRoute = require("./categoriesRoute");
 const authorRoute = require("./authorRoute");
 const accountRoute = require("./accountRoute");
 const postRoute = require("./postRoute");
+const tagsRoute = require("./tagsRoute");
+
+// api tagsRoute
+router.use("/api", tagsRoute);
 
 // api author
 router.use("/api", authorRoute);
