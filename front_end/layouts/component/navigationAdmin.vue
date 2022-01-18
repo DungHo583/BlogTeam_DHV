@@ -8,42 +8,21 @@
         class="item-menu-admin"
         v-for="item in menuList"
         :key="item.key"
-        :class="{ active: item.route == routeActive }"
+        :class="{ active: item.route == menuDefault }"
         @click="pushRouter(item.route)"
       >
         <a-icon :type="item.icon" />
         <span>{{ item.name }}</span>
       </div>
     </div>
-    <!-- <div class="hr-line"></div> -->
-    <!-- <a-menu v-model="navigation" mode="inline">
-      <a-menu-item
-        v-for="item in menuList"
-        :key="item.key"
-        @click="handleMenu(item.key)"
-      >
-        <a-icon :type="item.icon" />
-        <span>{{ item.name }}</span>
-      </a-menu-item>
-    </a-menu> -->
   </div>
 </template>
 <script>
 export default {
-  // props: {
-  //   userIDLayout: String,
-  // },
-  // watch: {
-  //   userIDLayout() {
-  //     console.log("getID", this.userIDLayout);
-  //     this.getUserID = this.userIDLayout;
-  //   },
-  // },
   data() {
     return {
-      getEvUserID: null,
       navigation: "",
-      menuDefault: [],
+      menuDefault: "",
       menuList: [
         {
           key: "admin",
@@ -84,24 +63,17 @@ export default {
       ],
     };
   },
-  mounted() {
-    this.getEvUserID = this.getUserID;
-    // console.log("default", this.menuDefault);
-  },
   methods: {
     pushRouter(path) {
-      this.$router.push({
-        path: `${path}` + "?user_id=" + this.getEvUserID,
-      });
+      this.menuDefault = path;
+      this.$emit("route", this.menuDefault);
     },
   },
+
   computed: {
-    getUserID() {
-      return this.$route.query.user_id;
-    },
-    routeActive() {
-      return this.$route.path;
-    },
+    // routeActive() {
+    //   return this.$route.path;
+    // },
   },
 };
 </script>

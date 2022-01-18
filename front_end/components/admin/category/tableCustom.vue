@@ -14,7 +14,7 @@
         <th class="col-action">Thao tác</th>
       </thead>
       <!--  -->
-      <tbody class="body-table-custom">
+      <tbody class="body-table-custom" v-if="!loadingData">
         <!--  -->
         <tr v-for="(item, idx) in content" :key="idx">
           <td class="col-number">{{ idx + 1 }}</td>
@@ -38,6 +38,10 @@
       </tbody>
       <!--  -->
     </table>
+    <!-- loading data -->
+    <div class="no-data" v-if="loadingData">
+      <div class="text-loading"><a-icon type="loading" />Đang tải dữ liệu</div>
+    </div>
     <!-- modal confirm -->
     <a-modal
       class="modal-warning"
@@ -61,6 +65,7 @@ export default {
   props: {
     header: Array,
     content: Array,
+    loadingTable: Boolean,
   },
   data() {
     return {
@@ -69,12 +74,19 @@ export default {
       loading: false,
       visible: false,
       idCate: null,
+      loadingData: true,
     };
   },
-  watch: {},
+  watch: {
+    loadingTable(event) {
+      this.loadingData = event;
+    },
+  },
   methods: {
     handleEdit(event) {
-      this.$router.push({ path: "/admin/category/update/" + event });
+      this.$router.push({
+        path: "/admin/category/update/" + event + "?user_id=" + this.getUserID,
+      });
     },
 
     confirmDel(event) {
@@ -105,7 +117,7 @@ export default {
           title: "Thành công !",
           text: response.data.message,
         });
-        this.$router.push({ path: "/admin/category" });
+        this.$emit("reloadTable", true);
       } else {
         this.$notify({
           type: "error",
@@ -113,6 +125,11 @@ export default {
           text: response.data.message,
         });
       }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };
