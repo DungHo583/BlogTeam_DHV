@@ -65,7 +65,6 @@ export default {
   props: {
     header: Array,
     content: Array,
-    getUserID: String,
     loadingTable: Boolean,
   },
   data() {
@@ -75,23 +74,18 @@ export default {
       loading: false,
       visible: false,
       idCate: null,
-      userID: null,
-      loadingData: false,
+      loadingData: true,
     };
   },
   watch: {
-    getUserID() {
-      this.userID = this.getUserID;
-    },
     loadingTable(event) {
-      console.log("loading", event);
       this.loadingData = event;
     },
   },
   methods: {
     handleEdit(event) {
       this.$router.push({
-        path: "/admin/category/update/" + event + "?user_id=" + this.userID,
+        path: "/admin/category/update/" + event + "?user_id=" + this.getUserID,
       });
     },
 
@@ -123,7 +117,7 @@ export default {
           title: "Thành công !",
           text: response.data.message,
         });
-        this.$router.push({ path: "/admin/category?user_id=" + this.userID });
+        this.$emit("reloadTabe", true);
       } else {
         this.$notify({
           type: "error",
@@ -131,6 +125,11 @@ export default {
           text: response.data.message,
         });
       }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };

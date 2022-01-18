@@ -11,7 +11,14 @@
       <!--  -->
       <div class="btn-action-group">
         <button class="btn-action btn-cancel" @click="handleBack">Hủy</button>
-        <button class="btn-action btn-save" @click="handleSave">Lưu</button>
+        <button
+          class="btn-action btn-save"
+          @click="handleSave"
+          :disabled="loadingSave"
+        >
+          <span v-if="loadingSave"><a-icon type="loading" /></span>
+          <span v-else>Lưu</span>
+        </button>
       </div>
     </div>
   </adminLayout>
@@ -30,6 +37,7 @@ export default {
     return {
       checkRegister: null,
       loading: true,
+      loadingSave: false,
       dataCate: {
         name: "",
         short_desc: "",
@@ -46,7 +54,7 @@ export default {
   methods: {
     handleBack() {
       this.$router.push({
-        path: "/admin/category",
+        path: "/admin/category?user_id=" + this.getUserID,
       });
     },
 
@@ -71,6 +79,7 @@ export default {
     async handleSave() {
       let check = await this.beforSave();
       if (check) {
+        this.loadingSave = true;
         const url = process.env.API_BLOG;
         const response = await this.$axios.post(url + "/api/category/create", {
           title: this.dataCate.name,
@@ -85,7 +94,9 @@ export default {
             text: response.data.message,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/admin/category" });
+            this.$router.push({
+              path: "/admin/category?user_id=" + this.getUserID,
+            });
           }, 1500);
         } else {
           this.$notify({
@@ -95,6 +106,11 @@ export default {
           });
         }
       }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };

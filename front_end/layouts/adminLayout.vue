@@ -1,9 +1,6 @@
 <template>
   <main class="main-body">
-    <div class="loading-content" v-if="checkLoading">
-      <a-icon type="loading" />
-    </div>
-    <div class="main-container" v-else>
+    <div class="main-container">
       <!-- header admin -->
       <headerAdmin />
       <!-- content -->
@@ -35,6 +32,7 @@ export default {
       userID: this.$route.query.user_id,
       routePage: "",
       nextPage: false,
+      checkLoadingAdmin: true,
     };
   },
   watch: {},
@@ -76,9 +74,6 @@ export default {
             });
           }
           this.nextPage = true;
-          setTimeout(() => {
-            this.checkLoading = false;
-          }, 1500);
         }
       } else {
         this.$notify({
@@ -103,29 +98,17 @@ export default {
   height: 100vh;
   position: relative;
   z-index: 1;
-  .loading-content {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.6);
-    .anticon {
-      font-size: 60px;
-      color: #42b883;
-    }
-  }
   .main-container {
     width: 100%;
     height: 100%;
     border-top: 2px solid #42b883;
     background-color: #f5f6fa;
+    position: relative;
     .main-content {
       width: 100%;
       display: flex;
       padding: 0 30px 0 20px;
+      position: relative;
       .nav-content {
         width: max-content;
         height: calc(100vh - 82px);

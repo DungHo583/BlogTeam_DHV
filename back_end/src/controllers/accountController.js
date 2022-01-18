@@ -113,6 +113,7 @@ const accountController = {
         user_id == "underfied" ||
         user_id == "null" ||
         user_id == "undefined"
+        || user_id == ""
       ) {
         return res.json({
           success: false,
