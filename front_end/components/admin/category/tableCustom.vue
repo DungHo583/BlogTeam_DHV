@@ -117,7 +117,7 @@ export default {
           title: "Thành công !",
           text: response.data.message,
         });
-        this.$emit("reloadTabe", true);
+        this.$emit("reloadTable", true);
       } else {
         this.$notify({
           type: "error",

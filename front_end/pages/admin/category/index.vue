@@ -12,7 +12,7 @@
         :header="headerTable"
         :content="contentTable"
         :loadingTable="loadingTable"
-        @reloadTabe="reloadFetchData"
+        @reloadTable="reloadFetchData"
       />
     </div>
   </adminLayout>
