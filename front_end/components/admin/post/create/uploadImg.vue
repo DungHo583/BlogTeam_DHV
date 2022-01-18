@@ -40,9 +40,6 @@ export default {
       upload: null,
     };
   },
-  mounted() {
-    this.fetchUpload();
-  },
   methods: {
     handleCancel() {
       this.previewVisible = false;
