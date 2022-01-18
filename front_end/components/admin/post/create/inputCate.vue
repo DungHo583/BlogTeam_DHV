@@ -4,53 +4,10 @@
       <div class="l">
         <div class="form-input-group">
           <div class="title-input">
-            <h3 class="text-title">Ảnh minh hoạ:</h3>
+            <h3 class="text-title">Ảnh tiêu đề:</h3>
           </div>
           <div class="box-upload-img">
-            <div class="clearfix">
-              <!-- <a-upload
-                action=""
-                list-type="picture-card"
-                :file-list="fileList"
-                @preview="handlePreview"
-                @change="handleChange"
-              >
-                <div v-if="fileList.length < 1">
-                  <a-icon type="plus" />
-                  <div class="ant-upload-text">Tải ảnh lên</div>
-                </div>
-              </a-upload> -->
-              <a-upload
-                accept="image/*"
-                list-type="picture-card"
-                class="avatar-uploader"
-                :multiple="true"
-                :show-upload-list="false"
-                :beforeUpload="createFile"
-              >
-                <div v-if="isLoadImage">
-                  <a-icon type="loading" />
-                </div>
-                <div v-else>
-                  <a-icon width="2em" type="plus" />
-                  <div class="ant-upload-text">Tải ảnh lên</div>
-                </div>
-              </a-upload>
-              <!-- <a-modal
-                :visible="previewVisible"
-                :footer="null"
-                @cancel="handleCancel"
-              >
-                <div class="box-thumnail-upload">
-                  <img alt="example" style="width: 100%" :src="previewImage" />
-                </div>
-              </a-modal> -->
-            </div>
-            <div class="note-upload">
-              <p class="text-note">
-                <span class="warning-text">* </span>File ảnh tối đa 5Mb
-              </p>
-            </div>
+            <uploadIMG @uploaded="getUploaded" />
           </div>
         </div>
       </div>
@@ -113,31 +70,25 @@
 </template>
 
 <script>
+import uploadIMG from "~/components/admin/post/create/uploadImg";
 import selectCustom from "~/components/admin/post/selectCustom";
 
-function getBase64(img, callback) {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
-  reader.readAsDataURL(img);
-}
 export default {
-  components: { selectCustom },
+  components: { selectCustom, uploadIMG },
   data() {
     return {
       titlePost: "",
       shortPost: "",
       descPost: "",
       waitInput: null,
-      previewVisible: false,
-      previewImage: "",
-      imageUrl: "",
-      isLoadImage: false,
       dataPost: {
+        thumbnail: {},
         title: "",
         short_desc: "",
-        description: "",
+        description: [],
+        author: {},
       },
-      selected: { _id: 12346, name: "value 2" },
+      selected: {},
       listSelect: [
         {
           _id: 12345,
@@ -154,11 +105,20 @@ export default {
       },
     };
   },
+  mounted() {
+    this.fetchAuthor();
+  },
+  watch: {
+    descPost() {
+      this.dataPost.description = this.descPost;
+      this.$emit("getValue", this.dataPost);
+    },
+  },
   methods: {
     changeName() {
       clearTimeout(this.waitInput);
       this.waitInput = setTimeout(() => {
-        this.dataPost.name = this.titlePost;
+        this.dataPost.title = this.titlePost;
         this.$emit("getValue", this.dataPost);
       }, 500);
     },
@@ -169,124 +129,28 @@ export default {
         this.$emit("getValue", this.dataPost);
       }, 500);
     },
-    changeDesc() {
-      clearTimeout(this.waitInput);
-      this.waitInput = setTimeout(() => {
-        this.dataPost.description = this.descPost;
-        this.$emit("getValue", this.dataPost);
-      }, 500);
-    },
     getSelect(event) {
       this.selected = event;
+      this.dataPost.author = this.selected;
+      this.$emit("getValue", this.dataPost);
     },
+    getUploaded(event) {
+      this.dataPost.thumbnail = event[0].thumbUrl;
+      setTimeout(() => {
+        this.$emit("getValue", this.dataPost);
+      }, 1000);
+    },
+
+    async fetchAuthor() {
+      const url = process.env.API_BLOG;
+      const response = await this.$axios.get(url + "/api/author");
+      if (response.data && response.data.success == true) {
+        this.listSelect = response.data.data;
+      }
+    },
+
     handleCancel() {
       this.previewVisible = false;
-    },
-    // handleChange(info) {
-    //   if (info.file.status === "uploading") {
-    //     this.loading = true;
-    //     return;
-    //   }
-    //   if (info.file.status === "done") {
-    //     // Get this url from response in real world.
-    //     getBase64(info.file.originFileObj, (imageUrl) => {
-    //       this.imageUrl = imageUrl;
-    //       this.loading = false;
-    //     });
-    //   }
-    // },
-
-    // beforeUpload(file) {
-    //   const isJpgOrPng =
-    //     file.type === "image/jpeg" || file.type === "image/png";
-    //   if (!isJpgOrPng) {
-    //     this.$notify({
-    //       type: "error",
-    //       title: "Thất bại !",
-    //       text: "Bạn chưa nhập tiêu đề bài viết !",
-    //     });
-    //     this.$message.error("You can only upload JPG file!");
-    //   }
-    //   const isLt2M = file.size < 5 * 1024 * 1024;
-    //   if (!isLt2M) {
-    //     this.$notify({
-    //       type: "error",
-    //       title: "Thất bại !",
-    //       text: "Ảnh phải có dung lượng nhỏ hơn 5MB !",
-    //     });
-    //   }
-    //   return isJpgOrPng && isLt2M;
-    // },
-    async handlePreview(file) {
-      if (!file.url && !file.preview) {
-        file.preview = await getBase64(file.originFileObj);
-      }
-      this.previewImage = file.url || file.preview;
-      this.previewVisible = true;
-    },
-
-    async beforeUpload(file) {
-      this.isLoadImage = true;
-      if (!file.type.match("image.*")) {
-        alert("Select an image");
-        return;
-      }
-      console.log(file);
-      try {
-        let error;
-        if (
-          !file.name.toLowerCase().endsWith(".jpeg") &&
-          !file.name.toLowerCase().endsWith(".jpg") &&
-          !file.name.toLowerCase().endsWith(".png") &&
-          !file.name.toLowerCase().endsWith(".gif")
-        ) {
-          error = "Upload failed, Unspported file type";
-        }
-        if (file.size > 5 * 1024 * 1024) {
-          error = "Upload failed, max file size is 5Mb";
-        }
-        if (error) {
-          this.$notify({
-            title: "Upload lỗi",
-            message: error,
-            type: "error",
-          });
-          return false;
-        }
-
-        let formData = new FormData();
-        // let formHeader = {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data",
-        //     flag: "parseImage",
-        //   },
-        // };
-        await formData.append("media", file);
-        // await this.$api({
-        //   baseUrl: process.env.API_POS,
-        //   path: /media/upload/ + this.shopId,
-        //   type: "post",
-        //   options: formHeader,
-        //   data: formData,
-        // }).then((res) => {
-        //   if (res.data.updated && res.data.updated.url) {
-        //     this.product.images.push(res.data.updated.url);
-        //     this.$notify({
-        //       title: "Thành công",
-        //       message: "Upload thành công!",
-        //       type: "success",
-        //     });
-        //   }
-        // });
-      } catch (err) {
-        console.log(err);
-        this.$notify({
-          title: "Thất bại",
-          message: "Upload thất bại!",
-          type: "error",
-        });
-      }
-      this.isLoadImage = false;
     },
   },
 };

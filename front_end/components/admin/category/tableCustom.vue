@@ -78,9 +78,6 @@ export default {
     };
   },
   watch: {
-    loadingTable(event) {
-      this.loadingData = event;
-    },
   },
   methods: {
     handleEdit(event) {

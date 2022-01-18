@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="logo">
-      <h1>Nhoms 3</h1>
+      <img src="/images/logo.jpg" style="" />
     </div>
     <div class="navbar">
       <div class="sidebar">
@@ -12,7 +12,7 @@
         <label for="check" class="sidebar__overlay"></label>
         <div class="sidebar__left">
           <div class="sidebar__left-header">
-            <h1 class="sidebar__left-header-content">nhom 3</h1>
+            <h1 class="sidebar__left-header-content">Blog Review</h1>
             <label for="check" class="sidebar__close">
               <a-icon
                 :style="{ fontSize: '22px', color: '#eaeaec' }"
@@ -54,8 +54,35 @@
           </ul>
         </nav>
       </div>
-      <div class="searchBar">
-        <a-input-search placeholder="input search text" @search="onSearch" />
+
+      <div class="login">
+        <a-dropdown :trigger="['click']">
+          <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
+            <a-icon
+              type="user"
+              :style="{ fontSize: '30px', color: '#595959' }"
+            />
+            <!-- <a-icon type="down" :style="{ color: '#595959' }" /> -->
+          </a>
+          <a-menu class="login-here" slot="overlay">
+            <a-menu-item key="0" @click="handleSignIn" v-if="!checkUser">
+              <a-icon type="double-right" /> Đăng nhập
+            </a-menu-item>
+
+            <a-menu-divider v-if="!checkUser" />
+            <a-menu-item key="1" @click="handleSignUp" v-if="!checkUser"
+              ><a-icon type="double-right" /> Đăng ký
+            </a-menu-item>
+
+            <a-menu-item key="0" @click="handleAdmin" v-if="checkUser"
+              ><a-icon type="double-right" /> Admin
+            </a-menu-item>
+            <a-menu-divider v-if="checkUser" />
+            <a-menu-item key="1" @click="handleLogout" v-if="checkUser"
+              ><a-icon type="double-right" /> Đăng xuất
+            </a-menu-item>
+          </a-menu>
+        </a-dropdown>
       </div>
     </div>
   </div>
@@ -65,15 +92,73 @@
 import sidebar from "./sidebar/sidebar.vue";
 export default {
   components: { sidebar },
+  data() {
+    return {
+      checkUser: false,
+      checkRegister: null,
+    };
+  },
+  mounted() {
+    this.getUser();
+  },
   methods: {
-    onSearch(value) {
-      console.log(value);
+    handleSignUp() {
+      this.$router.push({
+        path: "/admin/sign-up",
+      });
+    },
+    handleSignIn() {
+      this.$router.push({
+        path: "/admin/login",
+      });
+    },
+    handleAdmin() {
+      this.$router.push({
+        path: "/admin?user_id=" + this.getUserID,
+      });
+    },
+    async handleLogout() {
+      await window.localStorage.removeItem("auth");
+      setTimeout(() => {
+        this.checkUser = false;
+        this.$router.go();
+      }, 500);
+    },
+
+    checkToken() {
+      this.checkRegister = window.localStorage.auth;
+      if (this.checkRegister) {
+        this.checkUser = true;
+        return true;
+      }
+      return false;
+    },
+    async getUser() {
+      let check = await this.checkToken();
+      console.log("check", check);
+      if (check) {
+        const url = process.env.API_BLOG;
+        const response = await this.$axios.post(url + "/api/check-user", {
+          headers: {
+            Authorization: "Bearer " + window.localStorage.auth,
+          },
+        });
+        console.log("token", response);
+      }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.login-here {
+  margin-top: 20px;
+}
 .header {
   position: relative;
   z-index: 9999;
@@ -81,16 +166,18 @@ export default {
   border-bottom: 1px solid #eaeaec;
 }
 .sidebar {
-  width: 20%;
+  flex: 1;
 }
 .navMenu {
-  width: 60%;
+  flex: 2;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.searchBar {
-  width: 20%;
+.login {
+  flex: 1;
+  display: flex;
+  flex-direction: row-reverse;
 }
 .logo {
   display: flex;

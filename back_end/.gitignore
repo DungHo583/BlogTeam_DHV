@@ -87,4 +87,8 @@ sw.*
 .DS_Store
 
 # Vim swap files
+<<<<<<< HEAD
 *.swp
+=======
+*.swp
+>>>>>>> 411e58b182eaf25ec6cb618a01a4fd43829ef87e

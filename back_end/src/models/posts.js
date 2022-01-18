@@ -10,16 +10,16 @@ const postsSchema = new schema({
     default: null,
   },
   short_desc: String,
-  description: String,
+  description: Array,
   author: {
     type: schema.Types.ObjectId,
-    ref: "categories",
+    ref: "Author",
   },
-  tags: Array,
-  category: {
-    type: schema.Types.ObjectId,
-    ref: "categories",
-  },
+  // tags: Array,
+  // category: {
+  //   type: schema.Types.ObjectId,
+  //   ref: "categories",
+  // },
   created_at: {
     type: Number,
     default: Date.now(),

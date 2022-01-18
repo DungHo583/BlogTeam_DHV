@@ -18,18 +18,20 @@
         <!--  -->
         <tr v-for="(item, idx) in content" :key="idx">
           <td class="col-number">{{ idx + 1 }}</td>
-          <td>{{ item.title }}</td>
-          <td>{{ item.short_desc }}</td>
-          <td>{{ item.name_author }}</td>
-          <td align="center">
-            <!-- {{ Number(item.created_at) | formatDate("dd/mm/yyyy hh:MM") }} -->
+          <!-- <td>{{ item.image }}</td> -->
+          <td>{{ item.fullname }}</td>
+          <td>{{ item.password }}</td>
+          <td>{{ item.role }}</td>
+          <td>{{ item.email }}</td>
+
+          <!-- <td align="center">
             {{ item.created_at | formatDate("dd/mm/yyyy hh:MM") }}
-          </td>
+          </td> -->
           <td class="col-action">
             <div class="action-table">
-              <button class="btn-custom btn-edit" @click="handleEdit(item._id)">
+              <!-- <button class="btn-custom btn-edit" @click="handleEdit(item._id)">
                 <a-icon type="edit" /> Sửa
-              </button>
+              </button> -->
               <button class="btn-custom btn-del" @click="confirmDel(item._id)">
                 <a-icon type="delete" /> Xóa
               </button>
@@ -48,7 +50,7 @@
     <a-modal
       class="modal-warning"
       v-model="visible"
-      title="Xoá danh mục"
+      title="Xoá tài khoản"
       on-ok="handleOk"
     >
       <template slot="footer">
@@ -57,7 +59,7 @@
           Xoá
         </a-button>
       </template>
-      <p>Xác nhận xoá danh mục này ?</p>
+      <p>Xác nhận xoá tài khoản này ?</p>
     </a-modal>
   </div>
 </template>
@@ -75,20 +77,24 @@ export default {
       bodyTable: [],
       loading: false,
       visible: false,
-      idCate: null,
+      idAccount: null,
       loadingData: true,
     };
   },
-  watch: {},
+  watch: {
+    loadingTable(event) {
+      this.loadingData = event;
+    },
+  },
   methods: {
     handleEdit(event) {
       this.$router.push({
-        path: "/admin/category/update/" + event + "?user_id=" + this.getUserID,
+        path: "/admin/user/update/" + event + "?user_id=" + this.getUserID,
       });
     },
 
     confirmDel(event) {
-      this.idCate = event;
+      this.idAccount = event;
       this.visible = true;
     },
 
@@ -97,7 +103,7 @@ export default {
       setTimeout(() => {
         this.visible = false;
         this.loading = false;
-        this.handleDel(this.idCate);
+        this.handleDel(this.idAccount);
       }, 1500);
     },
     handleCancel(e) {
@@ -107,7 +113,7 @@ export default {
     async handleDel(event) {
       const url = process.env.API_BLOG;
       const response = await this.$axios.delete(
-        url + "/api/post/delete/" + event
+        url + "/api/account/delete/" + event
       );
       if (response.data && response.data.success == true) {
         this.$notify({

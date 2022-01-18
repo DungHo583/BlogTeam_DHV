@@ -20,5 +20,6 @@ router.use("/api", accountRoute);
 
 // api post
 router.use("/api", postRoute);
+
 //
 module.exports = router;

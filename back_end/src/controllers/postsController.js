@@ -23,6 +23,40 @@ const postsController = {
       });
     }
   },
+
+  // tạo bài viết
+  createPost: async (req, res) => {
+    try {
+      const {
+        title,
+        thumbnail,
+        short_desc,
+        description,
+        //  author
+      } = req.body;
+      console.log("body", req.body);
+
+      const newPost = await POSTS.create({
+        title,
+        thumbnail,
+        short_desc,
+        description,
+        // author,
+      });
+
+      return res.json({
+        success: true,
+        message: "Tạo bài viết thành công !",
+        data: newPost,
+      });
+    } catch (error) {
+      console.log("eror", error);
+      return res.json({
+        success: false,
+        message: "Tạo bài viết thất bại !",
+      });
+    }
+  },
 };
 
 module.exports = postsController;

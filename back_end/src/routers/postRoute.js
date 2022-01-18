@@ -8,8 +8,8 @@ router.get("/posts", postsController.getPosts);
 // // get 1 bài viết theo id
 // router.get("/get-post/:id", postsController.getCate);
 
-// // tạo bài viết
-// router.post("/post/create", postsController.createCate);
+// tạo bài viết
+router.post("/post/create", postsController.createPost);
 
 // // cập nhật bài viết
 // router.post("/post/update/:id", postsController.updateCate);

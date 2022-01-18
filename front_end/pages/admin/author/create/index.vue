@@ -11,7 +11,11 @@
       <!--  -->
       <div class="btn-action-group">
         <button class="btn-action btn-cancel" @click="handleBack">Hủy</button>
-        <button class="btn-action btn-save" @click="handleSave">Lưu</button>
+        :disabled="loadingSave"
+        <button class="btn-action btn-save" @click="handleSave">
+          <span v-if="loadingSave"><a-icon type="loading" /></span>
+          <span v-else>Lưu</span>
+        </button>
       </div>
     </div>
   </adminLayout>
@@ -30,6 +34,8 @@ export default {
     return {
       checkRegister: null,
       loading: true,
+      loadingSave: false,
+
       dataAuthor: {
         name_author: "",
         short_desc: "",
@@ -48,7 +54,7 @@ export default {
   methods: {
     handleBack() {
       this.$router.push({
-        path: "/admin/author",
+        path: "/admin/author?user_id=" + this.getUserID,
       });
     },
 
@@ -89,6 +95,8 @@ export default {
     async handleSave() {
       let check = await this.beforSave();
       if (check) {
+        this.loadingSave = true;
+
         const url = process.env.API_BLOG;
         const response = await this.$axios.post(url + "/api/author/create", {
           name_author: this.dataAuthor.name_author,
@@ -106,7 +114,9 @@ export default {
             text: response.data.message,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/admin/author" });
+            this.$router.push({
+              path: "/admin/author?user_id=" + this.getUserID,
+            });
           }, 1500);
         } else {
           this.$notify({
@@ -116,6 +126,11 @@ export default {
           });
         }
       }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };

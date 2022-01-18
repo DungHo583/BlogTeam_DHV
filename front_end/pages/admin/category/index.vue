@@ -29,8 +29,6 @@ export default {
   },
   data() {
     return {
-      checkRegister: null,
-      loadingPage: false,
       loadingTable: false,
       headerTable: [
         {
