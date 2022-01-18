@@ -67,6 +67,7 @@ export default {
   props: {
     header: Array,
     content: Array,
+    loadingTable: Boolean,
   },
   data() {
     return {
@@ -81,7 +82,9 @@ export default {
   watch: {},
   methods: {
     handleEdit(event) {
-      this.$router.push({ path: "/admin/category/update/" + event });
+      this.$router.push({
+        path: "/admin/category/update/" + event + "?user_id=" + this.getUserID,
+      });
     },
 
     confirmDel(event) {
@@ -104,7 +107,7 @@ export default {
     async handleDel(event) {
       const url = process.env.API_BLOG;
       const response = await this.$axios.delete(
-        url + "/api/category/delete/" + event
+        url + "/api/post/delete/" + event
       );
       if (response.data && response.data.success == true) {
         this.$notify({
@@ -112,7 +115,7 @@ export default {
           title: "Thành công !",
           text: response.data.message,
         });
-        this.$router.push({ path: "/admin/category" });
+        this.$emit("reloadTable", true);
       } else {
         this.$notify({
           type: "error",

@@ -97,7 +97,7 @@ export default {
       let check = await this.beforSignUp();
       if (check) {
         const url = process.env.API_BLOG;
-        const api = await this.$axios.post(url + "/api/sign-up", {
+        const api = await this.$axios.post(url + "/api/sign-in", {
           fullname: this.fullName,
           email: this.email,
           password: this.password,
@@ -114,7 +114,9 @@ export default {
             if (api.data.data.role == 3) {
               this.$router.push({ path: "/" });
             } else {
-              this.$router.push({ path: "/admin" });
+              this.$router.push({
+                path: "/admin?user_id=" + api.data.data._id,
+              });
             }
           }, 1500);
         } else {

@@ -12,7 +12,7 @@
         :key="idx"
         :class="{ active: selected && item._id == selected._id }"
       >
-        <span class="name-item-dropdown">{{ item.name }}</span>
+        <span class="name-item-dropdown">{{ item.name_author }}</span>
       </li>
     </ul>
   </div>
@@ -43,12 +43,11 @@ export default {
 
     handleChange(event) {
       this.show = false;
-      console.log("select", event);
-      this.$emit("getEvent", event);
+      this.$emit("getEvent", event._id);
     },
 
     getName() {
-      if (this.selected) return this.selected.name;
+      if (this.selected) return this.selected.name_author;
       if (this.placeholder) return this.placeholder;
       return "";
     },

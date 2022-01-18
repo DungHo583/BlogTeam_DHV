@@ -1,6 +1,6 @@
 <template>
-  <adminLayout :loadPage="loading">
-    <div class="card-container" v-if="!loading">
+  <adminLayout>
+    <div class="card-container">
       <div class="title-card">
         <h3 class="text-title">Tạo danh mục</h3>
       </div>
@@ -35,8 +35,6 @@ export default {
   },
   data() {
     return {
-      checkRegister: null,
-      loading: true,
       loadingSave: false,
       dataCate: {
         name: "",
@@ -45,11 +43,7 @@ export default {
       },
     };
   },
-  mounted() {
-    setTimeout(() => {
-      this.loading = false;
-    }, 500);
-  },
+  mounted() {},
 
   methods: {
     handleBack() {
@@ -102,7 +96,7 @@ export default {
           this.$notify({
             type: "error",
             title: "Thất bại !",
-            text: api.data.message,
+            text: response.data.message,
           });
         }
       }
