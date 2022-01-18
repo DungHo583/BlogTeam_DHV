@@ -4,7 +4,7 @@ const commentSchema = new schema({
     description: String,
     name_account: String,
     email_address: String,
-    image: String,
+    thumbnail: String,
     created_at: {
       type: Number,
       default: Date.now(),
