@@ -1,17 +1,28 @@
 <template>
-  <adminLayout :loadPage="loading">
-    <div class="card-container" v-if="!loading">
+  <adminLayout>
+    <div class="card-container">
       <div class="title-card">
-        <h3 class="text-title">Cập nhật tags</h3>
+        <h3 class="text-title">Cập nhật Tag</h3>
       </div>
       <!--  -->
-      <updateTags :getTags="dataTags" @getValue="valueInput" />
+      <updateTags
+        :getTags="dataTags"
+        @getValue="valueInput"
+        :checkSave="checkSave"
+      />
       <!--  -->
       <div class="line"></div>
       <!--  -->
       <div class="btn-action-group">
         <button class="btn-action btn-cancel" @click="handleBack">Hủy</button>
-        <button class="btn-action btn-save" @click="handleSave">Lưu</button>
+        <button
+          class="btn-action btn-save"
+          @click="handleSave"
+          :disabled="loadingSave"
+        >
+          <span v-if="loadingSave"><a-icon type="loading" /></span>
+          <span v-else>Lưu</span>
+        </button>
       </div>
     </div>
   </adminLayout>
@@ -28,13 +39,13 @@ export default {
   },
   data() {
     return {
-      checkRegister: null,
-      loading: true,
+      loadingSave: false,
       dataTags: {
-        title: null,
-        description: null,
+        title: "",
+        description: "",
       },
       getIdTag: null,
+      checkSave: false,
     };
   },
   mounted() {
@@ -45,23 +56,20 @@ export default {
   methods: {
     handleBack() {
       this.$router.push({
-        path: "/admin/tags",
+        path: "/admin/tags?user_id=" + this.getUserID,
       });
     },
 
     async fetchTag() {
       const url = process.env.API_BLOG;
       const response = await this.$axios.get(
-        url + "/api/get-tag/" + this.getIdTag
+        url + "/api/get-tags/" + this.getIdTag
       );
       if (response.data && response.data.success == true) {
         this.dataTags = {
           title: response.data.data.title,
           description: response.data.data.description,
         };
-        setTimeout(() => {
-          this.loading = false;
-        }, 1500);
       }
     },
 
@@ -73,10 +81,8 @@ export default {
     },
 
     beforSave() {
-      if (
-        !this.dataTags.title &&
-        this.dataTags.title.trim() == ""
-      ) {
+      this.checkSave = !this.checkSave;
+      if (!this.dataTags.title && this.dataTags.title.trim() == "") {
         this.$notify({
           type: "error",
           title: "Thất bại !",
@@ -90,6 +96,7 @@ export default {
     async handleSave() {
       let check = await this.beforSave();
       if (check) {
+        this.loadingSave = true;
         const url = process.env.API_BLOG;
         const response = await this.$axios.post(
           url + "/api/tags/update/" + this.getIdTag,
@@ -105,7 +112,9 @@ export default {
             text: response.data.message,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/admin/tags" });
+            this.$router.push({
+              path: "/admin/tags?user_id=" + this.getUserID,
+            });
           }, 1500);
         } else {
           this.$notify({
@@ -119,6 +128,11 @@ export default {
 
     getID() {
       this.getIdTag = this.$route.params.id;
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };

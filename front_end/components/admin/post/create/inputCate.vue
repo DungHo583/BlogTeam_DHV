@@ -59,6 +59,34 @@
     </div>
     <!--  -->
     <div class="row-form-item">
+      <div class="l">
+        <div class="form-input-group">
+          <div class="title-input">
+            <h3 class="text-title">Danh mục:</h3>
+          </div>
+          <selectOrtherCustom
+            :selected="selectedCate"
+            :list="listSelectCate"
+            @getEvent="getSelectCate"
+          />
+        </div>
+      </div>
+      <!--  -->
+      <div class="r">
+        <div class="form-input-group">
+          <div class="title-input">
+            <h3 class="text-title">Thẻ tag:</h3>
+          </div>
+          <multiSelect
+            :selected="selectedTags"
+            :list="listSelectTag"
+            @getEvent="getSelectTag"
+          />
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="row-form-item">
       <div class="form-input-group form-editor">
         <div class="title-input">
           <h3 class="text-title">Nội dung bài viết:</h3>
@@ -72,9 +100,16 @@
 <script>
 import uploadIMG from "~/components/admin/post/create/uploadImg";
 import selectCustom from "~/components/admin/post/selectCustom";
+import selectOrtherCustom from "~/components/admin/post/selectOrtherCustom";
+import multiSelect from "~/components/admin/post/multiSelectCustom";
 
 export default {
-  components: { selectCustom, uploadIMG },
+  components: {
+    selectCustom,
+    uploadIMG,
+    selectOrtherCustom,
+    multiSelect,
+  },
   data() {
     return {
       titlePost: "",
@@ -82,23 +117,20 @@ export default {
       descPost: "",
       waitInput: null,
       dataPost: {
-        thumbnail: {},
+        thumbnail: "",
         title: "",
         short_desc: "",
         description: [],
-        author: {},
+        author: "",
+        tags: "",
+        category: "",
       },
-      selected: {},
-      listSelect: [
-        {
-          _id: 12345,
-          name: "value 1",
-        },
-        {
-          _id: 12346,
-          name: "value 2",
-        },
-      ],
+      selected: { _id: 0, name_author: "Chọn tác giả" },
+      listSelect: [],
+      selectedCate: { _id: 0, title: "Chọn danh mục" },
+      listSelectCate: [],
+      selectedTags: { _id: 0, title: "Chọn thẻ tag" },
+      listSelectTag: [],
       config: {
         placeholderText: "Nhập nội dung bài viết !",
         charCounterCount: false,
@@ -107,6 +139,8 @@ export default {
   },
   mounted() {
     this.fetchAuthor();
+    this.fetchCategory();
+    this.fetchTags();
   },
   watch: {
     descPost() {
@@ -129,11 +163,7 @@ export default {
         this.$emit("getValue", this.dataPost);
       }, 500);
     },
-    getSelect(event) {
-      this.selected = event;
-      this.dataPost.author = this.selected;
-      this.$emit("getValue", this.dataPost);
-    },
+
     getUploaded(event) {
       this.dataPost.thumbnail = event[0].thumbUrl;
       setTimeout(() => {
@@ -147,6 +177,41 @@ export default {
       if (response.data && response.data.success == true) {
         this.listSelect = response.data.data;
       }
+    },
+
+    getSelect(event) {
+      this.selected = event;
+      console.log("select ev", event);
+      this.dataPost.author = this.selected._id;
+      this.$emit("getValue", this.dataPost);
+    },
+
+    async fetchCategory() {
+      const url = process.env.API_BLOG;
+      const response = await this.$axios.get(url + "/api/category");
+      if (response.data && response.data.success == true) {
+        this.listSelectCate = response.data.data;
+      }
+    },
+
+    getSelectCate(event) {
+      this.selectedCate = event;
+      this.dataPost.category = this.selectedCate._id;
+      this.$emit("getValue", this.dataPost);
+    },
+
+    async fetchTags() {
+      const url = process.env.API_BLOG;
+      const response = await this.$axios.get(url + "/api/tags");
+      if (response.data && response.data.success == true) {
+        this.listSelectTag = response.data.data;
+      }
+    },
+
+    getSelectTag(event) {
+      this.selectedTags = event;
+      this.dataPost.tags = this.selectedTags._id;
+      this.$emit("getValue", this.dataPost);
     },
 
     handleCancel() {

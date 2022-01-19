@@ -1,6 +1,6 @@
 <template>
-  <adminLayout :loadPage="loading">
-    <div class="card-container" v-if="!loading">
+  <adminLayout>
+    <div class="card-container">
       <div class="title-card">
         <h3 class="text-title">Danh sách tags</h3>
         <button class="btn-create" @click="handleCreate">
@@ -8,7 +8,12 @@
         </button>
       </div>
       <!--  -->
-      <tableCustom :header="headerTable" :content="contentTable" />
+      <tableCustom
+        :header="headerTable"
+        :content="contentTable"
+        :loadingTable="loadingTable"
+        @reloadTable="reloadFetchData"
+      />
     </div>
   </adminLayout>
 </template>
@@ -24,8 +29,7 @@ export default {
   },
   data() {
     return {
-      checkRegister: null,
-      loading: true,
+      loadingTable: false,
       headerTable: [
         {
           name: "Tags",
@@ -46,11 +50,6 @@ export default {
       contentTable: [],
     };
   },
-  watch: {
-    contentTable() {
-      this.fetchTag();
-    },
-  },
   mounted() {
     this.fetchTag();
   },
@@ -58,19 +57,31 @@ export default {
   methods: {
     handleCreate() {
       this.$router.push({
-        path: "/admin/tags/create",
+        path: "/admin/tags/create?user_id=" + this.getUserID,
       });
     },
 
     async fetchTag() {
+      this.loadingTable = true;
       const url = process.env.API_BLOG;
       const response = await this.$axios.get(url + "/api/tags");
       if (response.data && response.data.success == true) {
+        this.contentTable = response.data.data;
         setTimeout(() => {
-          this.loading = false;
-          this.contentTable = response.data.data;
+          this.loadingTable = false;
         }, 1500);
       }
+    },
+
+    reloadFetchData(event) {
+      if (event == true) {
+        this.fetchTag();
+      }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };

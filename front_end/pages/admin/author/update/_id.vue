@@ -1,11 +1,15 @@
 <template>
-  <adminLayout :loadPage="loading">
-    <div class="card-container" v-if="!loading">
+  <adminLayout>
+    <div class="card-container">
       <div class="title-card">
         <h3 class="text-title">Cập nhật tác giả</h3>
       </div>
       <!--  -->
-      <updateAuthor :getAuthor="dataAuthor" @getValue="valueInput" />
+      <updateAuthor
+        :getAuthor="dataAuthor"
+        @getValue="valueInput"
+        :checkSave="checkSave"
+      />
       <!--  -->
       <div class="line"></div>
       <!--  -->
@@ -17,7 +21,7 @@
           :disabled="loadingSave"
         >
           <span v-if="loadingSave"><a-icon type="loading" /></span>
-          <span> Lưu</span>
+          <span v-else>Lưu</span>
         </button>
       </div>
     </div>
@@ -35,18 +39,15 @@ export default {
   },
   data() {
     return {
-      checkRegister: null,
-      loading: true,
       loadingSave: false,
-
       dataAuthor: {
-        name_author: null,
-        short_desc: null,
-        description: null,
-        email_address: null,
-        image: null,
+        name_author: "",
+        description: "",
+        emailAddress: "",
+        image: "",
       },
       getIdAuthor: null,
+      checkSave: false,
     };
   },
   mounted() {
@@ -69,28 +70,24 @@ export default {
       if (response.data && response.data.success == true) {
         this.dataAuthor = {
           name_author: response.data.data.name_author,
-          short_desc: response.data.data.short_desc,
           description: response.data.data.description,
-          email_address: response.data.data.email_address,
+          emailAddress: response.data.data.email_address,
           image: response.data.data.image,
         };
-        setTimeout(() => {
-          this.loading = false;
-        }, 1500);
       }
     },
 
     valueInput(value = {}) {
       this.dataAuthor = {
         name_author: value.name_author,
-        short_desc: value.short_desc,
-        email_address: value.email_address,
+        emailAddress: value.emailAddress,
         description: value.description,
         image: value.image,
       };
     },
 
     beforSave() {
+      this.checkSave = !this.checkSave;
       if (
         !this.dataAuthor.name_author &&
         this.dataAuthor.name_author.trim() == ""
@@ -115,9 +112,8 @@ export default {
           url + "/api/author/update/" + this.getIdAuthor,
           {
             name_author: this.dataAuthor.name_author,
-            short_desc: this.dataAuthor.short_desc,
             description: this.dataAuthor.description,
-            email_address: this.dataAuthor.email_address,
+            email_address: this.dataAuthor.emailAddress,
             image: this.dataAuthor.image,
           }
         );

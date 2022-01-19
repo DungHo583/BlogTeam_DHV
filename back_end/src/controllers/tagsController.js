@@ -15,8 +15,7 @@ const tagsController = {
           data: data,
         });
       }
-    } 
-    catch (error) {
+    } catch (error) {
       return res.json({
         success: false,
         message: error,
@@ -34,6 +33,7 @@ const tagsController = {
         data: data,
       });
     } catch (error) {
+      console.log("er", error);
       return res.json({
         success: false,
         message: error,
@@ -42,8 +42,7 @@ const tagsController = {
   },
   createTag: async (req, res) => {
     try {
-      const { title, description, created_at } =
-        req.body;
+      const { title, description, created_at } = req.body;
 
       const newTag = await TAGS.create({
         title,
@@ -67,8 +66,7 @@ const tagsController = {
   // update danh mục
   updateTag: async (req, res) => {
     try {
-      const { title, description, created_at } =
-        req.body;
+      const { title, description, created_at } = req.body;
 
       const idTag = req.params.id;
 

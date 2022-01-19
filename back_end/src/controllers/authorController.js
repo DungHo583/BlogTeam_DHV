@@ -1,4 +1,4 @@
-const AUTHOR = require("../models/author");
+const AUTHOR = require("../models/authors");
 
 const authorController = {
   getAuthor: async (req, res) => {

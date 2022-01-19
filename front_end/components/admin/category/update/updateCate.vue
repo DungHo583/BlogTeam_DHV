@@ -62,9 +62,22 @@
 <script>
 export default {
   components: {},
-  props: ["getCategory"],
-  mounted() {
-    this.getPropsCate();
+  props: ["getCategory", "checkSave"],
+  mounted() {},
+  watch: {
+    getCategory() {
+      this.nameCate = this.getCategory.name;
+      this.shortDesc = this.getCategory.short_desc;
+      this.descCate = this.getCategory.description;
+      this.dataCate = {
+        name: this.getCategory.name,
+        short_desc: this.getCategory.short_desc,
+        description: this.getCategory.description,
+      };
+    },
+    checkSave() {
+      this.getPropsCate();
+    },
   },
   data() {
     return {
@@ -103,9 +116,6 @@ export default {
     },
 
     async getPropsCate() {
-      this.nameCate = this.getCategory.name;
-      this.shortDesc = this.getCategory.short_desc;
-      this.descCate = this.getCategory.description;
       this.dataCate = await {
         name: this.getCategory.name,
         short_desc: this.getCategory.short_desc,

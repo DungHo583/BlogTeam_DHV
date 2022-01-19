@@ -157,6 +157,9 @@ export default {
 .footer-above {
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
+  .footer-above-inner {
+    padding: 0 !important;
+  }
 }
 .footer-above-left {
   padding-top: 50px;

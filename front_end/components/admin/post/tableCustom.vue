@@ -20,9 +20,8 @@
           <td class="col-number">{{ idx + 1 }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.short_desc }}</td>
-          <td>{{ item.name_author }}</td>
+          <td align="right">{{ item.nameAuthor }}</td>
           <td align="center">
-            <!-- {{ Number(item.created_at) | formatDate("dd/mm/yyyy hh:MM") }} -->
             {{ item.created_at | formatDate("dd/mm/yyyy hh:MM") }}
           </td>
           <td class="col-action">
@@ -48,7 +47,7 @@
     <a-modal
       class="modal-warning"
       v-model="visible"
-      title="Xoá danh mục"
+      title="Xoá bài viết"
       on-ok="handleOk"
     >
       <template slot="footer">
@@ -57,7 +56,7 @@
           Xoá
         </a-button>
       </template>
-      <p>Xác nhận xoá danh mục này ?</p>
+      <p>Xác nhận xoá bài viết này ?</p>
     </a-modal>
   </div>
 </template>
@@ -75,20 +74,21 @@ export default {
       bodyTable: [],
       loading: false,
       visible: false,
-      idCate: null,
+      idPost: null,
       loadingData: true,
+      nameAuthorTb: "",
     };
   },
   watch: {},
   methods: {
     handleEdit(event) {
       this.$router.push({
-        path: "/admin/category/update/" + event + "?user_id=" + this.getUserID,
+        path: "/admin/post/update/" + event + "?user_id=" + this.getUserID,
       });
     },
 
     confirmDel(event) {
-      this.idCate = event;
+      this.idPost = event;
       this.visible = true;
     },
 
@@ -97,7 +97,7 @@ export default {
       setTimeout(() => {
         this.visible = false;
         this.loading = false;
-        this.handleDel(this.idCate);
+        this.handleDel(this.idPost);
       }, 1500);
     },
     handleCancel(e) {
@@ -123,6 +123,11 @@ export default {
           text: response.data.message,
         });
       }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };

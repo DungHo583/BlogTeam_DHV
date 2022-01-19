@@ -11,8 +11,11 @@
       <!--  -->
       <div class="btn-action-group">
         <button class="btn-action btn-cancel" @click="handleBack">Hủy</button>
-        :disabled="loadingSave"
-        <button class="btn-action btn-save" @click="handleSave">
+        <button
+          class="btn-action btn-save"
+          @click="handleSave"
+          :disabled="loadingSave"
+        >
           <span v-if="loadingSave"><a-icon type="loading" /></span>
           <span v-else>Lưu</span>
         </button>
