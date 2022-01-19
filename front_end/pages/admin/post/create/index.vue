@@ -37,12 +37,12 @@ export default {
     return {
       loadingSave: false,
       dataPost: {
-        thumbnail: {},
+        thumbnail: "",
         title: "",
         short_desc: "",
         description: "",
         author: "",
-        tag: [],
+        tag: "",
         category: "",
       },
     };
@@ -57,12 +57,13 @@ export default {
     },
 
     valueInput(value = {}) {
-      console.log("data post", value);
       this.dataPost.title = value.title;
       this.dataPost.short_desc = value.short_desc;
       this.dataPost.description = value.description;
       this.dataPost.author = value.author;
       this.dataPost.thumbnail = value.thumbnail;
+      this.dataPost.tag = value.tags;
+      this.dataPost.category = value.category;
     },
 
     beforSave() {
@@ -81,6 +82,7 @@ export default {
       let check = await this.beforSave();
       if (check) {
         this.loadingSave = true;
+        console.log("data push", this.dataPost);
         const url = process.env.API_BLOG;
         const response = await this.$axios.post(url + "/api/post/create", {
           title: this.dataPost.title,
@@ -88,6 +90,8 @@ export default {
           short_desc: this.dataPost.short_desc,
           description: this.dataPost.description,
           author: this.dataPost.author,
+          category: this.dataPost.category,
+          tag: this.dataPost.tag,
         });
         if (response.data && response.data.success == true) {
           this.$notify({

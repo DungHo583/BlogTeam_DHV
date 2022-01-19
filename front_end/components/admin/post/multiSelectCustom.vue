@@ -31,11 +31,7 @@ export default {
       show: false,
     };
   },
-  watch: {
-    selected(ev) {
-      console.log("selected orthor---------", ev);
-    },
-  },
+  watch: {},
   directives: {
     clickOutside: vClickOutside.directive,
   },

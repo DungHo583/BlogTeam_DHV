@@ -14,7 +14,7 @@ router.post("/post/create", postsController.createPost);
 // // cập nhật bài viết
 // router.post("/post/update/:id", postsController.updateCate);
 
-// // xoá bài viết
-// router.delete("/post/delete/:id", postsController.deleteCate);
+// xoá bài viết
+router.delete("/post/delete/:id", postsController.deletePost);
 
 module.exports = router;

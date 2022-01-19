@@ -117,12 +117,12 @@ export default {
       descPost: "",
       waitInput: null,
       dataPost: {
-        thumbnail: {},
+        thumbnail: "",
         title: "",
         short_desc: "",
         description: [],
-        author: {},
-        tags: [],
+        author: "",
+        tags: "",
         category: "",
       },
       selected: { _id: 0, name_author: "Chọn tác giả" },
@@ -210,7 +210,7 @@ export default {
 
     getSelectTag(event) {
       this.selectedTags = event;
-      this.dataPost.tags = this.selectedTags;
+      this.dataPost.tags = this.selectedTags._id;
       this.$emit("getValue", this.dataPost);
     },
 

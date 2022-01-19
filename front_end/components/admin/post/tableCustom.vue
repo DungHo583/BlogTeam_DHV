@@ -20,9 +20,8 @@
           <td class="col-number">{{ idx + 1 }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.short_desc }}</td>
-          <td>{{ item.name_author }}</td>
+          <td align="right">{{ item.nameAuthor }}</td>
           <td align="center">
-            <!-- {{ Number(item.created_at) | formatDate("dd/mm/yyyy hh:MM") }} -->
             {{ item.created_at | formatDate("dd/mm/yyyy hh:MM") }}
           </td>
           <td class="col-action">
@@ -77,13 +76,14 @@ export default {
       visible: false,
       idCate: null,
       loadingData: true,
+      nameAuthorTb: "",
     };
   },
   watch: {},
   methods: {
     handleEdit(event) {
       this.$router.push({
-        path: "/admin/category/update/" + event + "?user_id=" + this.getUserID,
+        path: "/admin/post/update/" + event + "?user_id=" + this.getUserID,
       });
     },
 
@@ -124,6 +124,22 @@ export default {
         });
       }
     },
+
+    // async fetchTag(id) {
+    //   const url = process.env.API_BLOG;
+    //   const response = await this.$axios
+    //     .get(url + "/api/get-author/" + id)
+    //     .then((item) => {
+    //       return item.data.data.name_author;
+    //     });
+    //   return response;
+    //   if (response.data && response.data.success == true) {
+    //     console.log("fetchTag", response.data);
+    //     this.nameAuthorTb = response.data.data.name_author;
+    //   } else {
+    //     this.nameAuthorTb = "";
+    //   }
+    // },
   },
 };
 </script>
