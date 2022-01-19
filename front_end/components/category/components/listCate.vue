@@ -1,35 +1,27 @@
 <template>
   <div class="list-cate">
-    <div class="title-list-cate">
-      <h3 class="text-title">{{ titleCate }}</h3>
-    </div>
     <div class="body-list-cate">
-      <carousel :per-page="4" :mouse-drag="false">
-        <slide v-for="(item, idx) in listProd" :key="idx">
-          <div
-            class="item-slide"
-            :style="{ backgroundImage: `url(${item.thumbnail})` }"
-          >
-            <div class="content-inner">
-              <div class="header-content-inner">
-                <h3 class="title-prod-inner">
-                  {{ item.name }} - {{ item.code_prod }}
-                </h3>
-                <div class="box-price-rating">
-                  <a-rate :default-value="item.rate" allow-half />
-                  <p class="price-prod">{{ item.price }}</p>
-                </div>
-              </div>
-              <div class="body-content-inner">
-                <p class="short-description">
-                  {{ item.short_desc }}
+      <a-row :gutter="[30, 30]" class="row-orther-post">
+        <a-col :span="8" class="col-orther-post">
+          <div class="card-post-orther">
+            <div class="thumbnail-inner-card">
+              <img class="thumbnail-inner" src="" alt="" />
+            </div>
+            <div class="content-inner-card">
+              <p class="text-time">Tháng 9, 2021</p>
+              <h3 class="title-card">Can a Smoothie ....</h3>
+              <div class="content-text">
+                <p class="text-desc">
+                  Most of us would agree – mornings are hectic. Getting yourself
+                  and possibly others ready for the day ahead may...
                 </p>
-                <a-button ghost class="btn-detail"> Xem chi tiết </a-button>
               </div>
             </div>
           </div>
-        </slide>
-      </carousel>
+        </a-col>
+        <a-col :span="8"></a-col>
+        <a-col :span="8"></a-col>
+      </a-row>
     </div>
   </div>
 </template>
@@ -77,33 +69,65 @@ export default {
     background-color: var(--color-hover) !important;
   }
 }
-</style>
 
-<style  scoped>
-.ant-carousel >>> .slick-slide {
-  text-align: center;
-  height: 160px;
-  line-height: 160px;
-  background: #364d79;
-  overflow: hidden;
-}
-
-.ant-carousel >>> .custom-slick-arrow {
-  width: 25px;
-  height: 25px;
-  font-size: 25px;
-  color: #fff;
-  background-color: rgba(31, 45, 61, 0.11);
-  opacity: 0.3;
-}
-.ant-carousel >>> .custom-slick-arrow:before {
-  display: none;
-}
-.ant-carousel >>> .custom-slick-arrow:hover {
-  opacity: 0.5;
-}
-
-.ant-carousel >>> .slick-slide h3 {
-  color: #fff;
+.body-list-cate {
+  .row-orther-post {
+    margin-top: 50px;
+    .col-orther-post {
+      .card-post-orther {
+        width: 100%;
+        height: 520px;
+        background-color: #fff;
+        .thumbnail-inner-card {
+          width: 100%;
+          overflow: hidden;
+          height: 240px;
+          cursor: pointer;
+          .thumbnail-inner {
+            width: 100%;
+            height: 100%;
+            transition: all 0.3s ease;
+          }
+        }
+        .content-inner-card {
+          padding: 34px 37px 45px;
+          overflow: hidden;
+          .text-time {
+            margin-bottom: 20px;
+            color: #777777;
+            font-size: 15px;
+          }
+          .title-card {
+            font-weight: bold;
+            text-align: justify;
+            color: #151515;
+            font-size: 18px;
+            margin-bottom: 18px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+          }
+          .title-card:hover {
+            color: #76aa6f;
+          }
+          .content-text {
+            width: 100%;
+            .text-desc {
+              text-align: justify;
+              font-size: 15px;
+              color: #777777;
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+      .card-post-orther:hover {
+        .thumbnail-inner-card {
+          .thumbnail-inner {
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+  }
 }
 </style>

@@ -1,20 +1,28 @@
 <template>
-  <div class="layout-container">
-    <div class="title-cate">
-      <h3 class="cate-title">Review công nghệ</h3>
+  <layout :bgFa="bgLayout">
+    <div class="layout-container">
+      <div class="title-cate">
+        <h3 class="cate-title">Review công nghệ</h3>
+      </div>
+      <div class="body-cate">
+        <listCate />
+      </div>
     </div>
-    <div class="body-cate">
-      <listCate :titleCate="'Laptop'" />
-    </div>
-  </div>
+  </layout>
 </template>
 
 <script>
 import listCate from "~/components/category/components/listCate.vue";
+import layout from "~/layouts/base.vue";
 export default {
-  layout: "base",
   components: {
     listCate,
+    layout,
+  },
+  data() {
+    return {
+      bgLayout: true,
+    };
   },
 };
 </script>
@@ -23,17 +31,13 @@ export default {
 .layout-container {
   padding-top: 25px;
   .title-cate {
-    background-image: url(/images/bg-tech.jpg);
     display: flex;
     align-items: center;
-    height: 200px;
-    background-size: cover;
-    background-position: center;
+    justify-content: center;
     .cate-title {
       margin-bottom: 0;
-      margin-left: 7%;
       font-size: 28px;
-      color: #fff;
+      color: var(--color-title);
       line-height: 40px;
       font-weight: bold;
       letter-spacing: 2px;

@@ -17,7 +17,9 @@
                   >{{ tags.name }}</a
                 >
               </div>
-              <a @click="handleAccess(item.id)" class="post-title">{{ item.title }}</a>
+              <a @click="handleAccess(item.id)" class="post-title">{{
+                item.title
+              }}</a>
               <p class="text-des">{{ item.descriptions }}</p>
               <span class="time-post-item">
                 <p class="text-day">{{ item.createdAt }}</p>
@@ -43,7 +45,9 @@
                   >{{ tags.name }}</a
                 >
               </div>
-              <a @click="handleAccess(item2.id)" class="post-title">{{ item2.title }}</a>
+              <a @click="handleAccess(item2.id)" class="post-title">{{
+                item2.title
+              }}</a>
               <p class="text-des">{{ item2.descriptions }}</p>
               <span class="time-post-item">
                 <p class="text-day">{{ item2.createdAt }}</p>
@@ -69,7 +73,9 @@
                   >{{ tags.name }}</a
                 >
               </div>
-              <a @click="handleAccess(item3.id)" class="post-title">{{ item3.title }}</a>
+              <a @click="handleAccess(item3.id)" class="post-title">{{
+                item3.title
+              }}</a>
               <p class="text-des">{{ item3.descriptions }}</p>
               <span class="time-post-item">
                 <p class="text-day">{{ item3.createdAt }}</p>
@@ -97,9 +103,14 @@ export default {
   methods: {
     handleAccess(idPost) {
       this.$router.push({
-        path: '/category/detail?id=' + idPost,
-      })
-    }
+        path: "/category/detail/" + idPost + "?user_id=" + this.getUserID,
+      });
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
+    },
   },
 };
 </script>

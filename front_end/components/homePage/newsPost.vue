@@ -79,8 +79,13 @@ export default {
   methods: {
     handleAccess(idPost) {
       this.$router.push({
-        path: "/category/detail?id=" + idPost,
+        path: "/category/detail/" + idPost + "?user_id=" + this.getUserID,
       });
+    },
+    computed: {
+      getUserID() {
+        return this.$route.query.user_id;
+      },
     },
   },
 };
