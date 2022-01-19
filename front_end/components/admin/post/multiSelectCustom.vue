@@ -2,6 +2,7 @@
   <div class="select-custom" v-click-outside="hide">
     <div class="select-item" @click="changeSelect">
       <span class="label-select">{{ getName() }}</span>
+
       <a-icon :type="show ? 'up' : 'down'" />
     </div>
     <ul class="dropdown-select" v-if="show">
@@ -12,7 +13,7 @@
         :key="idx"
         :class="{ active: selected && item._id == selected._id }"
       >
-        <span class="name-item-dropdown">{{ item.name_author }}</span>
+        <span class="name-item-dropdown">{{ item.title }}</span>
       </li>
     </ul>
   </div>
@@ -29,6 +30,11 @@ export default {
     return {
       show: false,
     };
+  },
+  watch: {
+    selected(ev) {
+      console.log("selected orthor---------", ev);
+    },
   },
   directives: {
     clickOutside: vClickOutside.directive,
@@ -48,7 +54,7 @@ export default {
     },
 
     getName() {
-      if (this.selected) return this.selected.name_author;
+      if (this.selected) return this.selected.title;
       return "";
     },
   },

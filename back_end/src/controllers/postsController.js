@@ -1,4 +1,5 @@
 const POSTS = require("../models/posts");
+const AUTHORS = require("../models/authors");
 
 const postsController = {
   // danh sách bài viết
@@ -27,21 +28,17 @@ const postsController = {
   // tạo bài viết
   createPost: async (req, res) => {
     try {
-      const {
-        title,
-        thumbnail,
-        short_desc,
-        description,
-        //  author
-      } = req.body;
+      const { title, thumbnail, short_desc, description, author } = req.body;
       console.log("body", req.body);
+      const author_id = await AUTHORS.findById({ _id: author });
+      console.log("author", author_id);
 
       const newPost = await POSTS.create({
         title,
         thumbnail,
         short_desc,
         description,
-        // author,
+        author: author_id,
       });
 
       return res.json({

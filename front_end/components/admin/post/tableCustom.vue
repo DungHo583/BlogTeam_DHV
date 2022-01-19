@@ -48,7 +48,7 @@
     <a-modal
       class="modal-warning"
       v-model="visible"
-      title="Xoá danh mục"
+      title="Xoá bài viết"
       on-ok="handleOk"
     >
       <template slot="footer">
@@ -57,7 +57,7 @@
           Xoá
         </a-button>
       </template>
-      <p>Xác nhận xoá danh mục này ?</p>
+      <p>Xác nhận xoá bài viết này ?</p>
     </a-modal>
   </div>
 </template>

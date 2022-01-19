@@ -13,7 +13,7 @@ const postsSchema = new schema({
   description: Array,
   author: {
     type: schema.Types.ObjectId,
-    ref: "Author",
+    ref: "authors",
   },
   // tags: Array,
   // category: {

@@ -87,7 +87,7 @@ export default {
           thumbnail: this.dataPost.thumbnail,
           short_desc: this.dataPost.short_desc,
           description: this.dataPost.description,
-          // author: this.dataPost.author,
+          author: this.dataPost.author,
         });
         if (response.data && response.data.success == true) {
           this.$notify({
