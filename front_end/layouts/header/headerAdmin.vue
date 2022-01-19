@@ -12,7 +12,7 @@
               <a-icon type="down" />
             </a>
             <a-menu slot="overlay">
-              <a-menu-item key="0" @click="handleEdit">
+              <a-menu-item key="0" @click="handleEdit(getUserID)">
                 <a-icon type="profile" /> Profile
               </a-menu-item>
 
@@ -36,9 +36,9 @@ export default {
     };
   },
   methods: {
-    handleEdit() {
+    handleEdit(event) {
       this.$router.push({
-        path: "/admin/user/update/" + this.getUserID,
+        path: "/admin/user/update/" + event + "?user_id=" + this.getUserID,
       });
     },
     async handleLogout() {

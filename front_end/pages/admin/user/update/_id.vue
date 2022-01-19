@@ -2,10 +2,15 @@
   <adminLayout :loadPage="loading">
     <div class="card-container" v-if="!loading">
       <div class="title-card">
-        <h3 class="text-title">Cập nhật tài khoản</h3>
+        <h3 class="text-title">Thông tin tài khoản</h3>
       </div>
       <!--  -->
-      <updateUser :getAccount="dataAccount" @getValue="valueInput" />
+
+      <updateUser
+        :getAccount="dataAccount"
+        @getValue="valueInput"
+        :checkSave="checkSave"
+      />
       <!--  -->
       <div class="line"></div>
       <!--  -->
@@ -37,6 +42,7 @@ export default {
         password: null,
       },
       getIdAccount: null,
+      checkSave: false,
     };
   },
   mounted() {
@@ -47,7 +53,7 @@ export default {
   methods: {
     handleBack() {
       this.$router.push({
-        path: "/admin/user",
+        path: "/admin/user?user_id=" + this.getUserID,
       });
     },
 
@@ -79,6 +85,8 @@ export default {
     },
 
     beforSave() {
+      this.checkSave = !this.checkSave;
+
       if (
         !this.dataAccount.fullname &&
         this.dataAccount.fullname.trim() == ""
@@ -113,7 +121,9 @@ export default {
             text: response.data.message,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/admin/user" });
+            this.$router.push({
+              path: "/admin/user?user_id=" + this.getUserID,
+            });
           }, 1500);
         } else {
           this.$notify({
@@ -127,6 +137,11 @@ export default {
 
     getID() {
       this.getIdAccount = this.$route.params.id;
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };
