@@ -27,17 +27,17 @@
     },
     {
       "id": 2,
-      "path": "/products",
+      "path": "/category/tech",
       "menuitem": "Đồ công nghệ"
     },
     {
       "id": 3,
-      "path": "/trends",
+      "path": "/category/trend",
       "menuitem": "Xu hướng"
     },
     {
       "id": 4,
-      "path": "/reviewtechnology",
+      "path": "/category/review",
       "menuitem": "Review công nghệ"
     }
   ]
