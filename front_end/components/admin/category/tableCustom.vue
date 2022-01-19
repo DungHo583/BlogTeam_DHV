@@ -76,8 +76,7 @@ export default {
       idCate: null,
     };
   },
-  watch: {
-  },
+  watch: {},
   methods: {
     handleEdit(event) {
       this.$router.push({

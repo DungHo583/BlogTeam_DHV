@@ -40,9 +40,20 @@
 <script>
 export default {
   components: {},
-  props: ["getTags"],
-  mounted() {
-    this.getPropsTag();
+  props: ["getTags", "checkSave"],
+  mounted() {},
+  watch: {
+    getTags() {
+      this.title = this.getTags.title;
+      this.descTags = this.getTags.description;
+      this.dataTags = {
+        title: this.getTags.title,
+        description: this.getTags.description,
+      };
+    },
+    checkSave() {
+      this.getPropsTag();
+    },
   },
   data() {
     return {
@@ -73,8 +84,6 @@ export default {
     },
 
     async getPropsTag() {
-      this.title = this.getTags.title;
-      this.descTags = this.getTags.description;
       this.dataTags = await {
         title: this.getTags.title,
         description: this.getTags.description,

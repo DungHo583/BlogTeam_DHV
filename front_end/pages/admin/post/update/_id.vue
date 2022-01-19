@@ -61,9 +61,6 @@ export default {
           short_desc: response.data.data.short_desc,
           description: response.data.data.description,
         };
-        setTimeout(() => {
-          this.loading = false;
-        }, 1500);
       }
     },
 

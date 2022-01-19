@@ -25,7 +25,7 @@
             type="email"
             class="input-group"
             placeholder="Nhập email ..."
-            v-model="email_address"
+            v-model="emailAddress"
             @input="changeEmail"
           />
         </div>
@@ -55,18 +55,33 @@
 <script>
 export default {
   components: {},
-  props: ["getAuthor"],
-  mounted() {
-    this.getPropsAuthor();
+  props: ["getAuthor", "checkSave"],
+  mounted() {},
+  watch: {
+    getAuthor() {
+      this.nameAuthor = this.getAuthor.name_author;
+      this.descAuthor = this.getAuthor.description;
+      this.emailAddress = this.getAuthor.emailAddress;
+      this.image = this.getAuthor.image;
+      this.dataAuthor = {
+        emailAddress: this.getAuthor.emailAddress,
+        name_author: this.getAuthor.name_author,
+        description: this.getAuthor.description,
+        image: this.getAuthor.image,
+      };
+    },
+    checkSave() {
+      this.getPropsAuthor();
+    },
   },
   data() {
     return {
       nameAuthor: "",
-      shortDesc: "",
       descAuthor: "",
+      emailAddress: "",
       waitInput: null,
       dataAuthor: {
-        email_address: "",
+        emailAddress: "",
         name_author: "",
         description: "",
         image: "",
@@ -92,24 +107,17 @@ export default {
     changeEmail() {
       clearTimeout(this.waitInput);
       this.waitInput = setTimeout(() => {
-        this.dataAuthor.email_address = this.email_address;
+        this.dataAuthor.emailAddress = this.emailAddress;
         this.$emit("getValue", this.dataAuthor);
       }, 500);
     },
 
     async getPropsAuthor() {
-      this.nameAuthor = this.getAuthor.name_author;
-      this.shortDesc = this.getAuthor.short_desc;
-      this.descAuthor = this.getAuthor.description;
-      this.email_address = this.getAuthor.email_address;
-      this.image = this.getAuthor.image;
-
       this.dataAuthor = await {
         name_author: this.getAuthor.name_author,
-        short_desc: this.getAuthor.short_desc,
         description: this.getAuthor.description,
         image: this.getAuthor.image,
-        email_address: this.getAuthor.email_address,
+        emailAddress: this.getAuthor.emailAddress,
       };
       this.$emit("getValue", this.dataAuthor);
     },

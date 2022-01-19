@@ -1,11 +1,15 @@
 <template>
-  <adminLayout :loadPage="loading">
-    <div class="card-container" v-if="!loading">
+  <adminLayout>
+    <div class="card-container">
       <div class="title-card">
         <h3 class="text-title">Cập nhật danh mục</h3>
       </div>
       <!--  -->
-      <updateCate :getCategory="dataCate" @getValue="valueInput" />
+      <updateCate
+        :getCategory="dataCate"
+        @getValue="valueInput"
+        :checkSave="checkSave"
+      />
       <!--  -->
       <div class="line"></div>
       <!--  -->
@@ -35,15 +39,14 @@ export default {
   },
   data() {
     return {
-      checkRegister: null,
-      loading: true,
       loadingSave: false,
       dataCate: {
-        name: null,
-        short_desc: null,
-        description: null,
+        name: "",
+        short_desc: "",
+        description: "",
       },
       getIdCate: null,
+      checkSave: false,
     };
   },
   mounted() {
@@ -69,9 +72,6 @@ export default {
           short_desc: response.data.data.short_desc,
           description: response.data.data.description,
         };
-        setTimeout(() => {
-          this.loading = false;
-        }, 1500);
       }
     },
 
@@ -84,6 +84,7 @@ export default {
     },
 
     beforSave() {
+      this.checkSave = !this.checkSave;
       if (!this.dataCate.name && this.dataCate.name.trim() == "") {
         this.$notify({
           type: "error",

@@ -1,6 +1,6 @@
 <template>
-  <adminLayout :loadPage="loading">
-    <div class="card-container" v-if="!loading">
+  <adminLayout>
+    <div class="card-container">
       <div class="title-card">
         <h3 class="text-title">Thêm tags</h3>
       </div>
@@ -11,7 +11,14 @@
       <!--  -->
       <div class="btn-action-group">
         <button class="btn-action btn-cancel" @click="handleBack">Hủy</button>
-        <button class="btn-action btn-save" @click="handleSave">Lưu</button>
+        <button
+          class="btn-action btn-save"
+          @click="handleSave"
+          :disabled="loadingSave"
+        >
+          <span v-if="loadingSave"><a-icon type="loading" /></span>
+          <span v-else>Lưu</span>
+        </button>
       </div>
     </div>
   </adminLayout>
@@ -28,8 +35,7 @@ export default {
   },
   data() {
     return {
-      checkRegister: null,
-      loading: true,
+      loadingSave: false,
       dataTags: {
         title: "",
         description: "",
@@ -45,7 +51,7 @@ export default {
   methods: {
     handleBack() {
       this.$router.push({
-        path: "/admin/tags",
+        path: "/admin/tags?user_id=" + this.getUserID,
       });
     },
 
@@ -55,10 +61,7 @@ export default {
     },
 
     beforSave() {
-      if (
-        !this.dataTags.title &&
-        this.dataTags.title.trim() == ""
-      ) {
+      if (!this.dataTags.title && this.dataTags.title.trim() == "") {
         this.$notify({
           type: "error",
           title: "Thất bại !",
@@ -72,6 +75,7 @@ export default {
     async handleSave() {
       let check = await this.beforSave();
       if (check) {
+        this.loadingSave = true;
         const url = process.env.API_BLOG;
         const response = await this.$axios.post(url + "/api/tags/create", {
           title: this.dataTags.title,
@@ -85,7 +89,9 @@ export default {
             text: response.data.message,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/admin/tags" });
+            this.$router.push({
+              path: "/admin/tags?user_id=" + this.getUserID,
+            });
           }, 1500);
         } else {
           this.$notify({
@@ -95,6 +101,11 @@ export default {
           });
         }
       }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };

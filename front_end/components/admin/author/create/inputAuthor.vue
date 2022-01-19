@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       nameAuthor: "",
-      shortDesc: "",
+      email_address: "",
       descAuthor: "",
       waitInput: null,
       dataAuthor: {
