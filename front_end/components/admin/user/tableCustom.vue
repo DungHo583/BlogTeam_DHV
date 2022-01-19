@@ -32,7 +32,11 @@
               <!-- <button class="btn-custom btn-edit" @click="handleEdit(item._id)">
                 <a-icon type="edit" /> Sửa
               </button> -->
-              <button class="btn-custom btn-del" @click="confirmDel(item._id)">
+              <button
+                class="btn-custom btn-del"
+                @click="confirmDel(item._id)"
+                v-if="item.role != 1"
+              >
                 <a-icon type="delete" /> Xóa
               </button>
             </div>

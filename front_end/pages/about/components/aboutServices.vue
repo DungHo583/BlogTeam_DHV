@@ -2,11 +2,13 @@
   <div class="about-services">
     <div class="box-about-services">
       <div class="border-top-about-services"></div>
-      <span class="title-about-services">About Services</span>
+      <span class="title-about-services">Các dịch vụ</span>
       <span class="text-about-services">
-        Lorem ipsum dolor sit amet, consec tetur adipiscing the egtlit sekido
-        eiusmod of the tempor incid dunt ulert labore et dolore all magna aliqua
-        mi bibendum neque egestas.
+        Chúng tôi muốn tạo ra một website cung cấp thông tin, hữu ích về các
+        lĩnh vực công nghệ. Ngoài ra còn có những sản phẩm hấp dẫn sẽ được cập
+        nhật thường xuyên nhất để bạn có nhiều cơ hội tìm hiểu vê công nghệ
+        nhiều hơn từ đó bạn sẽ có cơ hội phát triển nhiều hơn trong lĩnh vực
+        này.
       </span>
     </div>
     <div class="box-info-blog-team">
@@ -15,10 +17,9 @@
           <img src="/images/number1.png" style="padding-right: 15px" />
         </div>
         <div class="box-content-info">
-          <span class="content-info-blog-team">Ornare Quam Justo Tellusv.</span>
+          <span class="content-info-blog-team">Đồ công nghệ</span>
           <span class="text-info-blog-team"
-            >Lorem ipsum dolor sit amet, cotetur adiing sedo tempor dunt labore
-            dolor.</span
+            >Các sản phẩm công nghệ tiên tiến.</span
           >
           <div class="border-info-blog-team"></div>
         </div>
@@ -28,10 +29,9 @@
           <img src="/images/number2.png" style="padding-right: 15px" />
         </div>
         <div class="box-content-info">
-          <span class="content-info-blog-team">Ornare Quam Justo Tellusv.</span>
+          <span class="content-info-blog-team">Xu hướng công nghệ</span>
           <span class="text-info-blog-team"
-            >Lorem ipsum dolor sit amet, cotetur adiing sedo tempor dunt labore
-            dolor.</span
+            >Những công nghệ phổ biến sẽ đước sử dụng.</span
           >
           <div class="border-info-blog-team"></div>
         </div>
@@ -41,10 +41,9 @@
           <img src="/images/number3.png" style="padding-right: 15px" />
         </div>
         <div class="box-content-info">
-          <span class="content-info-blog-team">Ornare Quam Justo Tellusv.</span>
+          <span class="content-info-blog-team">Review sản phẩm công nghệ.</span>
           <span class="text-info-blog-team"
-            >Lorem ipsum dolor sit amet, cotetur adiing sedo tempor dunt labore
-            dolor.</span
+            >Review các sản phẩm chất lượng được nhiều người ưa chuộng.</span
           >
           <div class="border-info-blog-team"></div>
         </div>
@@ -105,6 +104,7 @@ export default {};
   padding-right: 80px;
 }
 .content-info-blog-team {
+  height: 75px;
   margin-bottom: 30px;
   color: #121212;
   font-family: "Poppins", Sans-serif;

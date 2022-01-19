@@ -1,13 +1,14 @@
 <template>
   <div class="contact">
     <div class="layout-container">
-      <a-breadcrumb class="breadcrumb">
+      <!-- <a-breadcrumb class="breadcrumb">
         <a-breadcrumb-item>Trang chủ</a-breadcrumb-item>
         <a-breadcrumb-item>liên hệ</a-breadcrumb-item>
-      </a-breadcrumb>
-      <h2 class="contact-title">Gửi bình luận cho chúng tôi</h2>
+      </a-breadcrumb> -->
+      <!-- <h2 class="contact-title">Gửi bình luận cho chúng tôi</h2> -->
       <a-row :gutter="40" class="contact-above">
-        <a-col :lg="12" :md="12" :sm="24" class="contact-left">
+        <!-- <a-col :lg="12" :md="12" :sm="24" class="contact-left">
+          
           <a-form :form="form" @submit="handleSubmit">
             <a-form-item
               :label-col="formItemLayout.labelCol"
@@ -109,8 +110,9 @@
               </a-button>
             </a-form-item>
           </a-form>
-        </a-col>
+        </a-col> -->
         <a-col :lg="12" :md="12" :sm="24" class="contact-right">
+          <h2 class="contact-title">Contact</h2>
           <div class="contact-right-item contact-address">
             <div class="contact-icons">
               <i class="fas fa-map-marker-alt"></i>
@@ -165,6 +167,14 @@
             </div>
           </div>
         </a-col>
+        <a-col :lg="12" :md="12" :sm="24" class="contact-right">
+          <h2 class="contact-title">Us team</h2>
+
+          <img
+            src="images/team.jpg"
+            style="width: 100%; height: 300px; object-fit: cover"
+          />
+        </a-col>
       </a-row>
     </div>
     <a-row class="contact-google-map">
@@ -217,6 +227,12 @@ export default {
 </script>
 
 <style lang="less">
+.contact-title {
+  font-size: 24px;
+  font-weight: 600;
+  display: block;
+  color: var(--color-title);
+}
 .contact {
   padding-top: 20px;
   padding-bottom: 60px;
@@ -290,4 +306,5 @@ export default {
   font-weight: 600;
   line-height: 1.7;
 }
-</style>;
+</style>
+;

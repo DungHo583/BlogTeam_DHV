@@ -15,20 +15,20 @@
             <div class="follow-tab">
               <followtab />
             </div>
-            <div class="search-tab">
+            <!-- <div class="search-tab">
               <searchTab />
-            </div>
+            </div> -->
             <div class="posts-tab">
               <postTab />
             </div>
-            <div class="recent-tab">
+            <!-- <div class="recent-tab">
               <recentPosts />
-            </div>
+            </div> -->
             <div class="follow-tab">
               <follow />
             </div>
-            <div class="categories-tab"><categories /></div>
-            <div class="subscribe-tab"><subscribeTab /></div>
+            <!-- <div class="categories-tab"><categories /></div> -->
+            <!-- <div class="subscribe-tab"><subscribeTab /></div> -->
           </a-col>
         </a-row>
         <relatedPost />
@@ -48,24 +48,24 @@
 import headerLayout from "./header/header.vue";
 import footerLayout from "./footer/footer.vue";
 import followtab from "./header/components/followTab.vue";
-import searchTab from "./header/components/searchTab.vue";
+// import searchTab from "./header/components/searchTab.vue";
 import postTab from "./header/components/postTab.vue";
-import recentPosts from "./header/components/recentPosts.vue";
+// import recentPosts from "./header/components/recentPosts.vue";
 import follow from "./header/components/follow.vue";
-import categories from "./header/components/categoriesTab.vue";
-import subscribeTab from "./header/components/subscribeTab.vue";
+// import categories from "./header/components/categoriesTab.vue";
+// import subscribeTab from "./header/components/subscribeTab.vue";
 import relatedPost from "./component/relatedPost.vue";
 export default {
   components: {
     headerLayout,
     footerLayout,
     followtab,
-    searchTab,
+    // searchTab,
     postTab,
-    recentPosts,
+    // recentPosts,
     follow,
-    categories,
-    subscribeTab,
+    // categories,
+    // subscribeTab,
     relatedPost,
   },
 };
