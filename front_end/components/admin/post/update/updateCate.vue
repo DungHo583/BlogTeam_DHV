@@ -4,29 +4,25 @@
       <div class="l">
         <div class="form-input-group">
           <div class="title-input">
-            <h3 class="text-title">Tên danh mục:</h3>
+            <h3 class="text-title">Ảnh tiêu đề:</h3>
           </div>
-          <input
-            type="text"
-            class="input-group"
-            placeholder="Nhập tên danh mục ..."
-            v-model="nameCate"
-            @input="changeName"
-          />
+          <div class="box-upload-img">
+            <uploadIMG @uploaded="getUploaded" />
+          </div>
         </div>
       </div>
       <!--  -->
       <div class="r">
         <div class="form-input-group">
           <div class="title-input">
-            <h3 class="text-title">Mô tả ngắn:</h3>
+            <h3 class="text-title">Tiêu đề bài viết:</h3>
           </div>
           <input
             type="text"
             class="input-group"
-            placeholder="Nhập mô tả ngắn ..."
-            v-model="shortDesc"
-            @input="changeShort"
+            placeholder="Nhập tiêu đề bài viết ..."
+            v-model="titlePost"
+            @input="changeName"
           />
         </div>
       </div>
@@ -36,82 +32,190 @@
       <div class="l">
         <div class="form-input-group">
           <div class="title-input">
-            <h3 class="text-title">Mô tả danh mục:</h3>
+            <h3 class="text-title">Mô tả ngắn:</h3>
           </div>
-          <textarea
-            class="area-group"
-            rows="4"
-            placeholder="Nhập mô tả ..."
-            v-model="descCate"
-            @input="changeDesc"
-          >
-          </textarea>
+          <input
+            type="text"
+            class="input-group"
+            placeholder="Nhập mô tả ngắn ..."
+            v-model="shortPost"
+            @input="changeShort"
+          />
         </div>
       </div>
       <!--  -->
-      <!-- <div class="r">
+      <div class="r">
         <div class="form-input-group">
-          <label for="">Mô tả ngắn:</label>
-          <input type="text" class="input-group" />
+          <div class="title-input">
+            <h3 class="text-title">Tác giả:</h3>
+          </div>
+          <selectCustom
+            :selected="selected"
+            :list="listSelect"
+            @getEvent="getSelect"
+          />
         </div>
-      </div> -->
+      </div>
+    </div>
+    <!--  -->
+    <div class="row-form-item">
+      <div class="l">
+        <div class="form-input-group">
+          <div class="title-input">
+            <h3 class="text-title">Danh mục:</h3>
+          </div>
+          <selectOrtherCustom
+            :selected="selectedCate"
+            :list="listSelectCate"
+            @getEvent="getSelectCate"
+          />
+        </div>
+      </div>
+      <!--  -->
+      <div class="r">
+        <div class="form-input-group">
+          <div class="title-input">
+            <h3 class="text-title">Thẻ tag:</h3>
+          </div>
+          <multiSelect
+            :selected="selectedTags"
+            :list="listSelectTag"
+            @getEvent="getSelectTag"
+          />
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="row-form-item">
+      <div class="form-input-group form-editor">
+        <div class="title-input">
+          <h3 class="text-title">Nội dung bài viết:</h3>
+        </div>
+        <froala :tag="'textarea'" :config="config" v-model="descPost"></froala>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import uploadIMG from "~/components/admin/post/create/uploadImg";
+import selectCustom from "~/components/admin/post/selectCustom";
+import selectOrtherCustom from "~/components/admin/post/selectOrtherCustom";
+import multiSelect from "~/components/admin/post/multiSelectCustom";
+
 export default {
-  components: {},
-  props: ["getCategory"],
-  mounted() {
-    this.getPropsCate();
+  components: {
+    selectCustom,
+    uploadIMG,
+    selectOrtherCustom,
+    multiSelect,
   },
   data() {
     return {
-      nameCate: "",
-      shortDesc: "",
-      descCate: "",
+      titlePost: "",
+      shortPost: "",
+      descPost: "",
       waitInput: null,
-      dataCate: {
-        name: "",
+      dataPost: {
+        thumbnail: "",
+        title: "",
         short_desc: "",
-        description: "",
+        description: [],
+        author: "",
+        tags: "",
+        category: "",
+      },
+      selected: { _id: 0, name_author: "Chọn tác giả" },
+      listSelect: [],
+      selectedCate: { _id: 0, title: "Chọn danh mục" },
+      listSelectCate: [],
+      selectedTags: { _id: 0, title: "Chọn thẻ tag" },
+      listSelectTag: [],
+      config: {
+        placeholderText: "Nhập nội dung bài viết !",
+        charCounterCount: false,
       },
     };
+  },
+  mounted() {
+    this.fetchAuthor();
+    this.fetchCategory();
+    this.fetchTags();
+  },
+  watch: {
+    descPost() {
+      this.dataPost.description = this.descPost;
+      this.$emit("getValue", this.dataPost);
+    },
   },
   methods: {
     changeName() {
       clearTimeout(this.waitInput);
       this.waitInput = setTimeout(() => {
-        this.dataCate.name = this.nameCate;
-        this.$emit("getValue", this.dataCate);
+        this.dataPost.title = this.titlePost;
+        this.$emit("getValue", this.dataPost);
       }, 500);
     },
     changeShort() {
       clearTimeout(this.waitInput);
       this.waitInput = setTimeout(() => {
-        this.dataCate.short_desc = this.shortDesc;
-        this.$emit("getValue", this.dataCate);
-      }, 500);
-    },
-    changeDesc() {
-      clearTimeout(this.waitInput);
-      this.waitInput = setTimeout(() => {
-        this.dataCate.description = this.descCate;
-        this.$emit("getValue", this.dataCate);
+        this.dataPost.short_desc = this.shortPost;
+        this.$emit("getValue", this.dataPost);
       }, 500);
     },
 
-    async getPropsCate() {
-      this.nameCate = this.getCategory.name;
-      this.shortDesc = this.getCategory.short_desc;
-      this.descCate = this.getCategory.description;
-      this.dataCate = await {
-        name: this.getCategory.name,
-        short_desc: this.getCategory.short_desc,
-        description: this.getCategory.description,
-      };
-      this.$emit("getValue", this.dataCate);
+    getUploaded(event) {
+      this.dataPost.thumbnail = event[0].thumbUrl;
+      setTimeout(() => {
+        this.$emit("getValue", this.dataPost);
+      }, 1000);
+    },
+
+    async fetchAuthor() {
+      const url = process.env.API_BLOG;
+      const response = await this.$axios.get(url + "/api/author");
+      if (response.data && response.data.success == true) {
+        this.listSelect = response.data.data;
+      }
+    },
+
+    getSelect(event) {
+      this.selected = event;
+      console.log("select ev", event);
+      this.dataPost.author = this.selected._id;
+      this.$emit("getValue", this.dataPost);
+    },
+
+    async fetchCategory() {
+      const url = process.env.API_BLOG;
+      const response = await this.$axios.get(url + "/api/category");
+      if (response.data && response.data.success == true) {
+        this.listSelectCate = response.data.data;
+      }
+    },
+
+    getSelectCate(event) {
+      this.selectedCate = event;
+      this.dataPost.category = this.selectedCate._id;
+      this.$emit("getValue", this.dataPost);
+    },
+
+    async fetchTags() {
+      const url = process.env.API_BLOG;
+      const response = await this.$axios.get(url + "/api/tags");
+      if (response.data && response.data.success == true) {
+        this.listSelectTag = response.data.data;
+      }
+    },
+
+    getSelectTag(event) {
+      this.selectedTags = event;
+      this.dataPost.tags = this.selectedTags._id;
+      this.$emit("getValue", this.dataPost);
+    },
+
+    handleCancel() {
+      this.previewVisible = false;
     },
   },
 };
@@ -179,5 +283,27 @@ export default {
   .area-group:focus {
     border-color: #e14eca;
   }
+}
+
+.box-upload-img {
+  display: flex;
+  width: 100%;
+  height: 110px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  .note-upload {
+    margin-left: 25px;
+    .text-note {
+      color: #2f3235;
+      font-size: 16px;
+      .warning-text {
+        color: #d42929;
+      }
+    }
+  }
+}
+
+.box-thumnail-upload {
+  margin-top: 25px;
 }
 </style>

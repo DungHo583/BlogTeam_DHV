@@ -124,22 +124,11 @@ export default {
         });
       }
     },
-
-    // async fetchTag(id) {
-    //   const url = process.env.API_BLOG;
-    //   const response = await this.$axios
-    //     .get(url + "/api/get-author/" + id)
-    //     .then((item) => {
-    //       return item.data.data.name_author;
-    //     });
-    //   return response;
-    //   if (response.data && response.data.success == true) {
-    //     console.log("fetchTag", response.data);
-    //     this.nameAuthorTb = response.data.data.name_author;
-    //   } else {
-    //     this.nameAuthorTb = "";
-    //   }
-    // },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
+    },
   },
 };
 </script>

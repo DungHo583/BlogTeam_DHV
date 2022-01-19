@@ -1,83 +1,77 @@
 <template>
-  <adminLayout :loadPage="loading">
-    <div class="card-container" v-if="!loading">
+  <adminLayout>
+    <div class="card-container">
       <div class="title-card">
         <h3 class="text-title">Cập nhật bài viết</h3>
       </div>
       <!--  -->
-      <updateCate :getCategory="dataCate" @getValue="valueInput" />
+      <inputCate @getValue="valueInput" />
       <!--  -->
       <div class="line"></div>
       <!--  -->
       <div class="btn-action-group">
         <button class="btn-action btn-cancel" @click="handleBack">Hủy</button>
-        <button class="btn-action btn-save" @click="handleSave">Lưu</button>
+        <button
+          class="btn-action btn-save"
+          @click="handleSave"
+          :disabled="loadingSave"
+        >
+          <span v-if="loadingSave"><a-icon type="loading" /></span>
+          <span v-else>Lưu</span>
+        </button>
       </div>
     </div>
   </adminLayout>
 </template>
 
 <script>
-import updateCate from "~/components/admin/post/update/updateCate.vue";
+import inputCate from "~/components/admin/post/update/updateCate.vue";
 import adminLayout from "~/layouts/adminLayout";
 
 export default {
   components: {
     adminLayout,
-    updateCate,
+    inputCate,
   },
   data() {
     return {
-      checkRegister: null,
-      loading: true,
-      dataCate: {
-        name: null,
-        short_desc: null,
-        description: null,
+      loadingSave: false,
+      dataPost: {
+        thumbnail: "",
+        title: "",
+        short_desc: "",
+        description: "",
+        author: "",
+        tag: "",
+        category: "",
       },
-      getIdPost: null,
     };
   },
-  mounted() {
-    this.getID();
-    this.fetchCate();
-  },
+  mounted() {},
 
   methods: {
     handleBack() {
       this.$router.push({
-        path: "/admin/post",
+        path: "/admin/post?user_id=" + this.getUserID,
       });
     },
 
-    async fetchCate() {
-      const url = process.env.API_BLOG;
-      const response = await this.$axios.get(
-        url + "/api/get-category/" + this.getIdPost
-      );
-      if (response.data && response.data.success == true) {
-        this.dataCate = {
-          name: response.data.data.title,
-          short_desc: response.data.data.short_desc,
-          description: response.data.data.description,
-        };
-      }
-    },
-
     valueInput(value = {}) {
-      this.dataCate = {
-        name: value.name,
-        short_desc: value.short_desc,
-        description: value.description,
-      };
+      this.dataPost.title = value.title;
+      this.dataPost.short_desc = value.short_desc;
+      this.dataPost.description = value.description;
+      this.dataPost.author = value.author;
+      this.dataPost.thumbnail = value.thumbnail;
+      this.dataPost.tag = value.tags;
+      this.dataPost.category = value.category;
     },
 
     beforSave() {
-      if (!this.dataCate.name && this.dataCate.name.trim() == "") {
+      if (!this.dataPost.title && this.dataPost.title.trim() == "") {
         this.$notify({
           type: "error",
           title: "Thất bại !",
-          text: "Bạn chưa nhập tên danh mục !",
+          text: "Bạn chưa nhập tiêu đề bài viết !",
         });
         return false;
       }
@@ -87,15 +81,18 @@ export default {
     async handleSave() {
       let check = await this.beforSave();
       if (check) {
+        this.loadingSave = true;
+        console.log("data push", this.dataPost);
         const url = process.env.API_BLOG;
-        const response = await this.$axios.post(
-          url + "/api/post/update/" + this.getIdPost,
-          {
-            title: this.dataCate.name,
-            short_desc: this.dataCate.short_desc,
-            description: this.dataCate.description,
-          }
-        );
+        const response = await this.$axios.post(url + "/api/post/create", {
+          title: this.dataPost.title,
+          thumbnail: this.dataPost.thumbnail,
+          short_desc: this.dataPost.short_desc,
+          description: this.dataPost.description,
+          author: this.dataPost.author,
+          category: this.dataPost.category,
+          tag: this.dataPost.tag,
+        });
         if (response.data && response.data.success == true) {
           this.$notify({
             type: "success",
@@ -103,20 +100,23 @@ export default {
             text: response.data.message,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/admin/post" });
+            this.$router.push({
+              path: "/admin/post?user_id=" + this.getUserID,
+            });
           }, 1500);
         } else {
           this.$notify({
             type: "error",
             title: "Thất bại !",
-            text: api.data.message,
+            text: response.data.message,
           });
         }
       }
     },
-
-    getID() {
-      this.getIdPost = this.$route.params.id;
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };
