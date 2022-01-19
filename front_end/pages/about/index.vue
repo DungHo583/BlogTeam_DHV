@@ -4,9 +4,9 @@
       <div class="title-about-page">THE MOST POWERFUL THEME ON EARTH</div>
       <div class="content-about-page">We are a team of expert designers</div>
       <div class="text-about-page">
-        Lorem ipsum dolor sit amet, consec tetur adipiscing the egtlit sekido
-        eiusmod of the tempor incid dunt ulert labore et dolore all magna aliqua
-        mi bibendum neque egestas.
+        Hãy cùng đồng hành trong quá trình phát triển của chúng tôi, để có thể
+        tạo ra những giá trị tốt nhất cho cộng đồng. Cũng như đưa ra các nhận
+        xét và góp ý để chúng tôi ngày một trưởng thành và phát triển hơn nữa.
       </div>
     </div>
     <aboutTeam />

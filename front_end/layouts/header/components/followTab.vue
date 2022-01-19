@@ -2,15 +2,13 @@
   <div class="container-follow">
     <div class="content-follow">Follow Us</div>
     <div class="about">
-      <img
-        class="author-follow"
-        src="https://templatesell.net/polite/wp-content/uploads/sites/3/2020/02/ava1.png"
-      />
+      <img class="author-follow" src="/images/team.jpg" />
       <p class="text-follow">
-        I am the author of this site. I am here to share lots of information to
-        you regarding my expertise. Follow me in social media for the updates.
+        Chúng tôi là tác giả của trang web này. Chúng tôi ở đây để chia sẻ nhiều
+        thông tin cho bạn. Hãy theo dõi tôi trên phương tiện truyền thông xã hội
+        để cập nhật thêm nhiều thông tin khác.
       </p>
-      <div class="socials-icon">
+      <!-- <div class="socials-icon">
         <a class="icon" href="http://www.facebook.com" target="_blank"
           ><a-icon type="facebook" :style="{ fontSize: '22px' }"
         /></a>
@@ -26,7 +24,7 @@
         <a class="icon" href="http://www.youtube.com" target="_blank"
           ><a-icon type="youtube" :style="{ fontSize: '22px' }"
         /></a>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -72,6 +70,8 @@ export default {};
   }
 }
 .author-follow {
+  border-radius: 50%;
+  object-fit: cover;
   width: 318px;
   height: 318px;
 }

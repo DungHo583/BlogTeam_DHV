@@ -5,12 +5,12 @@
         <img src="/images/intro.png" width="100%" />
       </div>
       <div class="intro-info">
-        <div class="content-intro-blog">Pharetra Etiam Inceptos</div>
+        <div class="content-intro-blog">Tiêu Chí</div>
         <div class="text-intro-blog">
-          Etiam porta sem malesuada magna mollis euismod. Vivamus sagittis lacus
-          vel augue laoreet rutrum faucibus dolor auctor. Maecenas faucibus
-          mollis interdum. Donec id elit non mi porta gravida at eget metus.
-          Aenean lacinia.
+          Website của chúng tôi ra đời với sứ mệnh “Đưa ra những nhận xét, cái
+          nhìn khách quan nhất về các sản phẩm công nghệ. Từ đó giúp người mua
+          có thể tìm kiếm ra những sản phẩm phù hợp với bản thân, cũng như nhu
+          cầu sử dụng.”
         </div>
         <div class="text-list-intro-blog">
           <ul class="list-into-item">
@@ -20,7 +20,7 @@
                 theme="filled"
                 :style="{ fontSize: '20px', color: '#23a455' }"
               />
-              <span class="text-list-into"> Vestibulum id ligula</span>
+              <span class="text-list-into"> Nhận xét khách quan</span>
             </li>
             <li class="list-intro-item-content">
               <a-icon
@@ -28,7 +28,7 @@
                 theme="filled"
                 :style="{ fontSize: '20px', color: '#23a455' }"
               />
-              <span class="text-list-into"> Egestas Fermentum</span>
+              <span class="text-list-into">Mô tả chân thực</span>
             </li>
             <li class="list-intro-item-content">
               <a-icon
@@ -36,7 +36,7 @@
                 theme="filled"
                 :style="{ fontSize: '20px', color: '#23a455' }"
               />
-              <span class="text-list-into"> Ultricies Bibendum.</span>
+              <span class="text-list-into">Sản phẩm tin cậy</span>
             </li>
             <li class="list-intro-item-content">
               <a-icon
@@ -44,7 +44,7 @@
                 theme="filled"
                 :style="{ fontSize: '20px', color: '#23a455' }"
               />
-              <span class="text-list-into"> Fermentum Tellus</span>
+              <span class="text-list-into">Đáp ứng nhu cầu</span>
             </li>
           </ul>
           <ul class="list-into-item">
@@ -54,7 +54,7 @@
                 theme="filled"
                 :style="{ fontSize: '20px', color: '#23a455' }"
               />
-              <span class="text-list-into"> Vestibulum id ligula</span>
+              <span class="text-list-into">Công nghệ tiên tiến</span>
             </li>
             <li class="list-intro-item-content">
               <a-icon
@@ -62,7 +62,7 @@
                 theme="filled"
                 :style="{ fontSize: '20px', color: '#23a455' }"
               />
-              <span class="text-list-into"> Adipiscing Vulputate</span>
+              <span class="text-list-into">Sản phẩm ưa chuộng</span>
             </li>
             <li class="list-intro-item-content">
               <a-icon
@@ -70,7 +70,7 @@
                 theme="filled"
                 :style="{ fontSize: '20px', color: '#23a455' }"
               />
-              <span class="text-list-into"> Fringilla Quam Elit</span>
+              <span class="text-list-into">Nắm bắt xu thế</span>
             </li>
             <li class="list-intro-item-content">
               <a-icon
@@ -78,7 +78,7 @@
                 theme="filled"
                 :style="{ fontSize: '20px', color: '#23a455' }"
               />
-              <span class="text-list-into">CommodoVestibulum</span>
+              <span class="text-list-into">Đồng hành - Phát triển</span>
             </li>
           </ul>
         </div>

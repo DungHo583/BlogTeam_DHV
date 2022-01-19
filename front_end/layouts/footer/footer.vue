@@ -3,32 +3,14 @@
     <div class="footer-above">
       <a-row class="footer-above-inner layout-container">
         <a-col :lg="8" :md="24" class="footer-above-left">
-          <div class="footer-about">
-            <h2 class="footer-title">Về chúng tôi</h2>
-            <ul class="contact-wrap no-mar-pad">
-              <li class="contact-item no-list">
-                Đại học Vinh, 128 Lê Duẩn, Nghệ An
-              </li>
-              <li class="contact-item no-list">
-                Giờ mở cửa: 9:00 sáng đến 6:00 tối
-              </li>
-              <li class="contact-item no-list">
-                Số điện thoại:
-                <a href="tel:+84987654321">+84987654321</a>
-              </li>
-              <li class="contact-item no-list">
-                Số Fax:
-                <a href="tel:+84987654321">+84987654321</a>
-              </li>
-              <li class="contact-item no-list"></li>
-              <li class="contact-item no-list">
-                Email:
-                <a href="mailto:TeamBlog@gmail.com">TeamBlog(@)teamblog.com</a>
-              </li>
-            </ul>
-          </div>
+          <h2 class="footer-title">About Us</h2>
+          <h3 class="text-about">
+            Hãy cùng đồng hành trong quá trình phát triển của chúng tôi, để có
+            thể tạo ra những giá trị tốt nhất cho cộng đồng. Cũng như đưa ra các
+            nhận xét và góp ý để chúng tôi ngày một trưởng thành và phát triển
+            hơn nữa.
+          </h3>
           <div class="footer-connect">
-            <h2 class="footer-title">Liên hệ</h2>
             <div class="social-connect">
               <a href="" class="social-links">
                 <i class="social-icons fab fa-facebook-f"></i>
@@ -43,7 +25,7 @@
           </div>
         </a-col>
         <a-col :lg="8" :md="24" class="footer-above-center">
-          <h2 class="footer-title">Bài đăng gần đây</h2>
+          <h2 class="footer-title">Recent Posts</h2>
           <ul class="recent no-mar-pad">
             <li
               class="recent-post no-list"
@@ -67,61 +49,30 @@
           </ul>
         </a-col>
         <a-col :lg="8" :md="24" class="footer-above-right">
-          <h2 class="footer-title">Đăng ký nhận tin</h2>
-          <a-form :form="form" @submit="handleSubmit">
-            <a-form-item
-              label="Tên của bạn"
-              :label-col="formItemLayout.labelCol"
-              :wrapper-col="formItemLayout.wrapperCol"
-              class="form-input-item form-input-name"
-            >
-              <a-input
-                class="form-input"
-                type="text"
-                placeholder="Nhập tên của bạn"
-                v-decorator="[
-                  'name',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Hãy nhập tên đầy đủ của bạn!',
-                      },
-                    ],
-                  },
-                ]"
-              />
-            </a-form-item>
-            <a-form-item
-              label="Địa chỉ Email"
-              :label-col="formItemLayout.labelCol"
-              :wrapper-col="formItemLayout.wrapperCol"
-              class="form-input-item form-input-email"
-            >
-              <a-input
-                class="form-input"
-                type="email"
-                placeholder="Nhập email của bạn"
-                v-decorator="[
-                  'email',
-                  {
-                    rules: [
-                      { required: true, message: 'Hãy nhập email của bạn!' },
-                    ],
-                  },
-                ]"
-              />
-            </a-form-item>
-            <a-form-item
-              :label-col="formItemLayout.labelCol"
-              :wrapper-col="formItemLayout.wrapperCol"
-              class="form-input-item btn-item"
-            >
-              <a-button type="primary" html-type="submit" class="btn-submit">
-                ĐĂNG KÝ
-              </a-button>
-            </a-form-item>
-          </a-form>
+          <div class="footer-about">
+            <h2 class="footer-title">Contact Us</h2>
+            <ul class="contact-wrap no-mar-pad">
+              <li class="contact-item no-list">
+                Đại học Vinh, 128 Lê Duẩn, Nghệ An
+              </li>
+              <li class="contact-item no-list">
+                Giờ mở cửa: 9:00 sáng đến 6:00 tối
+              </li>
+              <li class="contact-item no-list">
+                Số điện thoại:
+                <a href="tel:+84987654321">+84987654321</a>
+              </li>
+              <li class="contact-item no-list">
+                Số Fax:
+                <a href="tel:+84987654321">+84987654321</a>
+              </li>
+              <li class="contact-item no-list"></li>
+              <li class="contact-item no-list">
+                Email:
+                <a href="mailto:TeamBlog@gmail.com">TeamBlog(@)teamblog.com</a>
+              </li>
+            </ul>
+          </div>
         </a-col>
       </a-row>
     </div>
@@ -191,6 +142,14 @@ export default {
 </script>
 
 <style lang="less">
+.footer-connect {
+  padding-top: 20px;
+}
+.text-about {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #636363;
+}
 .footer-below-inner {
   padding: 10px 0 !important;
   height: 70px;
@@ -385,6 +344,5 @@ export default {
       justify-content: flex-start;
     }
   }
- 
 }
 </style>

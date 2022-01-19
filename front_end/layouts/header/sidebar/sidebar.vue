@@ -5,16 +5,14 @@
         <h2 class="title">About Author</h2>
         <div class="author-wrapper">
           <figure>
-            <img
-              class="author"
-              src="https://templatesell.net/polite/wp-content/uploads/sites/3/2020/02/ava1.png"
-            />
+            <img class="author" src="/images/team.jpg" />
           </figure>
 
           <p>
-            This is the author widget. You can add the author image and social
-            media icons there. All the popular social media icons are there in
-            this widgets. Try it now.
+            Hãy cùng đồng hành trong quá trình phát triển của chúng tôi, để có
+            thể tạo ra những giá trị tốt nhất cho cộng đồng. Cũng như đưa ra các
+            nhận xét và góp ý để chúng tôi ngày một trưởng thành và phát triển
+            hơn nữa.
           </p>
 
           <div class="socials-icon">
@@ -130,6 +128,8 @@ export default {
   text-align: center;
 }
 .author {
+  border-radius: 50%;
+  object-fit: cover;
   width: 280px;
   height: 280px;
 }

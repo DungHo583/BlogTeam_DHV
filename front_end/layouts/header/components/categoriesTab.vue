@@ -2,10 +2,13 @@
   <div class="container-categories">
     <div class="content-categories">Categories</div>
     <div class="box-categories">
-      <a href="/"><p class="text-categories">Dat</p></a>
-      <a href="/"><p class="text-categories">Dung</p></a>
-      <a href="/"><p class="text-categories">Hoang</p></a>
-      <a href="/"><p class="text-categories">Quang</p></a>
+      <a href="/category/tech"><p class="text-categories">Đồ công nghệ</p></a>
+      <a href="/category/trend"
+        ><p class="text-categories">Xu hướng công nghệ</p></a
+      >
+      <a href="/category/review"
+        ><p class="text-categories">Review công nghệ</p></a
+      >
     </div>
   </div>
 </template>
