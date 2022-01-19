@@ -29,10 +29,10 @@ export default {
   data() {
     return {
       checkLoading: true,
-      userID: this.$route.query.user_id,
       routePage: "",
       nextPage: false,
       checkLoadingAdmin: true,
+      checkPathUser: "",
     };
   },
   watch: {},
@@ -46,6 +46,7 @@ export default {
         this.pushPage(this.routePage);
       }
     },
+
     pathRoute(event) {
       this.routePage = event;
       if (this.nextPage) {
@@ -55,25 +56,59 @@ export default {
 
     pushPage(route) {
       this.$router.push({
-        path: route + "?user_id=" + this.userID,
+        path: route + "?user_id=" + this.getUserID,
       });
     },
 
+    checkPath() {
+      this.checkPathUser = this.$route.query.user_id;
+      if (this.checkPathUser) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
     async fetchUser() {
-      const url = process.env.API_BLOG;
-      const response = await this.$axios.post(url + "/api/check-user", {
-        user_id: this.userID,
-      });
-      if (response.data && response.data.success) {
-        if (response.data.data.role == 1 || response.data.data.role == 2) {
-          if (this.routePage == "/admin") {
+      let checkUser = await this.checkPath();
+      if (checkUser) {
+        const url = process.env.API_BLOG;
+        const response = await this.$axios.post(url + "/api/check-user", {
+          user_id: this.getUserID,
+        });
+        if (response.data && response.data.success) {
+          if (response.data.data.role == 1 || response.data.data.role == 2) {
+            if (this.routePage == "/admin") {
+              this.$notify({
+                title: "Thành công",
+                text: "Truy cập quản trị thành công !",
+                type: "success",
+              });
+            }
+            this.nextPage = true;
+          } else {
             this.$notify({
-              title: "Thành công",
-              text: "Truy cập quản trị thành công !",
-              type: "success",
+              title: "Thất bại",
+              text: "Tài khoản này không có quyền truy cập !",
+              type: "error",
             });
+            setTimeout(() => {
+              this.$router.push({
+                path: "/",
+              });
+            }, 1500);
           }
-          this.nextPage = true;
+        } else {
+          this.$notify({
+            title: "Thất bại",
+            text: "Tài khoản này không có quyền truy cập !",
+            type: "error",
+          });
+          setTimeout(() => {
+            this.$router.push({
+              path: "/",
+            });
+          }, 1500);
         }
       } else {
         this.$notify({
@@ -87,6 +122,11 @@ export default {
           });
         }, 1500);
       }
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };

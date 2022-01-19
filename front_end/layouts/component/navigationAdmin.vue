@@ -8,7 +8,9 @@
         class="item-menu-admin"
         v-for="item in menuList"
         :key="item.key"
-        :class="{ active: item.route == menuDefault }"
+        :class="{
+          active: item.route == activePath,
+        }"
         @click="pushRouter(item.route)"
       >
         <a-icon :type="item.icon" />
@@ -61,7 +63,11 @@ export default {
           route: "/admin/user",
         },
       ],
+      activePath: "",
     };
+  },
+  mounted() {
+    this.activePath = this.$route.path;
   },
   methods: {
     pushRouter(path) {

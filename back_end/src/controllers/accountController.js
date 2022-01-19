@@ -113,8 +113,8 @@ const accountController = {
       if (
         user_id == "underfied" ||
         user_id == "null" ||
-        user_id == "undefined"
-        || user_id == ""
+        user_id == "undefined" ||
+        user_id == ""
       ) {
         return res.json({
           success: false,
@@ -122,7 +122,7 @@ const accountController = {
         });
       }
 
-      const account = await ACCOUNT.findOne({ user_id });
+      const account = await ACCOUNT.findOne({ _id: user_id });
 
       if (account) {
         return res.json({
