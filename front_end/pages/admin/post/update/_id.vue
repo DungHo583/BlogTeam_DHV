@@ -5,7 +5,7 @@
         <h3 class="text-title">Cập nhật bài viết</h3>
       </div>
       <!--  -->
-      <inputCate @getValue="valueInput" />
+      <updatePost :dataFetch="dataPost" @getValue="valueInput" />
       <!--  -->
       <div class="line"></div>
       <!--  -->
@@ -25,17 +25,18 @@
 </template>
 
 <script>
-import inputCate from "~/components/admin/post/update/updateCate.vue";
+import updatePost from "~/components/admin/post/update/updateCate.vue";
 import adminLayout from "~/layouts/adminLayout";
 
 export default {
   components: {
     adminLayout,
-    inputCate,
+    updatePost,
   },
   data() {
     return {
       loadingSave: false,
+      dataFetchPost: {},
       dataPost: {
         thumbnail: "",
         title: "",
@@ -45,15 +46,42 @@ export default {
         tag: "",
         category: "",
       },
+      getIdPost: null,
     };
   },
-  mounted() {},
+  mounted() {
+    this.getID();
+    this.fetchPost();
+  },
 
   methods: {
+    getID() {
+      this.getIdPost = this.$route.params.id;
+    },
+
     handleBack() {
       this.$router.push({
         path: "/admin/post?user_id=" + this.getUserID,
       });
+    },
+
+    async fetchPost() {
+      const url = process.env.API_BLOG;
+      const response = await this.$axios.get(
+        url + "/api/get-post/" + this.getIdPost
+      );
+      if (response.data && response.data.success == true) {
+        this.dataFetchPost = response.data.data;
+        this.dataPost = {
+          thumbnail: this.dataFetchPost.thumbnail,
+          title: this.dataFetchPost.title,
+          short_desc: this.dataFetchPost.short_desc,
+          description: this.dataFetchPost.description,
+          author: this.dataFetchPost.author,
+          tag: this.dataFetchPost.tags,
+          category: this.dataFetchPost.category,
+        };
+      }
     },
 
     valueInput(value = {}) {

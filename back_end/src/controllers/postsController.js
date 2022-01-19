@@ -27,6 +27,26 @@ const postsController = {
     }
   },
 
+  // get 1 bài viết
+  getPost: async (req, res) => {
+    try {
+      const idPost = req.params.id;
+
+      const dataPost = await POSTS.findById(idPost);
+
+      return res.json({
+        success: true,
+        message: "Cập nhật bài viết thành công !",
+        data: dataPost,
+      });
+    } catch (error) {
+      return res.json({
+        success: false,
+        message: "Cập nhật bài viết thất bại !",
+      });
+    }
+  },
+
   // tạo bài viết
   createPost: async (req, res) => {
     try {
@@ -74,6 +94,26 @@ const postsController = {
   },
 
   // update bài viết
+  updatePost: async (req, res) => {
+    try {
+      const idPost = req.params.id;
+
+      const dataPost = await POSTS.findById(idPost);
+
+      console.log("post", dataPost);
+
+      return res.json({
+        success: true,
+        message: "Cập nhật bài viết thành công !",
+        data: dataPost,
+      });
+    } catch (error) {
+      return res.json({
+        success: false,
+        message: "Cập nhật bài viết thất bại !",
+      });
+    }
+  },
 
   // xoá bài viết
   deletePost: async (req, res) => {

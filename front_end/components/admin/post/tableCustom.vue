@@ -74,7 +74,7 @@ export default {
       bodyTable: [],
       loading: false,
       visible: false,
-      idCate: null,
+      idPost: null,
       loadingData: true,
       nameAuthorTb: "",
     };
@@ -88,7 +88,7 @@ export default {
     },
 
     confirmDel(event) {
-      this.idCate = event;
+      this.idPost = event;
       this.visible = true;
     },
 
@@ -97,7 +97,7 @@ export default {
       setTimeout(() => {
         this.visible = false;
         this.loading = false;
-        this.handleDel(this.idCate);
+        this.handleDel(this.idPost);
       }, 1500);
     },
     handleCancel(e) {

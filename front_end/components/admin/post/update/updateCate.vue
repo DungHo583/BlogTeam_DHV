@@ -7,7 +7,7 @@
             <h3 class="text-title">Ảnh tiêu đề:</h3>
           </div>
           <div class="box-upload-img">
-            <uploadIMG @uploaded="getUploaded" />
+            <uploadIMG :imgSelect="imgUrlSelect" @uploaded="getUploaded" />
           </div>
         </div>
       </div>
@@ -98,12 +98,15 @@
 </template>
 
 <script>
-import uploadIMG from "~/components/admin/post/create/uploadImg";
+import uploadIMG from "~/components/admin/post/update/uploadImg";
 import selectCustom from "~/components/admin/post/selectCustom";
 import selectOrtherCustom from "~/components/admin/post/selectOrtherCustom";
 import multiSelect from "~/components/admin/post/multiSelectCustom";
 
 export default {
+  props: {
+    dataFetch: Object,
+  },
   components: {
     selectCustom,
     uploadIMG,
@@ -115,6 +118,7 @@ export default {
       titlePost: "",
       shortPost: "",
       descPost: "",
+      imgUrlSelect: "",
       waitInput: null,
       dataPost: {
         thumbnail: "",
@@ -143,6 +147,25 @@ export default {
     this.fetchTags();
   },
   watch: {
+    dataFetch(ev) {
+      console.log("child fetch", ev);
+      this.titlePost = this.dataFetch.title;
+      this.shortPost = this.dataFetch.short_desc;
+      this.descPost = this.dataFetch.description;
+      this.imgUrlSelect = this.dataFetch.thumbnail;
+      this.selected = {
+        _id: this.dataFetch.author,
+        name_author: this.dataFetch.nameAuthor,
+      };
+      this.selectedCate = {
+        _id: this.dataFetch.category,
+        title: this.dataFetch.nameCate,
+      };
+      this.selectedTags = {
+        _id: this.dataFetch.tags,
+        title: this.dataFetch.nameTag,
+      };
+    },
     descPost() {
       this.dataPost.description = this.descPost;
       this.$emit("getValue", this.dataPost);
