@@ -2,40 +2,53 @@
   <div class="list-cate">
     <div class="body-list-cate">
       <a-row :gutter="[30, 30]" class="row-orther-post">
-        <a-col :span="8" class="col-orther-post">
+        <a-col
+          :span="8"
+          class="col-orther-post"
+          v-for="(item, idx) in listPost"
+          :key="idx"
+        >
           <div class="card-post-orther">
-            <div class="thumbnail-inner-card">
-              <img class="thumbnail-inner" src="" alt="" />
+            <div class="thumbnail-inner-card" @click="handleDetail(item._id)">
+              <img class="thumbnail-inner" :src="item.thumbnail" alt="" />
             </div>
             <div class="content-inner-card">
-              <p class="text-time">Tháng 9, 2021</p>
-              <h3 class="title-card">Can a Smoothie ....</h3>
+              <p class="text-time">
+                {{ item.created_at | formatDate("dd/mm/yyyy hh:MM") }}
+              </p>
+              <h3 class="title-card">{{ item.title }}</h3>
               <div class="content-text">
                 <p class="text-desc">
-                  Most of us would agree – mornings are hectic. Getting yourself
-                  and possibly others ready for the day ahead may...
+                  {{ item.short_desc }}
                 </p>
               </div>
             </div>
           </div>
         </a-col>
-        <a-col :span="8"></a-col>
-        <a-col :span="8"></a-col>
       </a-row>
     </div>
   </div>
 </template>
 
 <script>
-import dataSlide from "~/api/slideTechProd.json";
 export default {
   props: {
-    titleCate: String,
+    listPost: Array,
   },
   data() {
-    return {
-      listProd: dataSlide.list,
-    };
+    return {};
+  },
+  methods: {
+    handleDetail(id) {
+      this.$router.push({
+        path: "/category/detail/" + id + "?user_id=" + this.getUserID,
+      });
+    },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
+    },
   },
 };
 </script>

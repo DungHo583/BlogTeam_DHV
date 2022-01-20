@@ -5,6 +5,9 @@ const postsController = require("../controllers/postsController");
 // danh sách bài viết
 router.get("/posts", postsController.getPosts);
 
+// ds bài theo danh mục
+router.post("/post-cate", postsController.getCatePosts);
+
 // // get 1 bài viết theo id
 router.get("/get-post/:id", postsController.getPost);
 

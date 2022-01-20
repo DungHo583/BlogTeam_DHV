@@ -5,7 +5,7 @@
         <h3 class="cate-title">Review công nghệ</h3>
       </div>
       <div class="body-cate">
-        <listCate />
+        <listCate :listPost="listPost" />
       </div>
     </div>
   </layout>
@@ -22,7 +22,23 @@ export default {
   data() {
     return {
       bgLayout: true,
+      listPost: [],
     };
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      const url = process.env.API_BLOG;
+      const response = await this.$axios.post(url + "/api/post-cate", {
+        _id: "61e7ae5bb0441d335b549d44",
+      });
+      if (response.data && response.data.success == true) {
+        this.listPost = response.data.data;
+        // this.contentTable = response.data.data;
+      }
+    },
   },
 };
 </script>

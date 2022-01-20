@@ -82,10 +82,10 @@ export default {
         path: "/category/detail/" + idPost + "?user_id=" + this.getUserID,
       });
     },
-    computed: {
-      getUserID() {
-        return this.$route.query.user_id;
-      },
+  },
+  computed: {
+    getUserID() {
+      return this.$route.query.user_id;
     },
   },
 };
