@@ -1,12 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const cors = require('cors')
+const cors = require("cors");
 const route = require("./src/routers");
 const mongoose = require("mongoose");
 
-app.use(cors())
-app.use(express.json());
+app.use(cors());
+app.use(express.json({ limit: "50mb" }));
 
 async function connectDB() {
   try {

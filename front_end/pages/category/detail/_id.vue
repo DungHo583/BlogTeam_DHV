@@ -1,16 +1,16 @@
 <template>
-  <div class="layout-container">
+  <div class="layout-detail">
     <h3 class="title-post-detail">{{ postDetail.title }}</h3>
-    <span class="time-detail">{{
-      postDetail.created_at | formatDate("dd/mm/yyyy hh:MM")
-    }}</span>
+    <span class="time-detail">
+      {{ postDetail.created_at | formatDate("dd/mm/yyyy hh:MM") }}
+    </span>
     <div class="body-content-post">
       <div class="thumbnail-detail">
         <img :src="postDetail.thumbnail" alt="" />
       </div>
       <div class="content-detail">
-        <p class="text-detail">
-          {{ postDetail.description }}
+        <p class="text-detail" v-html="postDetail.description">
+          <!-- {{ postDetail.description }} -->
         </p>
       </div>
     </div>
@@ -59,3 +59,21 @@ export default {
   },
 };
 </script>
+
+<style lang="less" scoped>
+.layout-detail {
+  .title-post-detail {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .time-detail {
+    font-size: 16px;
+    color: var(--color-time);
+  }
+  .body-content-post {
+    margin-top: 20px;
+    width: 100%;
+  }
+}
+</style>
